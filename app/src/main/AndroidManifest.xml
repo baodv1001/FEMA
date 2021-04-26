@@ -9,13 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FashionEcommerceMobileApp">
-        <activity android:name=".MainActivity">
+        <activity android:name=".SignUp"></activity>
+        <activity android:name=".OnBoarding" />
+        <activity android:name=".Splash" />
+        <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>
