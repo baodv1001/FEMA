@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/search_bg"
     android:layout_width="120dp"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    android:layout_margin="8dp"
+    android:background="@drawable/search_bg">
 
 
     <ImageView
@@ -21,12 +21,13 @@
         android:id="@+id/product_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="Man Shirt"
-        android:textAlignment="center"
-        android:textColor="@color/dark"
-        android:layout_marginRight="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:ellipsize="end"
+        android:gravity="left"
+        android:maxLines="2"
+        android:text="Man Shirt"
+        android:textColor="@color/dark"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/product_image"
         app:layout_constraintStart_toStartOf="@+id/product_image"
@@ -37,10 +38,10 @@
         style="?android:attr/ratingBarStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:numStars="5"
-        android:progressTint="@color/warning"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:numStars="5"
+        android:progressTint="@color/warning"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/product_name" />
 
@@ -48,11 +49,11 @@
         android:id="@+id/product_sale_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:gravity="center_horizontal"
         android:text="100000"
         android:textAlignment="textStart"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:textColor="@color/primary"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/product_name"

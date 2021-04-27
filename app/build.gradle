@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -13,7 +14,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
+        vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -30,6 +31,21 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    sourceSets {
+        main {
+            res {
+                srcDirs 'src\\main\\res',
+                        'src\\main\\res\\layouts\\product',
+                        'src\\main\\res\\layouts\\activity',
+                        'src\\main\\res\\layouts\\category',
+                        'src\\main\\res\\layouts\\swipe',
+                        'src\\main\\res\\drawables\\images',
+                        'src\\main\\res\\drawables\\icons',
+                        'src\\main\\res\\drawables\\icon'
+            }
+        }
+    }
+
 }
 
 dependencies {

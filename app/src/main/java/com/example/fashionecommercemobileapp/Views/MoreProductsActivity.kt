@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.fashionecommercemobileapp.R
 
-class AllProducts : AppCompatActivity() {
+class MoreProductsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_all_products)
+        setContentView(R.layout.activity_more_products)
     }
 }

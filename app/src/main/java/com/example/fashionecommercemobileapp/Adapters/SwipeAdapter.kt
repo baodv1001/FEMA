@@ -9,11 +9,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.viewpager.widget.PagerAdapter
 import com.example.fashionecommercemobileapp.R
 
-class CustomSwipeAdapter(ctx: Context) : PagerAdapter() {
+class SwipeAdapter(ctx: Context) : PagerAdapter() {
 
-    var imageResources: Array<Int> = arrayOf<Int>( )
-    lateinit var layoutInflater:LayoutInflater
-    var context : Context = ctx
+    var imageResources: Array<Int> = arrayOf<Int>(R.drawable.recommend, R.drawable.recommend)
+    lateinit var layoutInflater: LayoutInflater
+    var context: Context = ctx
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
         return view == `object` as ConstraintLayout
@@ -25,8 +25,8 @@ class CustomSwipeAdapter(ctx: Context) : PagerAdapter() {
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         layoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        var viewItem:View  = layoutInflater.inflate(R.layout.swipe_layout,container,false)
-        var imageView : ImageView = viewItem.findViewById(R.id.image);
+        var viewItem: View = layoutInflater.inflate(R.layout.swipe_layout, container, false)
+        var imageView: ImageView = viewItem.findViewById(R.id.image);
         imageView.setImageResource(imageResources[position])
         container.addView(viewItem)
         return viewItem

@@ -14,38 +14,32 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.fashionecommercemobileapp.Model.Product
-import com.example.fashionecommercemobileapp.Views.ProductDetails
+import com.example.fashionecommercemobileapp.Views.ProductDetailsActivity
 import com.example.fashionecommercemobileapp.R
 
 
-class AllProductsAdapter(
-    private val context: Context,
-    allProductsList: List<Product>
-) : RecyclerView.Adapter<AllProductsAdapter.ProductViewHolder>() {
+class ProductAdapter(
+        private val context: Context,
+        allProductsList: List<Product>
+) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
     private val allProductsList: List<Product> = allProductsList
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
         val view: View =
-            LayoutInflater.from(context).inflate(R.layout.all_product_recycler_item, parent, false)
-        // here we need to create a layout for recyclerview cell items.
+                LayoutInflater.from(context).inflate(R.layout.product_recycler_item, parent, false)
         return ProductViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
+        //Truyền dữ liệu vô item
         holder.productName.text = allProductsList[position].name
-        holder.productSalePrice.text = (allProductsList[position].discount!!.toFloat()*allProductsList[position].price!!.toFloat()).toString()
-        holder.productPrice.text= allProductsList[position].price
+        holder.productSalePrice.text = (allProductsList[position].discount!!.toFloat() * allProductsList[position].price!!.toFloat()).toString()
+        holder.productPrice.text = allProductsList[position].price
         Glide.with(context).load(allProductsList[position].imageFile).into(holder.productImage)
         holder.productRating.rating = allProductsList[position].rating!!.toFloat();
-        holder.item.layoutParams.width = (getScreenWidth(context)-(64 * Resources.getSystem().displayMetrics.density).toInt())/2;
-        /*if(position==allProductsList.size-1) {
-            val params: ConstraintLayout.LayoutParams = ConstraintLayout.LayoutParams( (120 * Resources.getSystem().displayMetrics.density).toInt(), ConstraintLayout.LayoutParams.WRAP_CONTENT)
-            params.setMargins(0, 0, 0, 0)
-            holder.item.layoutParams = params
-
-
-        }*/
+        holder.item.layoutParams.width = (getScreenWidth(context) - (64 * Resources.getSystem().displayMetrics.density).toInt()) / 2;
+        //Bắt sự kiện click vào item
         holder.itemView.setOnClickListener {
-            val i = Intent(context, ProductDetails::class.java)
+            val i = Intent(context, ProductDetailsActivity::class.java)
             i.putExtra("name", allProductsList[position].name)
             i.putExtra("price", allProductsList[position].price)
             i.putExtra("rating", allProductsList[position].rating)
@@ -59,21 +53,23 @@ class AllProductsAdapter(
     }
 
     class ProductViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
+            RecyclerView.ViewHolder(itemView) {
         var productImage: ImageView = itemView.findViewById(R.id.product_image)
         var productName: TextView = itemView.findViewById(R.id.product_name)
-        var productSalePrice : TextView = itemView.findViewById(R.id.product_sale_price)
-        var productPrice : TextView = itemView.findViewById(R.id.product_price)
+        var productSalePrice: TextView = itemView.findViewById(R.id.product_sale_price)
+        var productPrice: TextView = itemView.findViewById(R.id.product_price)
         var productRating: RatingBar = itemView.findViewById(R.id.product_ratingBar)
-        var item:View = itemView
+        var item: View = itemView
     }
+
     private fun getScreenWidth(context: Context): Int {
         val wm = context
-            .getSystemService(Context.WINDOW_SERVICE) as WindowManager
+                .getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val dm = DisplayMetrics()
         wm.defaultDisplay.getMetrics(dm)
         return dm.widthPixels
     }
+
     private fun getScreenHeight(context: Context): Int {
         val wm = context
                 .getSystemService(Context.WINDOW_SERVICE) as WindowManager

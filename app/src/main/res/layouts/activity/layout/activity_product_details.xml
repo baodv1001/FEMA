@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".Views.ProductDetails">
+    tools:context=".Views.ProductDetailsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header"
@@ -98,7 +98,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
-                android:src="@mipmap/ic_launcher_round"
+                android:src="@drawable/recommend"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -205,9 +205,9 @@
                         android:checked="true"
                         android:gravity="center"
                         android:text="8"
-                        android:textStyle="bold"
                         android:textColor="@color/dark"
-                        android:textSize="14dp" />
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
 
                     <RadioButton
                         android:id="@+id/radio2"
@@ -219,9 +219,9 @@
                         android:checked="false"
                         android:gravity="center"
                         android:text="7"
-                        android:textStyle="bold"
                         android:textColor="@color/dark"
-                        android:textSize="14dp" />
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
 
                     <RadioButton
                         android:id="@+id/radio3"
@@ -233,9 +233,9 @@
                         android:checked="false"
                         android:gravity="center"
                         android:text="9"
-                        android:textStyle="bold"
                         android:textColor="@color/dark"
-                        android:textSize="14dp" />
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
 
                     <RadioButton
                         android:id="@+id/radio4"
@@ -247,9 +247,9 @@
                         android:checked="false"
                         android:gravity="center"
                         android:text="10"
-                        android:textStyle="bold"
                         android:textColor="@color/dark"
-                        android:textSize="14dp" />
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
 
                     <RadioButton
                         android:id="@+id/radio5"
@@ -261,9 +261,9 @@
                         android:checked="false"
                         android:gravity="center"
                         android:text="11"
-                        android:textStyle="bold"
                         android:textColor="@color/dark"
-                        android:textSize="14dp" />
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
 
                     <RadioButton
                         android:id="@+id/radio6"
@@ -276,8 +276,9 @@
                         android:gravity="center"
                         android:text="12"
                         android:textColor="@color/dark"
-                        android:textStyle="bold"
-                        android:textSize="14dp" />
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+
                     <RadioButton
                         android:id="@+id/radio7"
                         android:layout_width="wrap_content"
@@ -288,9 +289,9 @@
                         android:checked="false"
                         android:gravity="center"
                         android:text="13"
-                        android:textStyle="bold"
                         android:textColor="@color/dark"
-                        android:textSize="14dp" />
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
                 </RadioGroup>
             </HorizontalScrollView>
 
@@ -340,16 +341,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/search_bg"
-                android:padding="4dp"
                 android:lineSpacingExtra="2dp"
+                android:padding="4dp"
                 android:text="The Nike Air Max 270 React ENG combines a full-length React foam midsole with a 270 Max Air unit for unrivaled comfort and a striking visual experience.
 The Nike Air Max 270 React ENG combines a full-length React foam midsole with a 270 Max Air unit for unrivaled comfort and a striking visual experience."
                 android:textColor="@color/gray"
                 android:textSize="12sp"
                 android:textStyle="normal"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/style" />
+
             <View
                 android:id="@+id/footer_view"
                 android:layout_width="match_parent"
@@ -364,22 +366,23 @@ The Nike Air Max 270 React ENG combines a full-length React foam midsole with a 
 
 
     </ScrollView>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAddCart"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="8dp"
         android:layout_marginLeft="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:backgroundTint="@color/primary"
         android:text="Add to Cart"
         android:textAllCaps="false"
+        android:textColor="@color/white"
         android:textSize="20dp"
         android:textStyle="bold"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/primary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" >
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
     </com.google.android.material.button.MaterialButton>
 </androidx.constraintlayout.widget.ConstraintLayout>
