@@ -9,4 +9,6 @@ interface CategoryApi {
     @GET("get_category.php")
     fun getCategory(): Call<List<Category>>
 
+    @GET("get_swipe_image.php")
+    fun getSwipeImage(): Call<List<String>>
 }

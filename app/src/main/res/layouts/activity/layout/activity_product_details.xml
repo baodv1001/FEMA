@@ -33,6 +33,7 @@
                 android:layout_height="20dp"
                 android:layout_marginLeft="16dp"
                 android:layout_weight="1"
+                android:onClick="onClickBack"
                 app:srcCompat="@drawable/ic_back"
                 tools:ignore="VectorDrawableCompat" />
 
@@ -163,6 +164,7 @@
                 android:layout_height="24dp"
                 android:layout_marginTop="16dp"
                 android:layerType="software"
+                android:onClick="onClickHeart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/detail_image"
                 app:srcCompat="@drawable/ic_heartbutton"

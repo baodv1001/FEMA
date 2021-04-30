@@ -1,5 +1,6 @@
 package com.example.fashionecommercemobileapp.Retrofit.Repository
 
+import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.fashionecommercemobileapp.Model.Product
@@ -9,29 +10,34 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class ProductRepository {
-    private var productApi: ProductApi? = null
-    fun getNews(source: String?, key: String?): List<Product> {
-        val callProduct: Call<List<Product>> = productApi!!.getProduct()
-        var result: List<Product>? = null
-        callProduct.enqueue(object : Callback<List<Product>> {
-            override fun onResponse(
-                    call: Call<List<Product>>,
-                    response: Response<List<Product>>
-            ) {
-                val categoryList: List<Product> = response.body()!!
-                result = categoryList
-            }
-
-            override fun onFailure(
-                    call: Call<List<Product>>,
-                    t: Throwable
-            ) {
-
-            }
-        })
-        return result!!
+    private var listProducts: MutableLiveData<List<Product>>? = MutableLiveData<List<Product>>()
+    var listFlashSale: MutableLiveData<List<Product>>? = MutableLiveData<List<Product>>()
+    var listRecommended: MutableLiveData<List<Product>>? = MutableLiveData<List<Product>>()
+    fun setProductData(productData: List<Product>) {
+        listProducts?.value = productData
     }
+
+    fun getProductData(): MutableLiveData<List<Product>>? {
+        return listProducts
+    }
+    fun setFlashSaleData(flashSaleData: List<Product>) {
+        listFlashSale?.value = flashSaleData
+    }
+
+    fun getFlashSaleData(): MutableLiveData<List<Product>>? {
+        return listFlashSale
+    }
+    fun setRecommendedData(recommendedData: List<Product>) {
+        listRecommended?.value = recommendedData
+    }
+
+    fun getRecommendedData(): MutableLiveData<List<Product>>? {
+        return listRecommended
+    }
+
+    private var productApi: ProductApi? = null
 
     companion object {
         private var productRepository: ProductRepository? = null
@@ -42,10 +48,72 @@ class ProductRepository {
                 }
                 return productRepository
             }
+        private lateinit var context: Context
+        fun setContext(con: Context) {
+            context = con
+        }
     }
 
+    fun doProductRequest(idProductCode:String) {
+        val callProduct: Call<List<Product>> = productApi!!.getProduct(idProductCode)
+        callProduct.enqueue(object : Callback<List<Product>> {
+            override fun onResponse(
+                call: Call<List<Product>>,
+                response: Response<List<Product>>
+            ) {
+                response.body()?.let { setProductData(it) }
+            }
+
+            override fun onFailure(
+                call: Call<List<Product>>,
+                t: Throwable
+            ) {
+                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+    fun doFlashSaleRequest() {
+        val callProduct: Call<List<Product>> = productApi!!.getFlashSale()
+        callProduct.enqueue(object : Callback<List<Product>> {
+            override fun onResponse(
+                call: Call<List<Product>>,
+                response: Response<List<Product>>
+            ) {
+                response.body()?.let { setFlashSaleData(it) }
+            }
+
+            override fun onFailure(
+                call: Call<List<Product>>,
+                t: Throwable
+            ) {
+                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+    fun doRecommendedRequest() {
+        val callProduct: Call<List<Product>> = productApi!!.getRecommended()
+        callProduct.enqueue(object : Callback<List<Product>> {
+            override fun onResponse(
+                call: Call<List<Product>>,
+                response: Response<List<Product>>
+            ) {
+                response.body()?.let { setRecommendedData(it) }
+            }
+
+            override fun onFailure(
+                call: Call<List<Product>>,
+                t: Throwable
+            ) {
+                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
     init {
         var retrofit: RetrofitClient = RetrofitClient()
         productApi = retrofit.getRetrofitInstance()!!.create(ProductApi::class.java)
+
     }
 }

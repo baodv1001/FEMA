@@ -33,6 +33,7 @@
                 android:layout_height="20dp"
                 android:layout_marginLeft="16dp"
                 android:layout_weight="1"
+                android:onClick="onClickBack"
                 app:srcCompat="@drawable/ic_back"
                 tools:ignore="VectorDrawableCompat" />
 
