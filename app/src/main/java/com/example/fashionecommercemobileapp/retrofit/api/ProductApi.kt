@@ -1,7 +1,6 @@
-package com.example.fashionecommercemobileapp.Retrofit.API
+package com.example.fashionecommercemobileapp.retrofit.api
 
-import androidx.lifecycle.MutableLiveData
-import com.example.fashionecommercemobileapp.Model.Product
+import com.example.fashionecommercemobileapp.model.Product
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded

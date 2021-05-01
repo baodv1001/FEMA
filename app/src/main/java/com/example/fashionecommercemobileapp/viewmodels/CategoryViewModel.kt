@@ -1,10 +1,10 @@
-package com.example.fashionecommercemobileapp.ViewModels
+package com.example.fashionecommercemobileapp.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.fashionecommercemobileapp.Model.Category
-import com.example.fashionecommercemobileapp.Retrofit.Repository.CategoryRepository
+import com.example.fashionecommercemobileapp.model.Category
+import com.example.fashionecommercemobileapp.retrofit.repository.CategoryRepository
 
 class CategoryViewModel : ViewModel() {
     private var categoryData: MutableLiveData<List<Category>>? = null

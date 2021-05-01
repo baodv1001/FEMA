@@ -1,11 +1,11 @@
-package com.example.fashionecommercemobileapp.Retrofit.Repository
+package com.example.fashionecommercemobileapp.retrofit.repository
 
 import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import com.example.fashionecommercemobileapp.Model.Product
-import com.example.fashionecommercemobileapp.Retrofit.API.ProductApi
-import com.example.fashionecommercemobileapp.Retrofit.RetrofitClient
+import com.example.fashionecommercemobileapp.model.Product
+import com.example.fashionecommercemobileapp.retrofit.api.ProductApi
+import com.example.fashionecommercemobileapp.retrofit.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,6 +22,7 @@ class ProductRepository {
     fun getProductData(): MutableLiveData<List<Product>>? {
         return listProducts
     }
+
     fun setFlashSaleData(flashSaleData: List<Product>) {
         listFlashSale?.value = flashSaleData
     }
@@ -29,6 +30,7 @@ class ProductRepository {
     fun getFlashSaleData(): MutableLiveData<List<Product>>? {
         return listFlashSale
     }
+
     fun setRecommendedData(recommendedData: List<Product>) {
         listRecommended?.value = recommendedData
     }
@@ -54,7 +56,7 @@ class ProductRepository {
         }
     }
 
-    fun doProductRequest(idProductCode:String) {
+    fun doProductRequest(idProductCode: String) {
         val callProduct: Call<List<Product>> = productApi!!.getProduct(idProductCode)
         callProduct.enqueue(object : Callback<List<Product>> {
             override fun onResponse(
@@ -73,6 +75,7 @@ class ProductRepository {
 
         })
     }
+
     fun doFlashSaleRequest() {
         val callProduct: Call<List<Product>> = productApi!!.getFlashSale()
         callProduct.enqueue(object : Callback<List<Product>> {
@@ -92,6 +95,7 @@ class ProductRepository {
 
         })
     }
+
     fun doRecommendedRequest() {
         val callProduct: Call<List<Product>> = productApi!!.getRecommended()
         callProduct.enqueue(object : Callback<List<Product>> {
@@ -111,6 +115,7 @@ class ProductRepository {
 
         })
     }
+
     init {
         var retrofit: RetrofitClient = RetrofitClient()
         productApi = retrofit.getRetrofitInstance()!!.create(ProductApi::class.java)

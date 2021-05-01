@@ -1,6 +1,6 @@
-package com.example.fashionecommercemobileapp.Retrofit.API
+package com.example.fashionecommercemobileapp.retrofit.api
 
-import com.example.fashionecommercemobileapp.Model.Category
+import com.example.fashionecommercemobileapp.model.Category
 import retrofit2.Call
 import retrofit2.http.GET
 

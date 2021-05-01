@@ -1,4 +1,4 @@
-package com.example.fashionecommercemobileapp.Views
+package com.example.fashionecommercemobileapp.views
 
 import android.content.Intent
 import android.graphics.Paint

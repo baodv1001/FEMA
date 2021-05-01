@@ -1,12 +1,11 @@
-package com.example.fashionecommercemobileapp.Retrofit.Repository
+package com.example.fashionecommercemobileapp.retrofit.repository
 
 import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import com.example.fashionecommercemobileapp.Model.Category
-import com.example.fashionecommercemobileapp.Retrofit.API.CategoryApi
-import com.example.fashionecommercemobileapp.Retrofit.API.ProductApi
-import com.example.fashionecommercemobileapp.Retrofit.RetrofitClient
+import com.example.fashionecommercemobileapp.model.Category
+import com.example.fashionecommercemobileapp.retrofit.api.CategoryApi
+import com.example.fashionecommercemobileapp.retrofit.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -57,6 +56,7 @@ class CategoryRepository {
 
         })
     }
+
     init {
         var retrofit: RetrofitClient = RetrofitClient()
         categoryApi = retrofit.getRetrofitInstance()!!.create(CategoryApi::class.java)

@@ -1,4 +1,4 @@
-package com.example.fashionecommercemobileapp.Adapters
+package com.example.fashionecommercemobileapp.adapters
 
 import android.content.Context
 import android.content.Intent
@@ -12,9 +12,9 @@ import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.fashionecommercemobileapp.Model.Product
+import com.example.fashionecommercemobileapp.model.Product
 import com.example.fashionecommercemobileapp.R
-import com.example.fashionecommercemobileapp.Views.ProductDetailsActivity
+import com.example.fashionecommercemobileapp.views.ProductDetailsActivity
 
 
 class RecommendAdapter(
@@ -25,7 +25,6 @@ class RecommendAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecommendedViewHolder {
         val view: View =
             LayoutInflater.from(context).inflate(R.layout.recommended_recycler_item, parent, false)
-        // here we need to create a layout for recyclerview cell items.
         return RecommendedViewHolder(view)
     }
 

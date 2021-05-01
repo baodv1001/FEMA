@@ -1,12 +1,12 @@
-package com.example.fashionecommercemobileapp.ViewModels
+package com.example.fashionecommercemobileapp.viewmodels
 
 import androidx.lifecycle.LiveData
 
 import androidx.lifecycle.MutableLiveData
 
 import androidx.lifecycle.ViewModel
-import com.example.fashionecommercemobileapp.Model.Product
-import com.example.fashionecommercemobileapp.Retrofit.Repository.ProductRepository
+import com.example.fashionecommercemobileapp.model.Product
+import com.example.fashionecommercemobileapp.retrofit.repository.ProductRepository
 
 
 class ProductViewModel : ViewModel() {
@@ -25,7 +25,7 @@ class ProductViewModel : ViewModel() {
         recommendedData = productRepository?.getRecommendedData()
     }
 
-    fun getProductData(idProductCode : String ): LiveData<List<Product>>? {
+    fun getProductData(idProductCode: String): LiveData<List<Product>>? {
         productRepository!!.doProductRequest(idProductCode)
         productData = productRepository?.getProductData()
         return productData

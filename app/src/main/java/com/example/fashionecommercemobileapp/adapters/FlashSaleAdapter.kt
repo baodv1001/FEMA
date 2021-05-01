@@ -1,4 +1,4 @@
-package com.example.fashionecommercemobileapp.Adapters
+package com.example.fashionecommercemobileapp.adapters
 
 import android.content.Context
 import android.content.Intent
@@ -11,9 +11,9 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.fashionecommercemobileapp.Model.Product
+import com.example.fashionecommercemobileapp.model.Product
 import com.example.fashionecommercemobileapp.R
-import com.example.fashionecommercemobileapp.Views.ProductDetailsActivity
+import com.example.fashionecommercemobileapp.views.ProductDetailsActivity
 
 
 class FlashSaleAdapter(

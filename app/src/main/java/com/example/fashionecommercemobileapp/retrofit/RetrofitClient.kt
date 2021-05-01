@@ -1,4 +1,4 @@
-package com.example.fashionecommercemobileapp.Retrofit
+package com.example.fashionecommercemobileapp.retrofit
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -1,4 +1,4 @@
-package com.example.fashionecommercemobileapp.Adapters
+package com.example.fashionecommercemobileapp.adapters
 
 import android.content.Context
 import android.content.Intent
@@ -9,9 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.fashionecommercemobileapp.Model.Category
+import com.example.fashionecommercemobileapp.model.Category
 import com.example.fashionecommercemobileapp.R
-import com.example.fashionecommercemobileapp.Views.MoreProductsActivity
+import com.example.fashionecommercemobileapp.views.MoreProductsActivity
 
 class CategoryAdapter(
     private val context: Context,

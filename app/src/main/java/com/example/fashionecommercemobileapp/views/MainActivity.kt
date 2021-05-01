@@ -1,11 +1,10 @@
-package com.example.fashionecommercemobileapp.Views
+package com.example.fashionecommercemobileapp.views
 
 import android.os.Bundle
 import android.os.Handler
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -14,13 +13,13 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
-import com.example.fashionecommercemobileapp.Adapters.*
-import com.example.fashionecommercemobileapp.Model.Category
-import com.example.fashionecommercemobileapp.Model.Product
+import com.example.fashionecommercemobileapp.adapters.*
+import com.example.fashionecommercemobileapp.model.Category
+import com.example.fashionecommercemobileapp.model.Product
 import com.example.fashionecommercemobileapp.R
-import com.example.fashionecommercemobileapp.Retrofit.Repository.ProductRepository
-import com.example.fashionecommercemobileapp.ViewModels.CategoryViewModel
-import com.example.fashionecommercemobileapp.ViewModels.ProductViewModel
+import com.example.fashionecommercemobileapp.retrofit.repository.ProductRepository
+import com.example.fashionecommercemobileapp.viewmodels.CategoryViewModel
+import com.example.fashionecommercemobileapp.viewmodels.ProductViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -28,9 +27,9 @@ import java.util.*
 class MainActivity : AppCompatActivity() {
     private var productViewModel: ProductViewModel? = null
     var categoryViewModel: CategoryViewModel? = null
-    lateinit var viewPager : ViewPager
+    lateinit var viewPager: ViewPager
     lateinit var adapter: SwipeAdapter
-    var currentPosition : Int  = 0;
+    var currentPosition: Int = 0;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -72,8 +71,7 @@ class MainActivity : AppCompatActivity() {
         category_recycler.adapter = categoryAdapter
     }
 
-    private fun initSlideShow()
-    {
+    private fun initSlideShow() {
         viewPager = view_pager
         adapter = SwipeAdapter(this)
         viewPager.adapter = adapter
@@ -85,6 +83,7 @@ class MainActivity : AppCompatActivity() {
                 handleScrollState(state);
                 mScrollState = state;
             }
+
             private fun handleScrollState(state: Int) {
                 if (state == ViewPager.SCROLL_STATE_IDLE && mScrollState === ViewPager.SCROLL_STATE_DRAGGING) {
                     setNextItemIfNeeded()
@@ -109,16 +108,23 @@ class MainActivity : AppCompatActivity() {
                     view_pager.setCurrentItem(0, true)
                 }
             }
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
 
             }
+
             override fun onPageSelected(position: Int) {
-                currentPosition=position
+                currentPosition = position
                 prepareDots(position)
             }
         })
     }
-    private fun createSlideShow(){
+
+    private fun createSlideShow() {
         val handler = Handler()
         val update = Runnable {
             if (currentPosition === adapter.count) {
@@ -133,25 +139,34 @@ class MainActivity : AppCompatActivity() {
             }
         }, 300, 3000)
     }
-    fun prepareDots(currentSlidePosition : Int)
-    {
-        if(dotsContainer.childCount>0)
-        {
+
+    fun prepareDots(currentSlidePosition: Int) {
+        if (dotsContainer.childCount > 0) {
             dotsContainer.removeAllViews()
         }
-        var listdots : Array<ImageView> = Array<ImageView>(adapter.count){ ImageView(this) }
-        for(i : Int in 0 until adapter.count)
-        {
+        var listdots: Array<ImageView> = Array<ImageView>(adapter.count) { ImageView(this) }
+        for (i: Int in 0 until adapter.count) {
             listdots?.set(i, ImageView(this))
-            if(i==currentSlidePosition)
-                listdots[i].setImageDrawable(ContextCompat.getDrawable(this,R.drawable.active_dots))
+            if (i == currentSlidePosition)
+                listdots[i].setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.active_dots
+                    )
+                )
             else
-                listdots[i].setImageDrawable(ContextCompat.getDrawable(this,R.drawable.inactive_dots))
-            var layoutParam : LinearLayout.LayoutParams  = LinearLayout.LayoutParams(
+                listdots[i].setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.inactive_dots
+                    )
+                )
+            var layoutParam: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT)
-            layoutParam.setMargins(4,0,4,0)
-            dotsContainer.addView(listdots[i],layoutParam)
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            layoutParam.setMargins(4, 0, 4, 0)
+            dotsContainer.addView(listdots[i], layoutParam)
 
         }
     }

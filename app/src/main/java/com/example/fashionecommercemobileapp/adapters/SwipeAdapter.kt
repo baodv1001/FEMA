@@ -1,4 +1,4 @@
-package com.example.fashionecommercemobileapp.Adapters
+package com.example.fashionecommercemobileapp.adapters
 
 import android.content.Context
 import android.view.LayoutInflater

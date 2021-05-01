@@ -1,20 +1,17 @@
-package com.example.fashionecommercemobileapp.Views
+package com.example.fashionecommercemobileapp.views
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fashionecommercemobileapp.Adapters.ProductAdapter
-import com.example.fashionecommercemobileapp.Adapters.RecommendAdapter
-import com.example.fashionecommercemobileapp.Model.Product
+import com.example.fashionecommercemobileapp.adapters.ProductAdapter
+import com.example.fashionecommercemobileapp.model.Product
 import com.example.fashionecommercemobileapp.R
-import com.example.fashionecommercemobileapp.ViewModels.ProductViewModel
-import kotlinx.android.synthetic.main.activity_main.*
+import com.example.fashionecommercemobileapp.viewmodels.ProductViewModel
 import kotlinx.android.synthetic.main.activity_more_products.*
 
 class MoreProductsActivity : AppCompatActivity() {
