@@ -12,10 +12,10 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MaterialComponents.NoActionBar"
         tools:ignore="MissingClass">
-        <activity android:name=".SignUp"></activity>
-        <activity android:name=".OnBoarding" />
-        <activity android:name=".Splash" />
-        <activity android:name=".Login">
+        <activity android:name=".views.SignUpActivity"></activity>
+        <activity android:name=".views.OnBoardingActivity" />
+        <activity android:name=".views.SplashActivity" />
+        <activity android:name=".views.LoginActivity">
         <activity android:name=".views.MoreProductsActivity"></activity>
         <activity android:name=".views.ProductDetailsActivity" />
         <activity android:name=".views.MainActivity">
