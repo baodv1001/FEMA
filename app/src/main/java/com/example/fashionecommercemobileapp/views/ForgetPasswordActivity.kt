@@ -1,10 +1,11 @@
 package com.example.fashionecommercemobileapp.views
 
 import android.app.ProgressDialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.fashionecommercemobileapp.R
 import com.example.fashionecommercemobileapp.retrofit.repository.AccountRepository
@@ -14,10 +15,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
-import kotlinx.android.synthetic.main.activity_sign_up.*
+import kotlinx.android.synthetic.main.activity_forget_password.*
 import java.util.concurrent.TimeUnit
 
-class SignUpActivity : AppCompatActivity() {
+class ForgetPasswordActivity : AppCompatActivity() {
     private var forceResendingToken: PhoneAuthProvider.ForceResendingToken? = null
     private var mCallbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks? = null
     private var mVertificationId : String?= null
@@ -30,11 +31,13 @@ class SignUpActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_up)
+        setContentView(R.layout.activity_forget_password)
 
-        AccountRepository.Companion.setContext(this@SignUpActivity)
+        AccountRepository.Companion.setContext(this@ForgetPasswordActivity)
         accountViewModel = ViewModelProviders.of(this).get(AccountViewmodel::class.java)
         accountViewModel!!.init()
+        accountViewModel!!.CheckPW("","")
+            ?.observe(this, Observer {  })
 
         firebaseAuth = FirebaseAuth.getInstance()
 
@@ -44,12 +47,12 @@ class SignUpActivity : AppCompatActivity() {
 
         mCallbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(p0: PhoneAuthCredential) {
-                //progressDialog.dismiss()
+                progressDialog.dismiss()
             }
 
             override fun onVerificationFailed(p0: FirebaseException) {
                 progressDialog.dismiss()
-                Toast.makeText(this@SignUpActivity, "Check your phone number", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ForgetPasswordActivity, p0.message, Toast.LENGTH_SHORT).show()
             }
 
             override fun onCodeSent(verificationId: String, p1: PhoneAuthProvider.ForceResendingToken) {
@@ -57,44 +60,60 @@ class SignUpActivity : AppCompatActivity() {
                 mVertificationId = verificationId
                 forceResendingToken = p1
 
-                btnResendOTP.visibility = View.VISIBLE
-                btnSendOTP.visibility = View.INVISIBLE
-                btnSign.isEnabled = true
+                linearLayoutGetOtp.visibility = View.INVISIBLE
+                linearLayoutChangePW.visibility = View.VISIBLE
                 progressDialog.dismiss()
             }
         }
 
-        btnSendOTP.setOnClickListener(){
-            var phone : String = txtPhone.text.toString()
-            if (CheckEnterInfo()) {
+        btnSendOTPForgot.setOnClickListener(){
+            var phone : String = txtPhoneForgot.text.toString()
+            var username : String =txtUsernameForgot.text.toString()
+            var result : Boolean? = null
+            accountViewModel!!.CheckPW(username, phone)
+                ?.observe(this, Observer { result = it })
+
+            if (result == true)
+            {
                 if (phone[0] == '0') {
                     phone = phone.drop(1)
                     phone = "+84" + phone
                 }
                 SendVerificationCode(phone)
+            } else {
+                Toast.makeText(this@ForgetPasswordActivity, "Username or number phone is not available", Toast.LENGTH_SHORT).show()
             }
+
         }
 
-        btnResendOTP.setOnClickListener(){
-            var phone : String = txtPhone.text.toString()
-            if (CheckEnterInfo()) {
-                if (phone[0] == '0') {
-                    phone = phone.drop(1)
-                    phone = "+84" + phone
-                }
-                ReSendVerificationCode(phone, forceResendingToken)
+        btnReSendOTPForgot.setOnClickListener(){
+            var phone : String = txtPhoneForgot.text.toString()
+
+            if (phone[0] == '0') {
+                phone = phone.drop(1)
+                phone = "+84" + phone
             }
+            ReSendVerificationCode(phone, forceResendingToken)
         }
 
-        btnSign.setOnClickListener(){
-            if (txtOTP.text.toString().isEmpty())
+        btnChanePW.setOnClickListener(){
+            var pass :String = txtPasswordForgot.text.toString()
+            var rePass :String = txtRepasswordForgot.text.toString()
+
+            if (txtOTPForgot.text.toString().isEmpty())
             {
-                Toast.makeText(this@SignUpActivity, "Please enter your verification code...", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ForgetPasswordActivity, "Please enter your verification code...", Toast.LENGTH_SHORT).show()
             }
             else
             {
-                if (CheckEnterInfo())
-                    VerifyPhoneNumberwithCode(mVertificationId , txtOTP.text.toString())
+                if (pass.isEmpty()  || rePass.isEmpty())
+                {
+                    Toast.makeText(this@ForgetPasswordActivity, "Field must be fill...!", Toast.LENGTH_SHORT).show()
+                } else if (!pass.equals(rePass)){
+                    Toast.makeText(this@ForgetPasswordActivity, "Password is not match...!", Toast.LENGTH_SHORT).show()
+                } else {
+                    VerifyPhoneNumberwithCode(mVertificationId, txtOTPForgot.text.toString())
+                }
             }
         }
     }
@@ -143,38 +162,22 @@ class SignUpActivity : AppCompatActivity() {
         firebaseAuth.signInWithCredential(credential)
             .addOnSuccessListener {
                 phoneNumberSignupSuccess = firebaseAuth.currentUser.phoneNumber
-                Regiter()
+                ChangePassword()
                 progressDialog.dismiss()
                 //finish()
             }
             .addOnFailureListener{ e->
                 progressDialog.dismiss()
-                Toast.makeText(this@SignUpActivity, "${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ForgetPasswordActivity, "${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 
-    private  fun CheckEnterInfo() :Boolean
+    private fun ChangePassword()
     {
-        if (txtUsername.text.toString().isEmpty() || txtPhone.text.toString().isEmpty() || txtName.text.toString().isEmpty()
-            || txtPassword.text.toString().isEmpty() || txtRepassword.text.toString().isEmpty())
-        {
-            Toast.makeText(this@SignUpActivity, "Field must be fill...!", Toast.LENGTH_SHORT).show()
-            return false
-        } else if (!txtPassword.text.toString().equals(txtRepassword.text.toString())) {
-            Toast.makeText(this@SignUpActivity, "Password not match", Toast.LENGTH_SHORT).show()
-            return false
-        } else {
-            return true
-        }
-    }
+        var phone : String = txtPhoneForgot.text.toString()
+        var username : String = txtUsernameForgot.text.toString()
+        var pass :String = txtPasswordForgot.text.toString()
 
-    private fun Regiter()
-    {
-        val username = txtUsername.text.toString()
-        val password = txtPassword.text.toString()
-        val name = txtName.text.toString()
-        val phoneNum = txtPhone.text.toString()
-
-        accountViewModel!!.ResultofSignup(username, password, name, phoneNum)
+        accountViewModel!!.UpdatePW(username, pass, phone)
     }
 }

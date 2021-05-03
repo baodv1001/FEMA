@@ -7,7 +7,7 @@
     android:fitsSystemWindows="false"
     android:background="@color/white"
     tools:context=".views.SignUpActivity"
-    android:paddingVertical="32dp">
+    android:paddingVertical="16dp">
 
     <LinearLayout
         android:layout_width="0dp"
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginEnd="32dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="16dp"
             android:gravity="center"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
@@ -71,10 +71,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Username"
-            android:layout_marginBottom="12dp"
-            app:startIconDrawable="@drawable/ic_account_circle">
+            app:startIconDrawable="@drawable/ic_account_circle" >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -83,13 +83,28 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
-            android:layout_marginBottom="12dp"
+            android:hint="Your name"
+            app:startIconDrawable="@drawable/ic_lock">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Number phone"
             app:startIconDrawable="@drawable/ic_email">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtPhone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:digits="1234567890"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -97,11 +112,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:layout_marginBottom="12dp"
             app:passwordToggleEnabled="true"
             app:startIconDrawable="@drawable/ic_lock">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
@@ -112,15 +127,76 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password again"
-            android:layout_marginBottom="12dp"
             app:passwordToggleEnabled="true"
             app:startIconDrawable="@drawable/ic_lock">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/txtRepassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutCuponCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Verification Code"
+                app:startIconDrawable="@drawable/ic_lock"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/btnSendOTP"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginRight="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txtOTP"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:digits="1234567890"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnSendOTP"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:height="65dp"
+                android:backgroundTint="@color/primary"
+                android:text="Get Code"
+                android:padding="0dp"
+                android:layout_margin="0dp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/btnResendOTP"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:height="65dp"
+                android:backgroundTint="@color/primary"
+                android:text="Resend Code"
+                android:visibility="invisible"
+                android:padding="0dp"
+                android:layout_margin="0dp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/btnSign"
@@ -134,7 +210,8 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:enabled="false"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
