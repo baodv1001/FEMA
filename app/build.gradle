@@ -38,10 +38,7 @@ android {
                         'src\\main\\res\\layouts\\product',
                         'src\\main\\res\\layouts\\activity',
                         'src\\main\\res\\layouts\\category',
-                        'src\\main\\res\\layouts\\swipe',
-                        'src\\main\\res\\drawables\\images',
-                        'src\\main\\res\\drawables\\icons',
-                        'src\\main\\res\\drawables\\icon'
+                        'src\\main\\res\\layouts\\swipe'
             }
         }
     }
