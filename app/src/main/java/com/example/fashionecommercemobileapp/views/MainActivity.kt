@@ -17,6 +17,7 @@ import com.example.fashionecommercemobileapp.adapters.*
 import com.example.fashionecommercemobileapp.model.Category
 import com.example.fashionecommercemobileapp.model.Product
 import com.example.fashionecommercemobileapp.R
+import com.example.fashionecommercemobileapp.retrofit.repository.CategoryRepository
 import com.example.fashionecommercemobileapp.retrofit.repository.ProductRepository
 import com.example.fashionecommercemobileapp.viewmodels.CategoryViewModel
 import com.example.fashionecommercemobileapp.viewmodels.ProductViewModel
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         ProductRepository.Companion.setContext(this@MainActivity)
+        CategoryRepository.Companion.setContext(this@MainActivity)
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
         productViewModel!!.init()
         productViewModel!!.getRecommendedData()

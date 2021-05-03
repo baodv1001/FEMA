@@ -12,11 +12,11 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MaterialComponents.NoActionBar"
         tools:ignore="MissingClass">
-        <activity android:name=".views.SignUpActivity"></activity>
+        <activity android:name=".views.SignUpActivity" />
         <activity android:name=".views.OnBoardingActivity" />
         <activity android:name=".views.SplashActivity" />
-        <activity android:name=".views.LoginActivity">
-        <activity android:name=".views.MoreProductsActivity"></activity>
+        <activity android:name=".views.LoginActivity" />
+        <activity android:name=".views.MoreProductsActivity" />
         <activity android:name=".views.ProductDetailsActivity" />
         <activity android:name=".views.MainActivity">
             <intent-filter>
@@ -25,7 +25,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

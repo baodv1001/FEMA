@@ -15,7 +15,6 @@
         android:layout_marginStart="64dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="64dp"
-        android:clipToOutline="true"
         android:background="@drawable/background"
         app:layout_constraintDimensionRatio="1"
         android:scaleType="centerCrop"
