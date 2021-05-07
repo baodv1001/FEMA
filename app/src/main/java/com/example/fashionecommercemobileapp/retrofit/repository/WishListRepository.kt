@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.fashionecommercemobileapp.model.Product
 import com.example.fashionecommercemobileapp.retrofit.RetrofitClient
-import com.example.fashionecommercemobileapp.retrofit.api.WishListAPI
+import com.example.fashionecommercemobileapp.retrofit.api.WishListApi
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,7 +21,7 @@ class WishListRepository {
         return wishListProduct
     }
 
-    private var wishListApi: WishListAPI? = null
+    private var wishListApi: WishListApi? = null
 
     companion object {
         private var wishListRepository: WishListRepository? = null
@@ -69,6 +69,6 @@ class WishListRepository {
 
     init {
         var retrofit: RetrofitClient = RetrofitClient()
-        wishListApi = retrofit.getRetrofitInstance()!!.create(WishListAPI::class.java)
+        wishListApi = retrofit.getRetrofitInstance()!!.create(WishListApi::class.java)
     }
 }

@@ -5,7 +5,7 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
-interface AccountAPI {
+interface AccountApi {
     @FormUrlEncoded
     @POST("post_checkAccount.php")
     fun checkAccount(@Field("username") username: String,

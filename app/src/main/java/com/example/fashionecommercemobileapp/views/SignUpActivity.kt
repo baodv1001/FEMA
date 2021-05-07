@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.example.fashionecommercemobileapp.R
 import com.example.fashionecommercemobileapp.retrofit.repository.AccountRepository
-import com.example.fashionecommercemobileapp.viewmodels.AccountViewmodel
+import com.example.fashionecommercemobileapp.viewmodels.AccountViewModel
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
@@ -22,18 +22,18 @@ class SignUpActivity : AppCompatActivity() {
     private var mCallbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks? = null
     private var mVertificationId : String?= null
     private lateinit var firebaseAuth: FirebaseAuth
-    private var phoneNumberSignupSuccess : String? = null
+    private var phoneNumberSignUpSuccess : String? = null
 
     private lateinit var progressDialog: ProgressDialog
 
-    private var accountViewModel : AccountViewmodel? = null
+    private var accountViewModel : AccountViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
 
         AccountRepository.Companion.setContext(this@SignUpActivity)
-        accountViewModel = ViewModelProviders.of(this).get(AccountViewmodel::class.java)
+        accountViewModel = ViewModelProviders.of(this).get(AccountViewModel::class.java)
         accountViewModel!!.init()
 
         firebaseAuth = FirebaseAuth.getInstance()
@@ -66,23 +66,23 @@ class SignUpActivity : AppCompatActivity() {
 
         btnSendOTP.setOnClickListener(){
             var phone : String = txtPhone.text.toString()
-            if (CheckEnterInfo()) {
+            if (checkEnterInfo()) {
                 if (phone[0] == '0') {
                     phone = phone.drop(1)
                     phone = "+84" + phone
                 }
-                SendVerificationCode(phone)
+                sendVerificationCode(phone)
             }
         }
 
         btnResendOTP.setOnClickListener(){
             var phone : String = txtPhone.text.toString()
-            if (CheckEnterInfo()) {
+            if (checkEnterInfo()) {
                 if (phone[0] == '0') {
                     phone = phone.drop(1)
                     phone = "+84" + phone
                 }
-                ReSendVerificationCode(phone, forceResendingToken)
+                reSendVerificationCode(phone, forceResendingToken)
             }
         }
 
@@ -93,13 +93,13 @@ class SignUpActivity : AppCompatActivity() {
             }
             else
             {
-                if (CheckEnterInfo())
-                    VerifyPhoneNumberwithCode(mVertificationId , txtOTP.text.toString())
+                if (checkEnterInfo())
+                    verifyPhoneNumberWithCode(mVertificationId , txtOTP.text.toString())
             }
         }
     }
 
-    private fun SendVerificationCode(phone: String)
+    private fun sendVerificationCode(phone: String)
     {
         progressDialog.setMessage("Verifying Phone Number...")
         progressDialog.show()
@@ -112,7 +112,7 @@ class SignUpActivity : AppCompatActivity() {
             .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
-    private fun ReSendVerificationCode(phone:String, token : PhoneAuthProvider.ForceResendingToken?)
+    private fun reSendVerificationCode(phone:String, token : PhoneAuthProvider.ForceResendingToken?)
     {
         progressDialog.setMessage("Resending code...")
         progressDialog.show()
@@ -127,23 +127,23 @@ class SignUpActivity : AppCompatActivity() {
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
-    private fun VerifyPhoneNumberwithCode(verificationId:  String?, code :String)
+    private fun verifyPhoneNumberWithCode(verificationId:  String?, code :String)
     {
         progressDialog.setMessage("Verifying code...")
         progressDialog.show()
 
         val credential = PhoneAuthProvider.getCredential(verificationId!!, code)
-        SignInWithPhoneAuthCredential(credential)
+        signInWithPhoneAuthCredential(credential)
     }
 
-    private fun SignInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
+    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
         progressDialog.setMessage("Signing up...")
         progressDialog.show()
 
         firebaseAuth.signInWithCredential(credential)
             .addOnSuccessListener {
-                phoneNumberSignupSuccess = firebaseAuth.currentUser.phoneNumber
-                Regiter()
+                phoneNumberSignUpSuccess = firebaseAuth.currentUser.phoneNumber
+                regiter()
                 progressDialog.dismiss()
                 //finish()
             }
@@ -153,7 +153,7 @@ class SignUpActivity : AppCompatActivity() {
             }
     }
 
-    private  fun CheckEnterInfo() :Boolean
+    private  fun checkEnterInfo() :Boolean
     {
         if (txtUsername.text.toString().isEmpty() || txtPhone.text.toString().isEmpty() || txtName.text.toString().isEmpty()
             || txtPassword.text.toString().isEmpty() || txtRepassword.text.toString().isEmpty())
@@ -168,13 +168,13 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun Regiter()
+    private fun regiter()
     {
         val username = txtUsername.text.toString()
         val password = txtPassword.text.toString()
         val name = txtName.text.toString()
         val phoneNum = txtPhone.text.toString()
 
-        accountViewModel!!.ResultofSignup(username, password, name, phoneNum)
+        accountViewModel!!.resultOfSignUp(username, password, name, phoneNum)
     }
 }

@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.fashionecommercemobileapp.retrofit.repository.AccountRepository
 
-class AccountViewmodel : ViewModel() {
+class AccountViewModel : ViewModel() {
     private  var accountRepository : AccountRepository? = null
 
     fun init()
@@ -12,17 +12,17 @@ class AccountViewmodel : ViewModel() {
         accountRepository = AccountRepository()
     }
 
-    fun ResultofSignup(username: String, pass: String, name: String, phoneNumber: String)
+    fun resultOfSignUp(username: String, pass: String, name: String, phoneNumber: String)
     {
-        accountRepository!!.doSignup(username, pass, name, phoneNumber)
+        accountRepository!!.doSignUp(username, pass, name, phoneNumber)
     }
 
-    fun UpdatePW(username: String, pass: String, phoneNumber: String)
+    fun updatePW(username: String, pass: String, phoneNumber: String)
     {
         accountRepository!!.doUpdatePassword(username, pass ,phoneNumber)
     }
 
-    fun CheckPW(username: String, phoneNumber: String) : LiveData<Boolean>?
+    fun checkPW(username: String, phoneNumber: String) : LiveData<Boolean>?
     {
         accountRepository!!.doCheckAcc(username, phoneNumber)
         return accountRepository!!.getCheckPW()

@@ -4,24 +4,24 @@ import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.fashionecommercemobileapp.model.ShaPW
-import com.example.fashionecommercemobileapp.retrofit.api.AccountAPI
+import com.example.fashionecommercemobileapp.retrofit.api.AccountApi
 import com.example.fashionecommercemobileapp.retrofit.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class AccountRepository {
-    private  var accountApi : AccountAPI? = null
-    var resultofCheckPW : MutableLiveData<Boolean>? = MutableLiveData<Boolean>()
+    private  var accountApi : AccountApi? = null
+    var resultOfCheckPW : MutableLiveData<Boolean>? = MutableLiveData<Boolean>()
 
     fun getCheckPW() :  MutableLiveData<Boolean>?
     {
-        return resultofCheckPW
+        return resultOfCheckPW
     }
 
     fun setResultofCheckPW(result:String)
     {
-        resultofCheckPW?.value = (result == "true")
+        resultOfCheckPW?.value = (result == "true")
     }
 
     companion object {
@@ -39,7 +39,7 @@ class AccountRepository {
         }
     }
 
-    fun doSignup(username: String, pass: String, name: String, phoneNumber: String)
+    fun doSignUp(username: String, pass: String, name: String, phoneNumber: String)
     {
         var passEncrypt : String = ShaPW.instance!!.doEncrypt(pass)
         val call = accountApi!!.signUp(username, passEncrypt, name, phoneNumber)
@@ -121,6 +121,6 @@ class AccountRepository {
     }
     init {
         var retrofit: RetrofitClient = RetrofitClient()
-        accountApi = retrofit.getRetrofitInstance()!!.create(AccountAPI::class.java)
+        accountApi = retrofit.getRetrofitInstance()!!.create(AccountApi::class.java)
     }
 }

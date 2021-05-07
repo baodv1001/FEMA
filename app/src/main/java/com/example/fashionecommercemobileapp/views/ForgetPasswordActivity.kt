@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.fashionecommercemobileapp.R
 import com.example.fashionecommercemobileapp.retrofit.repository.AccountRepository
-import com.example.fashionecommercemobileapp.viewmodels.AccountViewmodel
+import com.example.fashionecommercemobileapp.viewmodels.AccountViewModel
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
@@ -23,20 +23,20 @@ class ForgetPasswordActivity : AppCompatActivity() {
     private var mCallbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks? = null
     private var mVertificationId : String?= null
     private lateinit var firebaseAuth: FirebaseAuth
-    private var phoneNumberSignupSuccess : String? = null
+    private var phoneNumberSignUpSuccess : String? = null
 
     private lateinit var progressDialog: ProgressDialog
 
-    private var accountViewModel : AccountViewmodel? = null
+    private var accountViewModel : AccountViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forget_password)
 
         AccountRepository.Companion.setContext(this@ForgetPasswordActivity)
-        accountViewModel = ViewModelProviders.of(this).get(AccountViewmodel::class.java)
+        accountViewModel = ViewModelProviders.of(this).get(AccountViewModel::class.java)
         accountViewModel!!.init()
-        accountViewModel!!.CheckPW("","")
+        accountViewModel!!.checkPW("","")
             ?.observe(this, Observer {  })
 
         firebaseAuth = FirebaseAuth.getInstance()
@@ -70,7 +70,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
             var phone : String = txtPhoneForgot.text.toString()
             var username : String =txtUsernameForgot.text.toString()
             var result : Boolean? = null
-            accountViewModel!!.CheckPW(username, phone)
+            accountViewModel!!.checkPW(username, phone)
                 ?.observe(this, Observer { result = it })
 
             if (result == true)
@@ -79,7 +79,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
                     phone = phone.drop(1)
                     phone = "+84" + phone
                 }
-                SendVerificationCode(phone)
+                sendVerificationCode(phone)
             } else {
                 Toast.makeText(this@ForgetPasswordActivity, "Username or number phone is not available", Toast.LENGTH_SHORT).show()
             }
@@ -93,7 +93,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
                 phone = phone.drop(1)
                 phone = "+84" + phone
             }
-            ReSendVerificationCode(phone, forceResendingToken)
+            reSendVerificationCode(phone, forceResendingToken)
         }
 
         btnChanePW.setOnClickListener(){
@@ -112,13 +112,13 @@ class ForgetPasswordActivity : AppCompatActivity() {
                 } else if (!pass.equals(rePass)){
                     Toast.makeText(this@ForgetPasswordActivity, "Password is not match...!", Toast.LENGTH_SHORT).show()
                 } else {
-                    VerifyPhoneNumberwithCode(mVertificationId, txtOTPForgot.text.toString())
+                    verifyPhoneNumberWithCode(mVertificationId, txtOTPForgot.text.toString())
                 }
             }
         }
     }
 
-    private fun SendVerificationCode(phone: String)
+    private fun sendVerificationCode(phone: String)
     {
         progressDialog.setMessage("Verifying Phone Number...")
         progressDialog.show()
@@ -131,7 +131,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
             .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
-    private fun ReSendVerificationCode(phone:String, token : PhoneAuthProvider.ForceResendingToken?)
+    private fun reSendVerificationCode(phone:String, token : PhoneAuthProvider.ForceResendingToken?)
     {
         progressDialog.setMessage("Resending code...")
         progressDialog.show()
@@ -146,23 +146,23 @@ class ForgetPasswordActivity : AppCompatActivity() {
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
-    private fun VerifyPhoneNumberwithCode(verificationId:  String?, code :String)
+    private fun verifyPhoneNumberWithCode(verificationId:  String?, code :String)
     {
         progressDialog.setMessage("Verifying code...")
         progressDialog.show()
 
         val credential = PhoneAuthProvider.getCredential(verificationId!!, code)
-        SignInWithPhoneAuthCredential(credential)
+        signInWithPhoneAuthCredential(credential)
     }
 
-    private fun SignInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
+    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
         progressDialog.setMessage("Signing up...")
         progressDialog.show()
 
         firebaseAuth.signInWithCredential(credential)
             .addOnSuccessListener {
-                phoneNumberSignupSuccess = firebaseAuth.currentUser.phoneNumber
-                ChangePassword()
+                phoneNumberSignUpSuccess = firebaseAuth.currentUser.phoneNumber
+                changePassword()
                 progressDialog.dismiss()
                 //finish()
             }
@@ -172,12 +172,12 @@ class ForgetPasswordActivity : AppCompatActivity() {
             }
     }
 
-    private fun ChangePassword()
+    private fun changePassword()
     {
         var phone : String = txtPhoneForgot.text.toString()
         var username : String = txtUsernameForgot.text.toString()
         var pass :String = txtPasswordForgot.text.toString()
 
-        accountViewModel!!.UpdatePW(username, pass, phone)
+        accountViewModel!!.updatePW(username, pass, phone)
     }
 }
