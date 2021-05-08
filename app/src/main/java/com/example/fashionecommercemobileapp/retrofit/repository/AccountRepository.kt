@@ -41,7 +41,8 @@ class AccountRepository {
 
     fun doSignUp(username: String, pass: String, name: String, phoneNumber: String)
     {
-        var passEncrypt : String = ShaPW.instance!!.doEncrypt(pass)
+//        var passEncrypt : String = ShaPW.instance!!.doEncrypt(pass)
+        var passEncrypt : String = ShaPW.instance!!.hash(pass)
         val call = accountApi!!.signUp(username, passEncrypt, name, phoneNumber)
         call.enqueue(object: Callback<String>
         {

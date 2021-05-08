@@ -19,7 +19,7 @@ class ShaPW {
         var outputData : ByteArray? = null
 
         try {
-            outputData = encryptSHA(inputData, "SHA-1")
+            outputData = encryptSHA(inputData, "SHA-256")
 
         } catch (e : java.lang.Exception)
         {
@@ -28,6 +28,13 @@ class ShaPW {
 
         var shaData =  BigInteger(1,outputData)
         return shaData.toString()
+    }
+
+    fun hash(pass: String): String {
+        val bytes = pass.toByteArray()
+        val md = MessageDigest.getInstance("SHA-256")
+        val digest = md.digest(bytes)
+        return digest.fold("", { str, it -> str + "%02x".format(it) })
     }
 
     companion object {
