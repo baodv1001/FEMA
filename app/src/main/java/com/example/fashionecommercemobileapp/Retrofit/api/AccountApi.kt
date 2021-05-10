@@ -4,6 +4,7 @@ import  retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
+import com.example.fashionecommercemobileapp.model.Account
 
 interface AccountApi {
     @FormUrlEncoded
@@ -23,4 +24,8 @@ interface AccountApi {
                @Field("password") password: String,
                 @Field("name") name: String,
                @Field("phoneNumber") phone: String?) : Call<String>
+
+    @FormUrlEncoded
+    @POST("login.php")
+    fun getAccount(@Field("username") username : String, @Field("password") password : String) : Call<List<Account>>
 }

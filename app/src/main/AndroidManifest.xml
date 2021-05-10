@@ -12,12 +12,13 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MaterialComponents.NoActionBar"
         tools:ignore="MissingClass">
-        <activity android:name=".views.SignUpActivity" >
-            <intent-filter>
+        <activity android:name=".views.SignUpActivity"
+            android:parentActivityName=".views.LoginActivity">
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity android:name=".views.OnBoardingActivity" />
         <activity android:name=".views.SplashActivity" />

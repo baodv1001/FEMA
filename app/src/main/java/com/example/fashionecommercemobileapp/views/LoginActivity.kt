@@ -4,22 +4,12 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
-import androidx.core.view.get
-import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.example.fashionecommercemobileapp.R
-import com.example.fashionecommercemobileapp.Retrofit.repository.AccountRepository
-import com.example.fashionecommercemobileapp.Retrofit.repository.UserRepository
 import com.example.fashionecommercemobileapp.model.Account
-import com.example.fashionecommercemobileapp.model.User
+import com.example.fashionecommercemobileapp.retrofit.repository.AccountRepository
 import com.example.fashionecommercemobileapp.viewmodels.AccountViewModel
-import com.example.fashionecommercemobileapp.viewmodels.UserViewModel
-import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_profile.*
@@ -46,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
             listAccount = accountViewModel!!.getAccountData(username, password)?.value
             if (listAccount?.isEmpty() == false) {
                 val intent = Intent(this, AccountActivity::class.java).apply {  }
-                intent.putExtra("idAccount", listAccount?.first()?.idAccount)
+                intent.putExtra("idAccount", listAccount?.first()?.id)
                 intent.putExtra("username",username)
                 startActivity(intent)
 
@@ -56,5 +46,10 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(baseContext,"Login Failed",Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    fun onClickSignUp(view: View) {
+        val intent = Intent(this, SignUpActivity::class.java).apply {  }
+        startActivity(intent)
     }
 }

@@ -132,7 +132,9 @@
             android:text="Chưa có tài khoản? Đăng ký ngay"
             android:textAllCaps="false"
             android:textColor="@color/primary"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:onClick="onClickSignUp"
+            />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
