@@ -32,4 +32,5 @@
     <string name="receiver_phone_number">Receiver Phone Number</string>
     <string name="address">Address</string>
     <string name="add_address">Add Address</string>
+    <string name="idAccount"></string>
 </resources>
