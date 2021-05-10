@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".views.WishListActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="BRAND NAME"
+            android:textSize="24dp"
+            android:textColor="@color/dark"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Wish list"
+            android:textColor="@color/dark"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft="16dp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/rectangle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomLinearLayout"
+        app:layout_constraintTop_toBottomOf="@id/topLinearLayout">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/wishlistRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:ignore="MissingConstraints" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+    <RelativeLayout
+        android:id="@+id/bottomLinearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="horizontal"
+        android:paddingLeft="30dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnMeWish"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Me"
+            tools:ignore="MissingConstraints"
+            android:background="@color/white"
+            android:layout_toRightOf="@id/btnCartWish" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnHomeWish"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:text="Home"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCartWish"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Cart"
+            tools:ignore="MissingConstraints"
+            android:background="@color/white"
+            android:layout_toRightOf="@id/btnWishlistWish" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnWishlistWish"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Wishlist"
+            android:background="@color/white"
+            tools:ignore="MissingConstraints"
+            android:layout_toRightOf="@id/btnHomeWish"/>
+
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
