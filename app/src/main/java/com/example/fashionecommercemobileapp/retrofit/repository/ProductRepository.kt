@@ -2,6 +2,7 @@ package com.example.fashionecommercemobileapp.retrofit.repository
 
 import android.content.Context
 import android.widget.Toast
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.fashionecommercemobileapp.model.Product
 import com.example.fashionecommercemobileapp.retrofit.api.ProductApi
@@ -15,6 +16,16 @@ class ProductRepository {
     private var listProducts: MutableLiveData<List<Product>>? = MutableLiveData<List<Product>>()
     var listFlashSale: MutableLiveData<List<Product>>? = MutableLiveData<List<Product>>()
     var listRecommended: MutableLiveData<List<Product>>? = MutableLiveData<List<Product>>()
+
+    private var productData: MutableLiveData<List<Product>>? = MutableLiveData<List<Product>>()
+
+    fun setProduct(product: List<Product>) {
+        productData?.value = product
+    }
+    fun getProduct(): MutableLiveData<List<Product>>? {
+        return productData
+    }
+
     fun setProductData(productData: List<Product>) {
         listProducts?.value = productData
     }
@@ -54,6 +65,26 @@ class ProductRepository {
         fun setContext(con: Context) {
             context = con
         }
+    }
+
+    fun fetchProductById(idProduct: String) {
+        val callProduct: Call<List<Product>> = productApi!!.getProductById(idProduct)
+        callProduct.enqueue(object : Callback<List<Product>> {
+            override fun onResponse(
+                call: Call<List<Product>>,
+                response: Response<List<Product>>
+            ) {
+                response.body()?.let { setProduct(it) }
+            }
+
+            override fun onFailure(
+                call: Call<List<Product>>,
+                t: Throwable
+            ) {
+                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+        })
     }
 
     fun doProductRequest(idProductCode: String) {

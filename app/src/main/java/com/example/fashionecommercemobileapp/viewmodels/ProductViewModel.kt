@@ -14,15 +14,23 @@ class ProductViewModel : ViewModel() {
     private var flashSaleData: MutableLiveData<List<Product>>? = null
     private var recommendedData: MutableLiveData<List<Product>>? = null
     private var productRepository: ProductRepository? = null
+
+    private var product: MutableLiveData<List<Product>>? = null
     public fun init() {
-        if (productData != null) {
-            return
-        }
+//        if (productData != null) {
+//            return
+//        }
         productRepository = ProductRepository()
         productRepository!!.doFlashSaleRequest()
         productRepository!!.doRecommendedRequest()
         flashSaleData = productRepository?.getFlashSaleData()
         recommendedData = productRepository?.getRecommendedData()
+    }
+
+    fun getProduct(idProduct: String): LiveData<List<Product>>? {
+        productRepository!!.fetchProductById(idProduct)
+        product = productRepository!!.getProduct()
+        return product
     }
 
     fun getProductData(idProductCode: String): LiveData<List<Product>>? {

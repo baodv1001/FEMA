@@ -18,4 +18,8 @@ interface ProductApi {
 
     @GET("get_flash_sale.php")
     fun getFlashSale(): Call<List<Product>>
+
+    @POST("get_product_by_id.php")
+    @FormUrlEncoded
+    fun getProductById(@Field("idProduct") idProduct:String): Call<List<Product>>
 }
