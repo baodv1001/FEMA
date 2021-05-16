@@ -1,4 +1,4 @@
-package com.example.fashionecommercemobileapp.Retrofit.api
+package com.example.fashionecommercemobileapp.retrofit.api
 
 import com.example.fashionecommercemobileapp.model.User
 import retrofit2.Call

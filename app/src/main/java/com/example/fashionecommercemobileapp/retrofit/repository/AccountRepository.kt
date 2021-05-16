@@ -1,4 +1,4 @@
-package com.example.fashionecommercemobileapp.retrofit.repository
+ package com.example.fashionecommercemobileapp.retrofit.repository
 
 import android.content.Context
 import android.widget.Toast
@@ -11,14 +11,17 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AccountRepository {
+ class AccountRepository() {
     var resultOfCheckPW : MutableLiveData<Boolean>? = MutableLiveData<Boolean>()
     private var listAccounts: MutableLiveData<List<Account>>? = MutableLiveData<List<Account>>()
     private var accountApi: AccountApi? = null
+
+     private var apiAccount: AccountApi = RetrofitClient().accountApi
     /*var resultOfCheckLogin: MutableLiveData<Boolean>? = MutableLiveData<Boolean>()*/
 
-    fun setAccountData(accountData: List<Account>){
-        listAccounts?.value = accountData
+    private fun setAccountData(accountData: List<Account>){
+        /*listAccounts?.value = accountData*/
+        listAccounts!!.postValue(accountData)
     }
     fun getAccountData(): MutableLiveData<List<Account>>? {
         return listAccounts
@@ -130,20 +133,7 @@ class AccountRepository {
         })
     }
 
-    fun doLogin(username: String, password: String) {
-        val passEncrypt: String = ShaPW.instance!!.hash(password)
-        val callAccount: Call<List<Account>> = accountApi!!.getAccount(username, passEncrypt)
-        callAccount.enqueue(object: Callback<List<Account>> {
-
-            override fun onResponse(call: Call<List<Account>>, response: Response<List<Account>>) {
-                response.body()?.let { setAccountData(it) }
-            }
-
-            override fun onFailure(call: Call<List<Account>>, t: Throwable) {
-                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
+    suspend fun doLogin(username: String, password: String) = apiAccount.getAccount(username, password)
 
     init {
         var retrofit: RetrofitClient = RetrofitClient()

@@ -1,10 +1,10 @@
-package com.example.fashionecommercemobileapp.Retrofit.repository
+package com.example.fashionecommercemobileapp.retrofit.repository
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import com.example.fashionecommercemobileapp.Retrofit.api.UserApi
+import com.example.fashionecommercemobileapp.retrofit.api.UserApi
 import com.example.fashionecommercemobileapp.model.User
 import com.example.fashionecommercemobileapp.retrofit.RetrofitClient
 import retrofit2.Call

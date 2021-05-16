@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.fashionecommercemobileapp.R
+import com.example.fashionecommercemobileapp.retrofit.utils.Status
 import com.example.fashionecommercemobileapp.model.Account
 import com.example.fashionecommercemobileapp.retrofit.repository.AccountRepository
 import com.example.fashionecommercemobileapp.viewmodels.AccountViewModel
@@ -33,21 +35,31 @@ class LoginActivity : AppCompatActivity() {
         btnLogin.setOnClickListener {
             val username = tfUsername.editText?.text.toString()
             val password = tfPassword.editText?.text.toString()
-            listAccount = accountViewModel!!.getAccountData(username, password)?.value
-            if (listAccount?.isEmpty() == false) {
-                val intent = Intent(this, AccountActivity::class.java).apply {  }
-                intent.putExtra("idAccount", listAccount?.first()?.id)
-                intent.putExtra("username",username)
-                startActivity(intent)
+            accountViewModel?.doLogin(username, password)?.observe(this, Observer {
+                it?.let { resource ->
+                    when (resource.status) {
+                        Status.SUCCESS -> {
+                            listAccount = it?.data
+                            if (listAccount?.isEmpty() == false) {
+                                val intent = Intent(this, AccountActivity::class.java).apply { }
+                                intent.putExtra("username", username)
+                                intent.putExtra("idAccount",listAccount?.first()?.id)
+                                startActivity(intent)
+                            }
+                            else
+                                Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
+                        }
+                        Status.ERROR -> {
+                            Toast.makeText(this,it.message,Toast.LENGTH_SHORT).show()
+                        }
+                        Status.LOADING -> {
 
-
-            }
-            else {
-                Toast.makeText(baseContext,"Login Failed",Toast.LENGTH_SHORT).show()
-            }
+                        }
+                    }
+                }
+            })
         }
     }
-
     fun onClickSignUp(view: View) {
         val intent = Intent(this, SignUpActivity::class.java).apply {  }
         startActivity(intent)

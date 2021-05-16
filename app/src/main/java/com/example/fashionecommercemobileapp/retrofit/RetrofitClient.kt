@@ -1,8 +1,10 @@
 package com.example.fashionecommercemobileapp.retrofit
 
+import com.example.fashionecommercemobileapp.retrofit.api.AccountApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 class RetrofitClient {
@@ -20,8 +22,11 @@ class RetrofitClient {
             retrofit = Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
         }
         return retrofit
     }
+    val accountApi: AccountApi = getRetrofitInstance()!!.create(AccountApi::class.java)
 }
+

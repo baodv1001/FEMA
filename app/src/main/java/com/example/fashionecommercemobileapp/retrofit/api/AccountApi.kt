@@ -27,5 +27,5 @@ interface AccountApi {
 
     @FormUrlEncoded
     @POST("login.php")
-    fun getAccount(@Field("username") username : String, @Field("password") password : String) : Call<List<Account>>
+    suspend fun getAccount(@Field("username") username : String, @Field("password") password : String) : List<Account>
 }

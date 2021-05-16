@@ -3,7 +3,7 @@ package com.example.fashionecommercemobileapp.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.fashionecommercemobileapp.Retrofit.repository.UserRepository
+import com.example.fashionecommercemobileapp.retrofit.repository.UserRepository
 import com.example.fashionecommercemobileapp.model.User
 
 class UserViewModel: ViewModel() {
