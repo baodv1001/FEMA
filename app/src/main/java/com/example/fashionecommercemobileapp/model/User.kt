@@ -37,4 +37,8 @@ class User {
     @SerializedName("idNumber")
     @Expose
     var idNumber : String? = null
+
+    @SerializedName("email")
+    @Expose
+    var email: String? = null
 }

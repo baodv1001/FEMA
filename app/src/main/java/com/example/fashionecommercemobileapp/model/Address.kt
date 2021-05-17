@@ -5,9 +5,9 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 class Address {
-    @SerializedName ("idUser")
+    @SerializedName ("idAccount")
     @Expose
-    var idUser : Int? = null
+    var idAccount : Int? = null
 
     @SerializedName ("name")
     @Expose

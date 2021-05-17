@@ -67,12 +67,15 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:hint="Username"
-            app:startIconDrawable="@drawable/ic_account_circle">
+            app:startIconDrawable="@drawable/ic_account_circle"
+            app:boxStrokeColor="@color/black"
+            android:textColorHint="@color/gray">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text_input_Username"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,12 +86,15 @@
             android:layout_height="wrap_content"
             android:hint="Password"
             app:passwordToggleEnabled="true"
-            app:startIconDrawable="@drawable/ic_lock">
+            app:startIconDrawable="@drawable/ic_lock"
+            app:boxStrokeColor="@color/black"
+            android:textColorHint="@color/gray">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text_input_Password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/gray"
                 android:inputType="textPassword"/>
 
         </com.google.android.material.textfield.TextInputLayout>

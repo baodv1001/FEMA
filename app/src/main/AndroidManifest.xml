@@ -38,6 +38,10 @@
         <activity android:name=".views.ForgetPasswordActivity"/>
         <activity android:name=".views.CartActivity"/>
         <activity android:name=".views.WishListActivity"/>
+        <activity android:name=".views.AddressActivity"
+            android:parentActivityName=".views.AccountActivity"/>
+        <activity android:name=".views.OrderActivity"
+            android:parentActivityName=".views.AccountActivity"/>
         <activity android:name=".views.MainActivity">
         </activity>
     </application>

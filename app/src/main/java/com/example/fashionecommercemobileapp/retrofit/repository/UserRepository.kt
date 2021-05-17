@@ -13,7 +13,7 @@ import retrofit2.Response
 
 class UserRepository {
     private var listUsers: MutableLiveData<List<User>>? = MutableLiveData<List<User>>()
-    private var userApi: UserApi? = null
+    private var userApi: UserApi = RetrofitClient().userApi
 
     fun setUserData(userData: List<User>) {
         listUsers?.value = userData
@@ -37,21 +37,10 @@ class UserRepository {
             context = con
         }
     }
-    fun doUserRequest(idAccount: String) {
-        val callUser: Call<List<User>> = userApi!!.getUser(idAccount)
-        callUser.enqueue(object: Callback<List<User>> {
-            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
-                response.body()?.let { setUserData(it) }
-            }
+    suspend fun doUserRequest(idAccount: String) = userApi.getUser(idAccount)
 
-            override fun onFailure(call: Call<List<User>>, t: Throwable) {
-                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-    init {
+    /*init {
         val retrofit = RetrofitClient()
         userApi = retrofit.getRetrofitInstance()!!.create(UserApi::class.java)
-    }
+    }*/
 }

@@ -14,10 +14,11 @@
             $t["name"] = $row["name"];
             $t["gender"] = $row["gender"];
             $t["phoneNumber"] = $row["phoneNumber"];
-            $t["dateofBirth"] = $row["dateofBirth"];
+            $t["dateOfBirth"] = $row["dateofBirth"];
             $t["idAccount"] = $row["idAccount"];
             $t["image"] = $row["image"];
             $t["idNumber"] = $row["idNumber"];
+            $t["email"] = $row["email"];
             $t["isDeleted"] = $row["isDeleted"];
             //Mảng JSON
             array_push($response, $t);

@@ -42,7 +42,8 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:drawableStart="@drawable/ic_outline_arrow_back_24" />
+            android:drawableStart="@drawable/ic_outline_arrow_back_24"
+            android:onClick="onClickBack"/>
 
         <View
             android:layout_width="match_parent"

@@ -1,6 +1,7 @@
 package com.example.fashionecommercemobileapp.retrofit
 
 import com.example.fashionecommercemobileapp.retrofit.api.AccountApi
+import com.example.fashionecommercemobileapp.retrofit.api.UserApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
@@ -28,5 +29,6 @@ class RetrofitClient {
         return retrofit
     }
     val accountApi: AccountApi = getRetrofitInstance()!!.create(AccountApi::class.java)
+    val userApi: UserApi = getRetrofitInstance()!!.create(UserApi::class.java)
 }
 
