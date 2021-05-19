@@ -75,7 +75,9 @@
                 android:id="@+id/text_input_Username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray"/>
+                android:textColor="@color/dark"
+                android:maxLength="50"
+                android:maxLines="1"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -88,14 +90,17 @@
             app:passwordToggleEnabled="true"
             app:startIconDrawable="@drawable/ic_lock"
             app:boxStrokeColor="@color/black"
-            android:textColorHint="@color/gray">
+            android:textColorHint="@color/gray"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text_input_Password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/gray"
-                android:inputType="textPassword"/>
+                android:textColor="@color/dark"
+                android:inputType="textPassword"
+                android:maxLength="100"
+                android:maxLines="1"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
