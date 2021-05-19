@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/receiver"
-        android:textSize="22sp"
+        android:textSize="18sp"
         android:textColor="@color/dark"
         android:textStyle="bold"
         android:layout_marginLeft="16dp"
@@ -24,10 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/address"
-        android:textSize="22sp"
+        android:textSize="18sp"
         android:textColor="@color/gray"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="50dp"
         app:layout_constraintTop_toBottomOf="@id/receiver_name"
         app:layout_constraintLeft_toLeftOf="parent"/>
     <TextView
@@ -35,10 +34,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/receiver_phone_number"
-        android:textSize="22sp"
+        android:textSize="18sp"
         android:textColor="@color/gray"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintTop_toBottomOf="@id/receiver_address"
         app:layout_constraintLeft_toLeftOf="parent"/>
     <View
