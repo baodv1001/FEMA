@@ -77,7 +77,8 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/dark"
                 android:maxLength="50"
-                android:maxLines="1"/>
+                android:maxLines="1"
+                android:inputType="textVisiblePassword"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
