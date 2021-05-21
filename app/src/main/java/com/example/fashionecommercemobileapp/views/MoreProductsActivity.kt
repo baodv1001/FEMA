@@ -36,8 +36,8 @@ class MoreProductsActivity : AppCompatActivity() {
         all_product_recycler.layoutManager = layoutManager
         all_product_recycler.adapter = productAdapter
     }
-
     fun onClickBack(view: View) {
         super.onBackPressed()
     }
+
 }

@@ -102,7 +102,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Number phone"
+            android:hint="Phone Number"
             app:boxStrokeColor="@color/black"
             android:textColorHint="@color/gray"
             app:startIconDrawable="@drawable/ic_email">
