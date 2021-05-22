@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.fashionecommercemobileapp.R
 import com.example.fashionecommercemobileapp.model.CartInfo
 import com.example.fashionecommercemobileapp.model.Product
+import com.example.fashionecommercemobileapp.retrofit.repository.CartRepository
 import kotlinx.android.synthetic.main.cart_item.view.*
 
 
@@ -38,17 +40,18 @@ class CartAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 //        if (listCart.isEmpty() || listProduct.isEmpty())
 //            return
+        Toast.makeText(context, listProduct.size.toString(), Toast.LENGTH_SHORT).show()
         Glide.with(context)
-            .load("https://via.placeholder.com/80.jpeg")
+            .load("https://via.placeholder.com/80.jpg")
             .fitCenter()
             .into(holder.imageCart)
 //        holder.productCart.text = listProduct[position].name
 //        holder.infoCart.text = listProduct[position].unit
 //        holder.costCart.text = ((listProduct[position].price?.toInt() ?: 1) * listCart[position].quantity!!).toString()
 
-        holder.productCart.text = listCart[position].idProduct.toString()
-        holder.infoCart.text = listCart[position].idCart.toString()
-        holder.costCart.text = listCart[position].idCart.toString()
+        holder.productCart.text = listProduct[position].name
+        holder.infoCart.text = listProduct[position].unit
+        holder.costCart.text = listProduct[position].price
         holder.quantityCart.text = listCart[position].quantity.toString()
 
         holder.itemView.button_increase_cart.setOnClickListener {

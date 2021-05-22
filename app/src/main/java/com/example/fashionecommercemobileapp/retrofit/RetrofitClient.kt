@@ -7,8 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 public class RetrofitClient {
 
     var retrofit: Retrofit? = null
-    private val BASE_URL =
-        "http://LAPTOP_NIU:8080/FEMA/"
+    private val BASE_URL = "http://192.168.43.206:8080/FEMA/"
 
     val gson = GsonBuilder()
         .setLenient()

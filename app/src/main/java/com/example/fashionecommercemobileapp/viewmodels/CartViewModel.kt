@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 import androidx.lifecycle.ViewModel
+import com.example.fashionecommercemobileapp.model.Cart
 import com.example.fashionecommercemobileapp.model.CartInfo
 import com.example.fashionecommercemobileapp.model.Product
 import com.example.fashionecommercemobileapp.retrofit.repository.CartRepository
@@ -12,29 +13,35 @@ import com.example.fashionecommercemobileapp.retrofit.repository.ProductReposito
 
 
 class CartViewModel : ViewModel() {
-    private var productCartData: MutableLiveData<List<Product>>? = null
     private var cartInfoData: MutableLiveData<List<CartInfo>>? = null
+    private var cartData: MutableLiveData<Cart>? = null
+
     private var cartRepository: CartRepository? = null
 
-    public fun init() {
-        if (cartInfoData != null) {
+    fun init() {
+        if (cartInfoData != null && cartData != null) {
             return
         }
         cartRepository = CartRepository()
-//        cartRepository!!.getCartInfoRequest(1) //tim cach gan idAccount
-//        cartInfoData = cartRepository?.getCartInfo()
     }
 
-    fun getCartInfo(idAccount: Int): LiveData<List<CartInfo>>? {
-        cartRepository!!.getCartInfoRequest(1) //tim cach gan idAccount
+    fun updateCartInfo(idCart: Int, idProduct: Int, quantity: Int) {
+        cartRepository!!.updateCartInfo(idCart, idProduct, quantity)
+    }
+
+    fun updateCart(idCart: Int, idAccount: Int, isPaid: Boolean) {
+        cartRepository!!.updateCart(idCart, idAccount, isPaid)
+    }
+
+    fun getCart(idAccount: Int): LiveData<Cart>? {
+        cartRepository!!.getCartRequest(idAccount)
+        cartData = cartRepository?.getCart()
+        return cartData
+    }
+
+    fun getCartInfo(idCart: Int): LiveData<List<CartInfo>>? {
+        cartRepository!!.getCartInfoRequest(idCart)
         cartInfoData = cartRepository?.getCartInfo()
         return cartInfoData
-    }
-
-    fun getProductCart(idAccount: Int): LiveData<List<Product>>? {
-        
-        cartRepository!!.getCartInfoRequest(1) //tim cach gan idAccount
-        cartInfoData = cartRepository?.getCartInfo()
-        return productCartData
     }
 }

@@ -1,16 +1,16 @@
 package com.example.fashionecommercemobileapp.retrofit.repository
 
 import android.content.Context
+import android.util.Log.d
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.fashionecommercemobileapp.model.Product
-import com.example.fashionecommercemobileapp.retrofit.api.ProductApi
 import com.example.fashionecommercemobileapp.retrofit.RetrofitClient
+import com.example.fashionecommercemobileapp.retrofit.api.ProductApi
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 
 class ProductRepository {
     private var listProducts: MutableLiveData<List<Product>>? = MutableLiveData<List<Product>>()
@@ -20,9 +20,10 @@ class ProductRepository {
     private var productData: MutableLiveData<List<Product>>? = MutableLiveData<List<Product>>()
 
     fun setProduct(product: List<Product>) {
-        productData?.value = product
+        productData?.postValue(product)
     }
-    fun getProduct(): MutableLiveData<List<Product>>? {
+
+    fun getProduct(): LiveData<List<Product>>? {
         return productData
     }
 
@@ -67,24 +68,31 @@ class ProductRepository {
         }
     }
 
-    fun fetchProductById(idProduct: String) {
+    fun fetchProductById(idProduct: List<String>) {
         val callProduct: Call<List<Product>> = productApi!!.getProductById(idProduct)
-        callProduct.enqueue(object : Callback<List<Product>> {
-            override fun onResponse(
-                call: Call<List<Product>>,
-                response: Response<List<Product>>
-            ) {
-                response.body()?.let { setProduct(it) }
-            }
+        Thread(Runnable {
+            val response: Response<List<Product>> = callProduct.execute()
+            response.body()?.let { setProduct(it) }
+        }).start()
 
-            override fun onFailure(
-                call: Call<List<Product>>,
-                t: Throwable
-            ) {
-                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
-            }
-
-        })
+//        val callProduct: Call<List<Product>> = productApi!!.getProductById(idProduct)
+//        callProduct.enqueue(object : Callback<List<Product>> {
+//            override fun onResponse(
+//                call: Call<List<Product>>,
+//                response: Response<List<Product>>
+//            ) {
+//                Toast.makeText(context, "fetch", Toast.LENGTH_SHORT).show()
+//                response.body()?.let { setProduct(it) }
+//            }
+//
+//            override fun onFailure(
+//                call: Call<List<Product>>,
+//                t: Throwable
+//            ) {
+//                Toast.makeText(context, t.toString(), Toast.LENGTH_LONG).show()
+//            }
+//
+//        })
     }
 
     fun doProductRequest(idProductCode: String) {
@@ -150,6 +158,5 @@ class ProductRepository {
     init {
         var retrofit: RetrofitClient = RetrofitClient()
         productApi = retrofit.getRetrofitInstance()!!.create(ProductApi::class.java)
-
     }
 }

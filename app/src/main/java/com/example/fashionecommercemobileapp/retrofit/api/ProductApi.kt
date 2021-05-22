@@ -11,7 +11,7 @@ interface ProductApi {
 
     @POST("get_product.php")
     @FormUrlEncoded
-    fun getProduct(@Field("idProductCode") idProductCode:String): Call<List<Product>>
+    fun getProduct(@Field("idProductCode") idProductCode: String): Call<List<Product>>
 
     @GET("get_recommended.php")
     fun getRecommended(): Call<List<Product>>
@@ -21,5 +21,5 @@ interface ProductApi {
 
     @POST("get_product_by_id.php")
     @FormUrlEncoded
-    fun getProductById(@Field("idProduct") idProduct:String): Call<List<Product>>
+    fun getProductById(@Field("idProductList") idProduct: List<String>): Call<List<Product>>
 }
