@@ -1,3 +1,36 @@
 <resources>
     <string name="app_name">FashionEcommerceMobileApp</string>
+    <string name="brand_names">BRAND NAME</string>
+    <string name="account">Account</string>
+    <string name="profile_button">Profile</string>
+    <string name="order_button">Order</string>
+    <string name="address_button">Address</string>
+    <string name="payment_button">Payment</string>
+    <string name="name">Name</string>
+    <string name="username">Username</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="gender">Gender</string>
+    <string name="birthday">Birthday</string>
+    <string name="user_birthday">Birthday</string>
+    <string name="email">Email</string>
+    <string name="user_email">User Email</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="user_phone_number">User Phone Number</string>
+    <string name="password">Password</string>
+    <string name="user_password">**********</string>
+    <string name="logout">Log Out</string>
+    <string name="order_code">Order Code</string>
+    <string name="order_date">Order Date</string>
+    <string name="order_status">Order Status</string>
+    <string name="shipping">Shipping</string>
+    <string name="items">Items</string>
+    <string name="amount">Amount</string>
+    <string name="price">Price</string>
+    <string name="total_price">Total Price</string>
+    <string name="receiver">Receiver</string>
+    <string name="receiver_phone_number">Receiver Phone Number</string>
+    <string name="address">Address</string>
+    <string name="add_address">Add Address</string>
+    <string name="idAccount"></string>
 </resources>

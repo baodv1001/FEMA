@@ -1,0 +1,6 @@
+<root>
+    <item
+        name='retrofit2.Callback void onResponse(retrofit2.Call&lt;T&gt;, retrofit2.Response&lt;T&gt;)'>
+        <annotation name='org.jetbrains.annotations.NonBlocking' />
+    </item>
+</root>

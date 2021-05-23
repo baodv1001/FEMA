@@ -1,7 +1,6 @@
 package com.example.fashionecommercemobileapp.retrofit.api
 
-import com.example.fashionecommercemobileapp.model.Cart
-import com.example.fashionecommercemobileapp.model.CartInfo
+import com.example.fashionecommercemobileapp.model.Bill
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
@@ -27,4 +26,8 @@ interface BillApi {
         @Field("idProduct") idProduct: Int,
         @Field("quantity") quantity: Int
     ): Call<Boolean>
+
+    @FormUrlEncoded
+    @POST("get_invoice.php")
+    fun getBillData(@Field("idAccount") idAccount : String) : Call<List<Bill>>
 }

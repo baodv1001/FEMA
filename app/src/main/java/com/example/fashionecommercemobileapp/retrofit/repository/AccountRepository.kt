@@ -1,8 +1,9 @@
-package com.example.fashionecommercemobileapp.retrofit.repository
+ package com.example.fashionecommercemobileapp.retrofit.repository
 
 import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import com.example.fashionecommercemobileapp.model.Account
 import com.example.fashionecommercemobileapp.model.ShaPW
 import com.example.fashionecommercemobileapp.retrofit.api.AccountApi
 import com.example.fashionecommercemobileapp.retrofit.RetrofitClient
@@ -10,10 +11,21 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class AccountRepository {
-    private  var accountApi : AccountApi? = null
+ class AccountRepository() {
     var resultOfCheckPW : MutableLiveData<Boolean>? = MutableLiveData<Boolean>()
+    private var listAccounts: MutableLiveData<List<Account>>? = MutableLiveData<List<Account>>()
+    private var accountApi: AccountApi? = null
 
+     private var apiAccount: AccountApi = RetrofitClient().accountApi
+    /*var resultOfCheckLogin: MutableLiveData<Boolean>? = MutableLiveData<Boolean>()*/
+
+    private fun setAccountData(accountData: List<Account>){
+        /*listAccounts?.value = accountData*/
+        listAccounts!!.postValue(accountData)
+    }
+    fun getAccountData(): MutableLiveData<List<Account>>? {
+        return listAccounts
+    }
     fun getCheckPW() :  MutableLiveData<Boolean>?
     {
         return resultOfCheckPW
@@ -120,6 +132,9 @@ class AccountRepository {
 
         })
     }
+
+    suspend fun doLogin(username: String, password: String) = apiAccount.getAccount(username, password)
+
     init {
         var retrofit: RetrofitClient = RetrofitClient()
         accountApi = retrofit.getRetrofitInstance()!!.create(AccountApi::class.java)

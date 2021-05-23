@@ -4,26 +4,24 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-class Bill() {
-
-    @SerializedName("idBill")
+class Bill {
+    @SerializedName ("id")
     @Expose
-    private val idBill: Int? = null
+    var id : Int? = null
 
-    @SerializedName("idAccount")
+    @SerializedName ("idAccount")
     @Expose
-    private val idAccount: Int? = null
+    var idAccount : Int? = null
 
-    @SerializedName("invoiceDate")
+    @SerializedName ("invoiceDate")
     @Expose
-    private val invoiceDate: Date? = null
+    var invoiceDate : Date? = null
 
-    @SerializedName("status")
+    @SerializedName ("status")
     @Expose
-    private val status: String? = null
+    var status : String? = null
 
-    @SerializedName("totalMoney")
+    @SerializedName ("totalMoney")
     @Expose
-    private val totalMoney: Int? = null
-
+    var totalMoney : Int? = null
 }

@@ -1,33 +1,24 @@
 package com.example.fashionecommercemobileapp.retrofit.repository
 
 import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
-import com.example.fashionecommercemobileapp.model.Cart
-import com.example.fashionecommercemobileapp.model.CartInfo
+import com.example.fashionecommercemobileapp.model.Bill
 import com.example.fashionecommercemobileapp.retrofit.RetrofitClient
 import com.example.fashionecommercemobileapp.retrofit.api.BillApi
-import com.example.fashionecommercemobileapp.retrofit.api.CartApi
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class BillRepository {
-    private var cart: MutableLiveData<Cart> = MutableLiveData()
-    private var cartInfoList: MutableLiveData<List<CartInfo>>? = MutableLiveData()
+    private var listBill: MutableLiveData<List<Bill>>? = MutableLiveData<List<Bill>>()
+    private var billApi : BillApi? = null
 
-    private var billApi: BillApi? = null
-
-    fun setCart(cart: Cart) {
-        this.cart.value = cart
+    fun setBillData(billData: List<Bill>) {
+        listBill?.value = billData
     }
-
-    fun getCart(): MutableLiveData<Cart>? {
-        return cart
-    }
-
-    fun setCartInfo(cartInfo: List<CartInfo>) {
-        cartInfoList?.postValue(cartInfo)
-    }
-
-    fun getCartInfo(): MutableLiveData<List<CartInfo>>? {
-        return cartInfoList
+    fun getBillData(): MutableLiveData<List<Bill>>? {
+        return listBill
     }
 
     companion object {
@@ -59,6 +50,17 @@ class BillRepository {
 //                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
 //            }
 //        })
+    fun doBillRequest(idAccount: String) {
+        val callBill: Call<List<Bill>> = billApi!!.getBillData(idAccount)
+        callBill.enqueue(object : Callback<List<Bill>> {
+            override fun onResponse(call: Call<List<Bill>>, response: Response<List<Bill>>) {
+                response.body()?.let { setBillData(it) }
+            }
+
+            override fun onFailure(call: Call<List<Bill>>, t: Throwable) {
+                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     init {
