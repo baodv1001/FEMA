@@ -58,4 +58,13 @@ class CartViewModel : ViewModel() {
             emit(Resource.error(data = null, message = exception.message ?: "Error"))
         }
     }
+
+    fun getCartInfoByProduct(idCart: Int, idProduct: Int) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(Resource.success(data = cartRepository?.getCartInfoByProduct(idCart, idProduct)))
+        } catch (exception: Exception) {
+            emit(Resource.error(data = null, message = exception.message ?: "Error"))
+        }
+    }
 }

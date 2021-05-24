@@ -1,12 +1,10 @@
 package com.example.fashionecommercemobileapp.views
 
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,6 +45,13 @@ class CartActivity : AppCompatActivity() {
         setUpRecyclerView()
         setUpCartObservers()
 
+//        btnCheckout.setOnClickListener {
+//            val bill: Bill = Bill()
+//            val orderViewModel: OrderViewModel =
+//                ViewModelProviders.of(this).get(OrderViewModel::class.java)
+//            orderViewModel!!.init()
+//            orderViewModel.createBill(bill)
+//        }
     }
 
     private fun setUpViewModel() {

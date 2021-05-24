@@ -377,6 +377,7 @@ The Nike Air Max 270 React ENG combines a full-length React foam midsole with a 
         android:layout_marginTop="8dp"
         android:layout_marginRight="24dp"
         android:backgroundTint="@color/primary"
+        android:onClick="addToCart"
         android:text="Add to Cart"
         android:textAllCaps="false"
         android:textColor="@color/white"

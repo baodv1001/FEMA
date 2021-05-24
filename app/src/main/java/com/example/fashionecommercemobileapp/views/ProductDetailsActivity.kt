@@ -6,16 +6,23 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.fashionecommercemobileapp.R
+import com.example.fashionecommercemobileapp.retrofit.utils.Status
+import com.example.fashionecommercemobileapp.viewmodels.CartViewModel
 import kotlinx.android.synthetic.main.activity_product_details.*
 
 class ProductDetailsActivity : AppCompatActivity() {
     var isLiked: Boolean = true
+    var id: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_details)
         var intent: Intent = intent
+        id = intent.getStringExtra("id")?.toInt() ?: 0
         var name: String? = intent.getStringExtra("name")
         var price: String? = intent.getStringExtra("price")
         var discount: String? = intent.getStringExtra("discount")
@@ -43,5 +50,31 @@ class ProductDetailsActivity : AppCompatActivity() {
 
     fun onClickBack(view: View) {
         super.onBackPressed()
+    }
+
+    fun addToCart(view: View) {
+        val cartViewModel: CartViewModel =
+            ViewModelProviders.of(this).get(CartViewModel::class.java)
+        cartViewModel!!.init()
+
+        cartViewModel!!.getCartInfoByProduct(1, id!!)?.observe(this, Observer { it ->
+            it?.let { resource ->
+                when (resource.status) {
+                    Status.SUCCESS -> {
+                        if (it.data != null) {
+                            val quantity: Int = it.data.quantity!! + 1
+                            cartViewModel.updateCartInfo(1, id, quantity)
+                        } else
+                            cartViewModel.postCartInfo(1, id, 1)
+                    }
+                    Status.ERROR -> {
+                        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                    }
+                    Status.LOADING -> {
+                        Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
     }
 }

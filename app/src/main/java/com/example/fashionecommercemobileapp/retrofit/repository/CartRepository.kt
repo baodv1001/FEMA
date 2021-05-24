@@ -92,6 +92,7 @@ class CartRepository {
 
     suspend fun getCartRequest(idAccount: Int) = apiCart?.getCart(idAccount)
     suspend fun getCartInfoRequest(idCart: Int) = apiCart?.getCartInfo(idCart)
+    suspend fun getCartInfoByProduct(idCart: Int, idProduct: Int) = apiCart?.getCartInfo(idCart, idProduct)
 
     init {
         var retrofit: RetrofitClient = RetrofitClient()

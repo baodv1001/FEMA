@@ -42,6 +42,7 @@ class ProductAdapter(
         //Bắt sự kiện click vào item
         holder.itemView.setOnClickListener {
             val i = Intent(context, ProductDetailsActivity::class.java)
+            i.putExtra("id", allProductsList[position].idProduct)
             i.putExtra("name", allProductsList[position].name)
             i.putExtra("price", allProductsList[position].price)
             i.putExtra("discount", allProductsList[position].discount)
