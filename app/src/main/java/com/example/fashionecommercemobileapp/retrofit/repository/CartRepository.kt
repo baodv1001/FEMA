@@ -18,26 +18,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class CartRepository {
-    private var cart: MutableLiveData<Cart> = MutableLiveData()
-    private var cartInfoList: MutableLiveData<List<CartInfo>>? = MutableLiveData()
-
-    private var cartApi: CartApi? = null
-
-    fun setCart(cart: Cart) {
-        this.cart.value = cart
-    }
-
-    fun getCart(): MutableLiveData<Cart>? {
-        return cart
-    }
-
-    fun setCartInfo(cartInfo: List<CartInfo>) {
-        cartInfoList?.postValue(cartInfo)
-    }
-
-    fun getCartInfo(): MutableLiveData<List<CartInfo>>? {
-        return cartInfoList
-    }
+    private var apiCart: CartApi? = null
 
     companion object {
         private var cartRepository: CartRepository? = null
@@ -54,14 +35,34 @@ class CartRepository {
         }
     }
 
-    fun updateCartInfo(idCart: Int, idProduct: Int, quantity: Int) {
-        val cartCall: Call<Boolean> = cartApi!!.updateCartInfo(idCart, idProduct, quantity)
+    fun postCartInfo(idCart: Int, idProduct: Int, quantity: Int) {
+        val cartCall: Call<Boolean> = apiCart!!.postCartInfo(idCart, idProduct, quantity)
         cartCall.enqueue(object : Callback<Boolean> {
             override fun onResponse(
                 call: Call<Boolean>,
                 response: Response<Boolean>
             ) {
-                response.body()?.let { }
+                if (response.body() == true)
+                    response.body()
+                        ?.let { Toast.makeText(context, "Successful", Toast.LENGTH_SHORT).show() }
+            }
+
+            override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    fun updateCartInfo(idCart: Int, idProduct: Int, quantity: Int) {
+        val cartCall: Call<Boolean> = apiCart!!.updateCartInfo(idCart, idProduct, quantity)
+        cartCall.enqueue(object : Callback<Boolean> {
+            override fun onResponse(
+                call: Call<Boolean>,
+                response: Response<Boolean>
+            ) {
+                if (response.body() == true)
+                    response.body()
+                        ?.let { Toast.makeText(context, "Successful", Toast.LENGTH_SHORT).show() }
             }
 
             override fun onFailure(call: Call<Boolean>, t: Throwable) {
@@ -71,13 +72,15 @@ class CartRepository {
     }
 
     fun updateCart(idCart: Int, idAccount: Int, isPaid: Boolean) {
-        val cartCall: Call<Boolean> = cartApi!!.updateCart(idCart, idAccount, isPaid)
+        val cartCall: Call<Boolean> = apiCart!!.updateCart(idCart, idAccount, isPaid)
         cartCall.enqueue(object : Callback<Boolean> {
             override fun onResponse(
                 call: Call<Boolean>,
                 response: Response<Boolean>
             ) {
-                response.body()?.let {  }
+                if (response.body() == true)
+                    response.body()
+                        ?.let { Toast.makeText(context, "Successful", Toast.LENGTH_SHORT).show() }
             }
 
             override fun onFailure(call: Call<Boolean>, t: Throwable) {
@@ -87,42 +90,11 @@ class CartRepository {
         })
     }
 
-    fun getCartRequest(idAccount: Int) {
-        val cartCall: Call<Cart> = cartApi!!.getCart(idAccount)
-        cartCall.enqueue(object : Callback<Cart> {
-            override fun onResponse(
-                call: Call<Cart>,
-                response: Response<Cart>
-            ) {
-                response.body()?.let { setCart(it) }
-            }
-
-            override fun onFailure(call: Call<Cart>, t: Throwable) {
-                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
-            }
-
-        })
-    }
-
-    fun getCartInfoRequest(idCart: Int) {
-        val cartInfoCall: Call<List<CartInfo>> = cartApi!!.getCartInfo(idCart)
-        cartInfoCall.enqueue(object : Callback<List<CartInfo>> {
-            override fun onResponse(
-                call: Call<List<CartInfo>>,
-                response: Response<List<CartInfo>>
-            ) {
-                response.body()?.let { setCartInfo(it) }
-            }
-
-            override fun onFailure(call: Call<List<CartInfo>>, t: Throwable) {
-                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
-            }
-
-        })
-    }
+    suspend fun getCartRequest(idAccount: Int) = apiCart?.getCart(idAccount)
+    suspend fun getCartInfoRequest(idCart: Int) = apiCart?.getCartInfo(idCart)
 
     init {
         var retrofit: RetrofitClient = RetrofitClient()
-        cartApi = retrofit.getRetrofitInstance()!!.create(CartApi::class.java)
+        apiCart = retrofit.getRetrofitInstance()!!.create(CartApi::class.java)
     }
 }

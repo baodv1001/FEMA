@@ -5,11 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import com.example.fashionecommercemobileapp.model.Cart
 import com.example.fashionecommercemobileapp.model.CartInfo
 import com.example.fashionecommercemobileapp.model.Product
+import com.example.fashionecommercemobileapp.model.ShaPW
 import com.example.fashionecommercemobileapp.retrofit.repository.CartRepository
 import com.example.fashionecommercemobileapp.retrofit.repository.ProductRepository
+import com.example.fashionecommercemobileapp.retrofit.utils.Resource
+import kotlinx.coroutines.Dispatchers
 
 
 class CartViewModel : ViewModel() {
@@ -25,6 +29,10 @@ class CartViewModel : ViewModel() {
         cartRepository = CartRepository()
     }
 
+    fun postCartInfo(idCart: Int, idProduct: Int, quantity: Int) {
+        cartRepository!!.postCartInfo(idCart, idProduct, quantity)
+    }
+
     fun updateCartInfo(idCart: Int, idProduct: Int, quantity: Int) {
         cartRepository!!.updateCartInfo(idCart, idProduct, quantity)
     }
@@ -33,15 +41,21 @@ class CartViewModel : ViewModel() {
         cartRepository!!.updateCart(idCart, idAccount, isPaid)
     }
 
-    fun getCart(idAccount: Int): LiveData<Cart>? {
-        cartRepository!!.getCartRequest(idAccount)
-        cartData = cartRepository?.getCart()
-        return cartData
+    fun getCart(idAccount: Int) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(Resource.success(data = cartRepository?.getCartRequest(idAccount)))
+        } catch (exception: Exception) {
+            emit(Resource.error(data = null, message = exception.message ?: "Error"))
+        }
     }
 
-    fun getCartInfo(idCart: Int): LiveData<List<CartInfo>>? {
-        cartRepository!!.getCartInfoRequest(idCart)
-        cartInfoData = cartRepository?.getCartInfo()
-        return cartInfoData
+    fun getCartInfo(idCart: Int) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(Resource.success(data = cartRepository?.getCartInfoRequest(idCart)))
+        } catch (exception: Exception) {
+            emit(Resource.error(data = null, message = exception.message ?: "Error"))
+        }
     }
 }

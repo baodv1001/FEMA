@@ -1,6 +1,7 @@
 package com.example.fashionecommercemobileapp.adapters
 
 import android.content.Context
+import android.text.method.TextKeyListener.clear
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,8 +19,8 @@ import kotlinx.android.synthetic.main.cart_item.view.*
 
 class CartAdapter(
     private val context: Context,
-    private val listCart: List<CartInfo>,
-    private val listProduct: List<Product>
+    private val listCart: ArrayList<CartInfo>,
+    private val listProduct: ArrayList<Product>
 ) :
     RecyclerView.Adapter<CartAdapter.ViewHolder>() {
 
@@ -31,6 +32,17 @@ class CartAdapter(
         var quantityCart: TextView = view.findViewById(R.id.edittext_quantity_cart)
     }
 
+    fun changeData(cartList: List<CartInfo>, productList: List<Product>) {
+        this.listCart.apply {
+            clear()
+            addAll(cartList)
+        }
+        this.listProduct.apply {
+            clear()
+            addAll(productList)
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View =
             LayoutInflater.from(parent.context).inflate(R.layout.cart_item, parent, false)
@@ -38,16 +50,12 @@ class CartAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        if (listCart.isEmpty() || listProduct.isEmpty())
-//            return
-        Toast.makeText(context, listProduct.size.toString(), Toast.LENGTH_SHORT).show()
+        if (listCart.isEmpty() || listProduct.isEmpty())
+            return
         Glide.with(context)
-            .load("https://via.placeholder.com/80.jpg")
+            .load("https://via.placeholder.com/80.png")
             .fitCenter()
             .into(holder.imageCart)
-//        holder.productCart.text = listProduct[position].name
-//        holder.infoCart.text = listProduct[position].unit
-//        holder.costCart.text = ((listProduct[position].price?.toInt() ?: 1) * listCart[position].quantity!!).toString()
 
         holder.productCart.text = listProduct[position].name
         holder.infoCart.text = listProduct[position].unit

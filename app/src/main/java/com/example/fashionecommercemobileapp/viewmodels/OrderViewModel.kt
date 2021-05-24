@@ -17,6 +17,10 @@ class OrderViewModel : ViewModel(){
         billRepository = BillRepository()
     }
 
+    fun createBill(bill: Bill) {
+        billRepository!!.createBill(bill)
+    }
+
     fun getBillData(idAccount: String):LiveData<List<Bill>>? {
         billRepository!!.doBillRequest(idAccount)
         billData = billRepository?.getBillData()

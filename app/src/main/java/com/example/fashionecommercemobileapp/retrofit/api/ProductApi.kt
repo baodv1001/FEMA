@@ -21,5 +21,5 @@ interface ProductApi {
 
     @POST("get_product_by_id.php")
     @FormUrlEncoded
-    fun getProductById(@Field("idProductList") idProduct: List<String>): Call<List<Product>>
+    suspend fun getProductById(@Field("idProductList") idProductList: String): List<Product>
 }

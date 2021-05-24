@@ -17,16 +17,6 @@ class ProductRepository {
     var listFlashSale: MutableLiveData<List<Product>>? = MutableLiveData<List<Product>>()
     var listRecommended: MutableLiveData<List<Product>>? = MutableLiveData<List<Product>>()
 
-    private var productData: MutableLiveData<List<Product>>? = MutableLiveData<List<Product>>()
-
-    fun setProduct(product: List<Product>) {
-        productData?.postValue(product)
-    }
-
-    fun getProduct(): LiveData<List<Product>>? {
-        return productData
-    }
-
     fun setProductData(productData: List<Product>) {
         listProducts?.value = productData
     }
@@ -68,32 +58,7 @@ class ProductRepository {
         }
     }
 
-    fun fetchProductById(idProduct: List<String>) {
-        val callProduct: Call<List<Product>> = productApi!!.getProductById(idProduct)
-        Thread(Runnable {
-            val response: Response<List<Product>> = callProduct.execute()
-            response.body()?.let { setProduct(it) }
-        }).start()
-
-//        val callProduct: Call<List<Product>> = productApi!!.getProductById(idProduct)
-//        callProduct.enqueue(object : Callback<List<Product>> {
-//            override fun onResponse(
-//                call: Call<List<Product>>,
-//                response: Response<List<Product>>
-//            ) {
-//                Toast.makeText(context, "fetch", Toast.LENGTH_SHORT).show()
-//                response.body()?.let { setProduct(it) }
-//            }
-//
-//            override fun onFailure(
-//                call: Call<List<Product>>,
-//                t: Throwable
-//            ) {
-//                Toast.makeText(context, t.toString(), Toast.LENGTH_LONG).show()
-//            }
-//
-//        })
-    }
+    suspend fun fetchProductById(idProduct: List<String>) = productApi?.getProductById(idProduct.joinToString())
 
     fun doProductRequest(idProductCode: String) {
         val callProduct: Call<List<Product>> = productApi!!.getProduct(idProductCode)

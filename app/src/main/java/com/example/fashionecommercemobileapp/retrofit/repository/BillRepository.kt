@@ -12,11 +12,12 @@ import retrofit2.Response
 
 class BillRepository {
     private var listBill: MutableLiveData<List<Bill>>? = MutableLiveData<List<Bill>>()
-    private var billApi : BillApi? = null
+    private var billApi: BillApi? = null
 
     fun setBillData(billData: List<Bill>) {
         listBill?.value = billData
     }
+
     fun getBillData(): MutableLiveData<List<Bill>>? {
         return listBill
     }
@@ -36,20 +37,28 @@ class BillRepository {
         }
     }
 
-    fun updateCartInfo(idCart: Int, idProduct: Int, quantity: Int) {
-//        val cartCall: Call<Boolean> = cartApi!!.updateCartInfo(idCart, idProduct, quantity)
-//        cartCall.enqueue(object : Callback<Boolean> {
-//            override fun onResponse(
-//                call: Call<Boolean>,
-//                response: Response<Boolean>
-//            ) {
-//                response.body()?.let { }
-//            }
-//
-//            override fun onFailure(call: Call<Boolean>, t: Throwable) {
-//                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
-//            }
-//        })
+    fun createBill(bill: Bill) {
+        val callBill: Call<Boolean> = billApi!!.createBill(
+            bill.id,
+            bill.idAccount,
+            bill.invoiceDate,
+            bill.status,
+            bill.totalMoney
+        )
+        callBill.enqueue(object : Callback<Boolean> {
+            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                if (response.body() == true)
+                    response.body()
+                        ?.let { Toast.makeText(context, "Successful", Toast.LENGTH_SHORT).show() }
+            }
+
+            override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
     fun doBillRequest(idAccount: String) {
         val callBill: Call<List<Bill>> = billApi!!.getBillData(idAccount)
         callBill.enqueue(object : Callback<List<Bill>> {

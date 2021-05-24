@@ -58,6 +58,18 @@
             android:layout_width="match_parent"
             android:layout_height="0dp">
 
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toTopOf="@+id/layoutCuponCode"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:indeterminate="true"
+                android:indeterminateTintMode="src_atop"
+                android:indeterminateTint="@color/primary"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_cart"
                 android:layout_width="match_parent"
@@ -147,7 +159,7 @@
                         android:layout_height="wrap_content"
                         android:text="Sub total"
                         android:textColor="@color/gray"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -179,7 +191,7 @@
                         android:layout_height="wrap_content"
                         android:text="Discount"
                         android:textColor="@color/gray"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -211,7 +223,7 @@
                         android:layout_height="wrap_content"
                         android:text="Shipping fee"
                         android:textColor="@color/gray"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -251,7 +263,7 @@
                         android:layout_height="wrap_content"
                         android:text="Total Price"
                         android:textColor="@color/dark"
-                        android:textSize="20sp"
+                        android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

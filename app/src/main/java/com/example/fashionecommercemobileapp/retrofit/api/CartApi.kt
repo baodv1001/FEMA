@@ -11,11 +11,11 @@ interface CartApi {
 
     @POST("Cart/get_cart_info.php")
     @FormUrlEncoded
-    fun getCartInfo(@Field("idCart") idCart: Int): Call<List<CartInfo>>
+    suspend fun getCartInfo(@Field("idCart") idCart: Int): List<CartInfo>
 
     @POST("Cart/get_cart.php")
     @FormUrlEncoded
-    fun getCart(@Field("idAccount") idAccount: Int): Call<Cart>
+    suspend fun getCart(@Field("idAccount") idAccount: Int): Cart
 
     @POST("Cart/update_cart.php")
     @FormUrlEncoded
@@ -28,6 +28,14 @@ interface CartApi {
     @POST("Cart/update_cart_info.php")
     @FormUrlEncoded
     fun updateCartInfo(
+        @Field("idCart") idCart: Int,
+        @Field("idProduct") idProduct: Int,
+        @Field("quantity") quantity: Int
+    ): Call<Boolean>
+
+    @POST("Cart/post_cart_info.php")
+    @FormUrlEncoded
+    fun postCartInfo(
         @Field("idCart") idCart: Int,
         @Field("idProduct") idProduct: Int,
         @Field("quantity") quantity: Int
