@@ -224,21 +224,25 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        app:layout_constraintBottom_toTopOf="@id/control_layout">
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="50dp">
+
         <Button
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="350dp"
             android:layout_height="50dp"
-            android:text="@string/logout"
-            android:gravity="center"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            android:backgroundTint="@color/white"
-            android:textColor="@color/gray"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
-            style="@style/Widget.MaterialComponents.Button"/>
+            android:backgroundTint="@color/white"
+            android:gravity="center"
+            android:onClick="onClickLogOut"
+            android:text="@string/logout"
+            android:textAllCaps="false"
+            android:textColor="@color/gray"
+            android:textSize="20sp" />
     </RelativeLayout>
-    <LinearLayout
+
+   <!-- <LinearLayout
         android:id="@+id/control_layout"
         android:layout_width="match_parent"
         android:layout_height="62dp"
@@ -283,5 +287,5 @@
             android:drawableTop="@drawable/ic_baseline_person_24"
             android:layout_weight="1"
             style="@style/Widget.MaterialComponents.Button.TextButton"/>
-    </LinearLayout>
+    </LinearLayout>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

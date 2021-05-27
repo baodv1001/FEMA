@@ -1,20 +1,19 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.fashionecommercemobileapp.R
-import com.example.fashionecommercemobileapp.retrofit.utils.Status
 import com.example.fashionecommercemobileapp.model.Account
 import com.example.fashionecommercemobileapp.retrofit.repository.AccountRepository
+import com.example.fashionecommercemobileapp.retrofit.utils.Status
 import com.example.fashionecommercemobileapp.viewmodels.AccountViewModel
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_profile.*
 
 
 class LoginActivity : AppCompatActivity() {
@@ -41,10 +40,15 @@ class LoginActivity : AppCompatActivity() {
                         Status.SUCCESS -> {
                             listAccount = it?.data
                             if (listAccount?.isEmpty() == false) {
-                                val intent = Intent(this, AccountActivity::class.java).apply { }
-                                intent.putExtra("username", username)
-                                intent.putExtra("idAccount",listAccount?.first()?.id)
+                                val intent = Intent(this, MainActivity::class.java).apply { }
+                                val sp = getSharedPreferences("Login", Context.MODE_PRIVATE)
+                                val Ed = sp.edit()
+                                Ed.putString("Unm", username)
+                                Ed.putString("Psw", password)
+                                Ed.putString("Id",listAccount?.first()?.id.toString())
+                                Ed.commit()
                                 startActivity(intent)
+                                this.finish()
                             }
                             else
                                 Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
@@ -62,6 +66,11 @@ class LoginActivity : AppCompatActivity() {
     }
     fun onClickSignUp(view: View) {
         val intent = Intent(this, SignUpActivity::class.java).apply {  }
+        startActivity(intent)
+    }
+
+    fun onClickForgotPassword(view: View) {
+        val intent = Intent(this, ForgetPasswordActivity::class.java).apply {  }
         startActivity(intent)
     }
 }

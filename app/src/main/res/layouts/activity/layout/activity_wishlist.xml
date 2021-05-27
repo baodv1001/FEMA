@@ -61,7 +61,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
-    <RelativeLayout
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bnvMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:itemBackground="@color/white"
+        app:itemIconTint="@color/selector"
+        app:itemTextColor="@color/selector"
+        app:menu="@menu/menu_navigation"
+        app:layout_constraintBottom_toBottomOf="parent">
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+    <!--<RelativeLayout
         android:id="@+id/bottomLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -105,6 +115,6 @@
             android:layout_toRightOf="@id/btnHomeWish"/>
 
 
-    </RelativeLayout>
+    </RelativeLayout>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
