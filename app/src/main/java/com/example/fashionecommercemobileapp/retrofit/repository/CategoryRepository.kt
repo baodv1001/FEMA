@@ -42,22 +42,23 @@ class CategoryRepository {
         val callCategory: Call<List<Category>> = categoryApi!!.getCategory()
         callCategory.enqueue(object : Callback<List<Category>> {
             override fun onResponse(
-                call: Call<List<Category>>,
-                response: Response<List<Category>>
+                    call: Call<List<Category>>,
+                    response: Response<List<Category>>
             ) {
                 response.body()?.let { setCategoryData(it) }
             }
 
             override fun onFailure(
-                call: Call<List<Category>>,
-                t: Throwable
+                    call: Call<List<Category>>,
+                    t: Throwable
             ) {
                 Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
             }
 
         })
     }
-    fun doCategoryByNameRequest(name:String) {
+
+    fun doCategoryByNameRequest(name: String) {
         val callCategory: Call<List<Category>> = categoryApi!!.getProductCodeByName(name)
         callCategory.enqueue(object : Callback<List<Category>> {
             override fun onResponse(
@@ -76,6 +77,7 @@ class CategoryRepository {
 
         })
     }
+
     init {
         var retrofit: RetrofitClient = RetrofitClient()
         categoryApi = retrofit.getRetrofitInstance()!!.create(CategoryApi::class.java)

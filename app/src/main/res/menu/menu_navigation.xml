@@ -3,30 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">>
     <item
         android:id="@+id/home_nvg"
+        android:icon="@drawable/ic_outline_home_24"
         android:title="Home"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_outline_home_24">
+        app:showAsAction="ifRoom">
 
     </item>
     <item
         android:id="@+id/wish_list"
+        android:icon="@drawable/ic_baseline_favorite_border_24"
         android:title="Wish List"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_baseline_favorite_border_24">
+        app:showAsAction="ifRoom">
 
     </item>
     <item
         android:id="@+id/cart"
+        android:icon="@drawable/ic_outline_shopping_cart_24"
         android:title="Cart"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_outline_shopping_cart_24">
+        app:showAsAction="ifRoom">
 
     </item>
     <item
         android:id="@+id/profile"
+        android:icon="@drawable/ic_outline_person_outline_24"
         android:title="Me"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_outline_person_outline_24">
+        app:showAsAction="ifRoom">
 
     </item>
 </menu>

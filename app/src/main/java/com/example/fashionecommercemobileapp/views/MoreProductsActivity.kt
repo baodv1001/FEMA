@@ -59,9 +59,7 @@ class MoreProductsActivity : AppCompatActivity() {
             if (idProductCode != "0") {
                 productViewModel!!.getProductData(idProductCode)
                         ?.observe(this, Observer { setupProductRecyclerView(it) })
-            }
-            else
-            {
+            } else {
                 productViewModel!!.getAllFlashSaleData()
                         ?.observe(this, Observer { setupProductRecyclerView(it) })
             }
@@ -207,7 +205,7 @@ class MoreProductsActivity : AppCompatActivity() {
     private fun filterByRatingName(rating: String, minPrice: String, maxPrice: String) {
         filterDialog?.hide()
         var res = rating.filter { it.isDigit() }
-        productViewModel!!.getProductDataByRating(res, idProductCode, minPrice, maxPrice,if(idProductCode=="0") "0" else "-1")
+        productViewModel!!.getProductDataByRating(res, idProductCode, minPrice, maxPrice, if (idProductCode == "0") "0" else "-1")
                 ?.observe(this@MoreProductsActivity, Observer { setupProductRecyclerView(it) })
     }
 

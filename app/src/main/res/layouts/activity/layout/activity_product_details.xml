@@ -296,6 +296,7 @@
                         android:textStyle="bold" />
                 </RadioGroup>
             </HorizontalScrollView>
+
             <TextView
                 android:id="@+id/select_color"
                 android:layout_width="336dp"
@@ -422,6 +423,7 @@
                         android:textStyle="bold" />
                 </RadioGroup>
             </HorizontalScrollView>
+
             <TextView
                 android:id="@+id/description"
                 android:layout_width="336dp"

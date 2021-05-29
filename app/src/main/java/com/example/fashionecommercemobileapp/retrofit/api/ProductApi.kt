@@ -11,16 +11,16 @@ interface ProductApi {
 
     @POST("get_product.php")
     @FormUrlEncoded
-    fun getProduct(@Field("idProductCode") idProductCode:String): Call<List<Product>>
+    fun getProduct(@Field("idProductCode") idProductCode: String): Call<List<Product>>
 
     @POST("get_product_by_name.php")
     @FormUrlEncoded
-    fun getProductByName(@Field("name") name:String,@Field("idProductCode") idProductCode: String): Call<List<Product>>
+    fun getProductByName(@Field("name") name: String, @Field("idProductCode") idProductCode: String): Call<List<Product>>
 
     @POST("get_product_by_rating_price.php")
     @FormUrlEncoded
-    fun getProductByRating(@Field("rating") rating:String,@Field("idProductCode") idProductCode: String
-                           ,@Field("minPrice") minPrice: String,@Field("maxPrice") maxPrice: String,@Field("discount") discount: String): Call<List<Product>>
+    fun getProductByRating(@Field("rating") rating: String, @Field("idProductCode") idProductCode: String
+                           , @Field("minPrice") minPrice: String, @Field("maxPrice") maxPrice: String, @Field("discount") discount: String): Call<List<Product>>
 
     @GET("get_recommended.php")
     fun getRecommended(): Call<List<Product>>

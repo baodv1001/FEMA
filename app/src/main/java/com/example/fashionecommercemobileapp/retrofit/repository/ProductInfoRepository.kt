@@ -22,6 +22,7 @@ class ProductInfoRepository {
     fun getSizeData(): MutableLiveData<List<Size>>? {
         return listSize
     }
+
     fun setColorData(colorData: List<Color>) {
         listColor?.value = colorData
     }
@@ -29,8 +30,10 @@ class ProductInfoRepository {
     fun getColorData(): MutableLiveData<List<Color>>? {
         return listColor
     }
-    private  var sizeApi: SizeApi? = null
+
+    private var sizeApi: SizeApi? = null
     private var colorApi: ColorApi? = null
+
     companion object {
         private var productInfoRepository: ProductInfoRepository? = null
         val instance: ProductInfoRepository?
@@ -38,7 +41,7 @@ class ProductInfoRepository {
                 if (productInfoRepository == null) {
                     productInfoRepository = ProductInfoRepository()
                 }
-                return  productInfoRepository
+                return productInfoRepository
             }
         private lateinit var context: Context
         fun setContext(con: Context) {

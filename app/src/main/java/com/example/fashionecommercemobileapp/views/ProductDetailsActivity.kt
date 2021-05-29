@@ -24,7 +24,7 @@ import kotlinx.android.synthetic.main.activity_product_details.*
 
 class ProductDetailsActivity : AppCompatActivity() {
     var isLiked: Boolean = true
-    var productInfoViewModel : ProductInfoViewModel? = null
+    var productInfoViewModel: ProductInfoViewModel? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_details)
@@ -49,8 +49,8 @@ class ProductDetailsActivity : AppCompatActivity() {
         loadColor()
         loadSize()
     }
-    private fun loadSize()
-    {
+
+    private fun loadSize() {
         productInfoViewModel?.getSizeData()?.observe(this, Observer {
             it?.let { resource ->
                 when (resource.status) {
@@ -58,12 +58,11 @@ class ProductDetailsActivity : AppCompatActivity() {
                         var listSize = it?.data
                         if (listSize?.isEmpty() == false) {
                             setupSizeRadioGroup(listSize)
-                        }
-                        else
+                        } else
                             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
                     }
                     Status.ERROR -> {
-                        Toast.makeText(this,it.message, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                     }
                     Status.LOADING -> {
 
@@ -72,8 +71,8 @@ class ProductDetailsActivity : AppCompatActivity() {
             }
         })
     }
-    private fun loadColor()
-    {
+
+    private fun loadColor() {
         productInfoViewModel?.getColorData()?.observe(this, Observer {
             it?.let { resource ->
                 when (resource.status) {
@@ -81,12 +80,11 @@ class ProductDetailsActivity : AppCompatActivity() {
                         var listColor = it?.data
                         if (listColor?.isEmpty() == false) {
                             setupColorRadioGroup(listColor)
-                        }
-                        else
+                        } else
                             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
                     }
                     Status.ERROR -> {
-                        Toast.makeText(this,it.message, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                     }
                     Status.LOADING -> {
 
@@ -95,28 +93,27 @@ class ProductDetailsActivity : AppCompatActivity() {
             }
         })
     }
-    private fun setupSizeRadioGroup(listSize : List<Size>)
-    {
-        var i=0;
-        for( size:Size in listSize)
-        {
-            var radioButton : RadioButton = RadioButton(this)
-            (radio_group_size[i] as RadioButton).text= size.name
+
+    private fun setupSizeRadioGroup(listSize: List<Size>) {
+        var i = 0;
+        for (size: Size in listSize) {
+            var radioButton: RadioButton = RadioButton(this)
+            (radio_group_size[i] as RadioButton).text = size.name
             i++
         }
-        radio_group_size.removeViews(i,radio_group_size.size-i)
+        radio_group_size.removeViews(i, radio_group_size.size - i)
     }
-    private fun setupColorRadioGroup(listColor : List<Color>)
-    {
-        var i=0;
-        for( color:Color in listColor)
-        {
-            var radioButton : RadioButton = RadioButton(this)
-            (radio_group_color[i] as RadioButton).text= color.name
+
+    private fun setupColorRadioGroup(listColor: List<Color>) {
+        var i = 0;
+        for (color: Color in listColor) {
+            var radioButton: RadioButton = RadioButton(this)
+            (radio_group_color[i] as RadioButton).text = color.name
             i++
         }
-        radio_group_color.removeViews(i,radio_group_color.size-i)
+        radio_group_color.removeViews(i, radio_group_color.size - i)
     }
+
     fun onClickHeart(view: View) {
         if (isLiked)
             Glide.with(this).load(R.drawable.ic_un_heart_button).into(view as ImageView)

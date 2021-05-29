@@ -201,8 +201,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onClickViewFlashSale(view: View) {
-        val intent = Intent(this, MoreProductsActivity::class.java).apply {  }
-        intent.putExtra("idProductCode","0")
+        val intent = Intent(this, MoreProductsActivity::class.java).apply { }
+        intent.putExtra("idProductCode", "0")
         startActivity(intent)
     }
 }

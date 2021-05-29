@@ -16,11 +16,13 @@ class CategoryViewModel : ViewModel() {
         categoryRepository = CategoryRepository()
 
     }
-    fun getCategoryByNameData(name:String): LiveData<List<Category>>? {
+
+    fun getCategoryByNameData(name: String): LiveData<List<Category>>? {
         categoryRepository!!.doCategoryByNameRequest(name)
         categoryData = categoryRepository?.getCategoryData()
         return categoryData
     }
+
     fun getCategoryData(): LiveData<List<Category>>? {
         categoryRepository!!.doCategoryRequest()
         categoryData = categoryRepository?.getCategoryData()

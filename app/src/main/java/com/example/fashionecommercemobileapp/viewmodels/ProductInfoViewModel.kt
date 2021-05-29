@@ -27,18 +27,17 @@ class ProductInfoViewModel : ViewModel() {
         emit(Resource.loading(data = null))
         try {
             emit(Resource.success(data = productInfoRepository!!.doSizeRequest()))
-        }
-        catch (exception: Exception) {
-            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!" ))
+        } catch (exception: Exception) {
+            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
         }
     }
+
     fun getColorData() = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
         try {
             emit(Resource.success(data = productInfoRepository!!.doColorRequest()))
-        }
-        catch (exception: Exception) {
-            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!" ))
+        } catch (exception: Exception) {
+            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
         }
     }
 }

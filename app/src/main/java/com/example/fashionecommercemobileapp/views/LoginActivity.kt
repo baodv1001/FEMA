@@ -45,16 +45,15 @@ class LoginActivity : AppCompatActivity() {
                                 val Ed = sp.edit()
                                 Ed.putString("Unm", username)
                                 Ed.putString("Psw", password)
-                                Ed.putString("Id",listAccount?.first()?.id.toString())
+                                Ed.putString("Id", listAccount?.first()?.id.toString())
                                 Ed.commit()
                                 startActivity(intent)
                                 this.finish()
-                            }
-                            else
+                            } else
                                 Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
                         }
                         Status.ERROR -> {
-                            Toast.makeText(this,it.message,Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                         }
                         Status.LOADING -> {
 
@@ -64,13 +63,14 @@ class LoginActivity : AppCompatActivity() {
             })
         }
     }
+
     fun onClickSignUp(view: View) {
-        val intent = Intent(this, SignUpActivity::class.java).apply {  }
+        val intent = Intent(this, SignUpActivity::class.java).apply { }
         startActivity(intent)
     }
 
     fun onClickForgotPassword(view: View) {
-        val intent = Intent(this, ForgetPasswordActivity::class.java).apply {  }
+        val intent = Intent(this, ForgetPasswordActivity::class.java).apply { }
         startActivity(intent)
     }
 }

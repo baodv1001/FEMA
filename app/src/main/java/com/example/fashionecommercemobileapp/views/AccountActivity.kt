@@ -20,19 +20,20 @@ class AccountActivity : AppCompatActivity() {
         val idAccount = sp1.getString("Id", null)
         /*Start ProfileActivity*/
         button_profile.setOnClickListener {
-            val intent = Intent(this, ProfileActivity::class.java).apply {  }
+            val intent = Intent(this, ProfileActivity::class.java).apply { }
             startActivity(intent)
         }
         button_address.setOnClickListener {
-            val intent = Intent(this, AddressActivity::class.java).apply {  }
+            val intent = Intent(this, AddressActivity::class.java).apply { }
             startActivity(intent)
         }
         button_order.setOnClickListener {
-            val intent = Intent(this, OrderActivity::class.java).apply {  }
+            val intent = Intent(this, OrderActivity::class.java).apply { }
             startActivity(intent)
         }
         handleNavigation()
     }
+
     private fun handleNavigation() {
         var navigationBar: BottomNavigationView = bnvMain
 

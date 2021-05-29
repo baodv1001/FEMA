@@ -26,9 +26,10 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 @Suppress("DEPRECATION")
-class ProfileActivity : AppCompatActivity(){
+class ProfileActivity : AppCompatActivity() {
     private var userViewModel: UserViewModel? = null
     private var listUser: List<User>? = null
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +43,10 @@ class ProfileActivity : AppCompatActivity(){
         val sp1 = getSharedPreferences("Login", Context.MODE_PRIVATE)
         val username = sp1.getString("Unm", null)
         val idAccount = sp1.getString("Id", null)
-        Toast.makeText(this,idAccount.toString(), Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, idAccount.toString(), Toast.LENGTH_SHORT).show()
         userViewModel?.getUserData(idAccount.toString())?.observe(this, Observer {
             it?.let { resource ->
-                when(resource.status) {
+                when (resource.status) {
                     Status.SUCCESS -> {
                         listUser = it?.data
                         text_username.text = username
@@ -57,7 +58,7 @@ class ProfileActivity : AppCompatActivity(){
 
                     }
                     Status.ERROR -> {
-                        Toast.makeText(this,it.message, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                     }
                     Status.LOADING -> {
 
@@ -76,7 +77,7 @@ class ProfileActivity : AppCompatActivity(){
         val Ed = sp.edit()
         Ed.putString("Unm", null)
         Ed.putString("Psw", null)
-        Ed.putInt("Id",0)
+        Ed.putInt("Id", 0)
         Ed.commit()
         val intent = Intent(this, LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

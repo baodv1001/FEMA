@@ -8,7 +8,14 @@
   $response = array();
   //$response["product"] = array();
   // Câu lệnh Select dùng để xem dữ liệu
-  $result = mysqli_query($db->connect(),"SELECT * FROM product WHERE name like '%$name%' and idProductCode='$idProductCode'");
+  if($idProductCode!='0')
+  {
+    $result = mysqli_query($db->connect(),"SELECT * FROM product WHERE name like '%$name%' and idProductCode='$idProductCode'");
+  }
+  else
+  {
+    $result = mysqli_query($db->connect(),"SELECT * FROM product WHERE name like '%$name%' and discount>'0'");
+  }
   //Đọc dữ liệu từ MySQL
   while($row = mysqli_fetch_assoc($result)){
     $data = array();

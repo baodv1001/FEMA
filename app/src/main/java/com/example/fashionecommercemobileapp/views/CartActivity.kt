@@ -15,6 +15,7 @@ class CartActivity : AppCompatActivity() {
         setContentView(R.layout.activity_cart)
         handleNavigation()
     }
+
     private fun handleNavigation() {
         var navigationBar: BottomNavigationView = bnvMain
 
