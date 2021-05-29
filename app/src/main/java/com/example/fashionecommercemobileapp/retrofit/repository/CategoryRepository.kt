@@ -4,6 +4,7 @@ import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import com.example.fashionecommercemobileapp.model.Category
+import com.example.fashionecommercemobileapp.model.ProductCode
 import com.example.fashionecommercemobileapp.retrofit.api.CategoryApi
 import com.example.fashionecommercemobileapp.retrofit.RetrofitClient
 import retrofit2.Call
@@ -56,7 +57,25 @@ class CategoryRepository {
 
         })
     }
+    fun doCategoryByNameRequest(name:String) {
+        val callCategory: Call<List<Category>> = categoryApi!!.getProductCodeByName(name)
+        callCategory.enqueue(object : Callback<List<Category>> {
+            override fun onResponse(
+                    call: Call<List<Category>>,
+                    response: Response<List<Category>>
+            ) {
+                response.body()?.let { setCategoryData(it) }
+            }
 
+            override fun onFailure(
+                    call: Call<List<Category>>,
+                    t: Throwable
+            ) {
+                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
     init {
         var retrofit: RetrofitClient = RetrofitClient()
         categoryApi = retrofit.getRetrofitInstance()!!.create(CategoryApi::class.java)

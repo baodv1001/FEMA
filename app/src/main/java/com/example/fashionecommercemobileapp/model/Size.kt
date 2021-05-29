@@ -1,14 +1,17 @@
 package com.example.fashionecommercemobileapp.model
 
 import com.google.gson.annotations.Expose
+
 import com.google.gson.annotations.SerializedName
 
-class ProductCode {
-    @SerializedName ("id")
+class Size {
+    @SerializedName("idSize")
     @Expose
-    private var id : Int? = null
+    var idSize: String? = null
 
-    @SerializedName ("name")
+    @SerializedName("name")
     @Expose
-    private var name : String? = null
+    var name: String? = null
 }
+
+

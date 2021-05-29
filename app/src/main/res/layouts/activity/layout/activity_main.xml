@@ -33,21 +33,20 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView">
 
 
-                    <EditText
+                    <TextView
                         android:id="@+id/editText"
                         android:layout_width="wrap_content"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         android:layout_margin="16dp"
                         android:layout_weight="8"
                         android:background="@drawable/search_bg"
-                        android:drawableLeft="@drawable/ic_search_black_24dp"
                         android:drawablePadding="16dp"
-                        android:ems="10"
                         android:hint="Search Product"
-                        android:inputType="textPersonName"
-                        android:paddingLeft="16dp"
+                        android:padding="4dp"
                         android:singleLine="true"
-                        android:textColorHint="@color/gray" />
+                        android:onClick="onClickOpenSearch"
+                        android:textColorHint="@color/gray"
+                        android:drawableLeft="@drawable/ic_search_black_24dp" />
 
                     <ImageView
                         android:id="@+id/imageView"
@@ -108,6 +107,7 @@
 
             </LinearLayout>
             <TextView
+                android:id="@+id/txvCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -119,7 +119,7 @@
                 android:textSize="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/view_pager" />
-            <com.google.android.material.button.MaterialButton
+            <!--<com.google.android.material.button.MaterialButton
                 android:id="@+id/btnMore"
                 style="@style/Widget.MaterialComponents.Button.TextButton"
                 android:layout_width="wrap_content"
@@ -133,7 +133,7 @@
                 android:textColor="@color/primary"
                 android:textSize="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view_pager" />
+                app:layout_constraintTop_toBottomOf="@+id/view_pager" />-->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/category_recycler"
                 android:layout_width="0dp"
@@ -143,7 +143,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnMore" />
+                app:layout_constraintTop_toBottomOf="@+id/txvCategory" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -169,6 +169,7 @@
                 android:backgroundTint="@color/white"
                 android:padding="0dp"
                 android:text="See More"
+                android:onClick="onClickViewFlashSale"
                 android:textColor="@color/primary"
                 android:textSize="20dp"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/layout_more_product"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -38,7 +40,7 @@
                 tools:ignore="VectorDrawableCompat" />
 
             <EditText
-                android:id="@+id/product_name"
+                android:id="@+id/txtSearchProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_margin="16dp"
@@ -49,7 +51,7 @@
                 android:ems="10"
                 android:paddingLeft="16dp"
                 android:singleLine="true"
-                android:text="Name Product"
+                android:hint="Name Product"
                 android:textColor="@color/gray"
                 android:textColorHint="@color/gray" />
 
@@ -60,8 +62,38 @@
                 android:layout_marginRight="16dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
+                android:onClick="onClickOpenFilter"
                 app:srcCompat="@drawable/ic_tune"
                 tools:ignore="VectorDrawableCompat" />
+            <RadioGroup
+                android:id="@+id/radio_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginRight="8dp">
+                <RadioButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_baseline_arrow_upward_24"
+                    android:button="@android:color/transparent"
+                    android:gravity="center"
+                    android:textColor="@color/dark"
+                    android:textSize="14dp"
+                    android:textStyle="bold">
+
+                </RadioButton>
+                <RadioButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/ic_baseline_arrow_downward_24"
+                    android:button="@android:color/transparent"
+                    android:gravity="center"
+                    android:textColor="@color/dark"
+                    android:textSize="14dp"
+                    android:textStyle="bold">
+
+                </RadioButton>
+            </RadioGroup>
         </LinearLayout>
 
         <TextView
@@ -90,4 +122,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header" />
 
+    <LinearLayout
+        android:id="@+id/overlay"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:layout_marginLeft="100dp"
+        android:clickable="true"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <EditText
+            android:id="@+id/edittext"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="50dp" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,12 +25,10 @@ class AccountActivity : AppCompatActivity() {
         }
         button_address.setOnClickListener {
             val intent = Intent(this, AddressActivity::class.java).apply {  }
-            intent.putExtra("idAccount",idAccount)
             startActivity(intent)
         }
         button_order.setOnClickListener {
             val intent = Intent(this, OrderActivity::class.java).apply {  }
-            intent.putExtra("idAccount",idAccount)
             startActivity(intent)
         }
         handleNavigation()

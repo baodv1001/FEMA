@@ -33,7 +33,7 @@ class ProductAdapter(
         //Truyền dữ liệu vô item
         holder.productName.text = allProductsList[position].name
         holder.productSalePrice.text =
-            (allProductsList[position].discount!!.toFloat() * allProductsList[position].price!!.toFloat()).toString()
+            ((1-allProductsList[position].discount!!.toFloat()) * allProductsList[position].price!!.toFloat()).toString()
         holder.productPrice.text = allProductsList[position].price
         Glide.with(context).load(allProductsList[position].imageFile).into(holder.productImage)
         holder.productRating.rating = allProductsList[position].rating!!.toFloat();

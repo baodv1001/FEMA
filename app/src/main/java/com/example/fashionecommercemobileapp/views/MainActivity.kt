@@ -3,6 +3,7 @@ package com.example.fashionecommercemobileapp.views
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -193,5 +194,15 @@ class MainActivity : AppCompatActivity() {
             this.finish()
             true
         })
+    }
+
+    fun onClickOpenSearch(view: View) {
+        startActivity(Intent(this@MainActivity, SearchActivity::class.java))
+    }
+
+    fun onClickViewFlashSale(view: View) {
+        val intent = Intent(this, MoreProductsActivity::class.java).apply {  }
+        intent.putExtra("idProductCode","0")
+        startActivity(intent)
     }
 }
