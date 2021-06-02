@@ -33,4 +33,10 @@
     <string name="address">Address</string>
     <string name="add_address">Add Address</string>
     <string name="idAccount"></string>
+    <string-array name="array_gender">
+        <item>Males</item>
+        <item>Females</item>
+        <item>Others</item>
+    </string-array>
+    <string name="dialog_title">Choose one</string>
 </resources>

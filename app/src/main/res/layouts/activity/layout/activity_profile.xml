@@ -42,8 +42,18 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:drawableStart="@drawable/ic_outline_arrow_back_24"
             android:onClick="onClickBack"/>
+        <Button
+            android:id="@+id/button_saved"
+            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            app:backgroundTint="#FFFFFF"
+            android:layout_alignParentBottom="true"
+            android:drawableLeft="@drawable/ic_baseline_check_24"
+            android:layout_alignParentRight="true"
+            android:onClick="onClickBack"
+            android:layout_alignParentEnd="true"
+            style="@style/Widget.MaterialComponents.Button.TextButton"/>
 
         <View
             android:layout_width="match_parent"
@@ -120,6 +130,13 @@
             android:gravity="center"
             android:layout_marginRight="62dp"
             android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios_27" />
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/birthday_layout"
@@ -153,6 +170,13 @@
             android:gravity="center"
             android:layout_marginRight="62dp"
             android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios_27" />
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/email_layout"
@@ -186,6 +210,13 @@
             android:gravity="center"
             android:layout_marginRight="62dp"
             android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios_27" />
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/phone_number_layout"
@@ -219,6 +250,13 @@
             android:gravity="center"
             android:layout_marginRight="62dp"
             android:layout_alignParentRight="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_ios_27" />
     </RelativeLayout>
 
     <RelativeLayout
