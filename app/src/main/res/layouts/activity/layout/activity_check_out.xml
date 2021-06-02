@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".views.CartActivity">
+    tools:context=".views.CheckOutActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topLinearLayout"
@@ -22,37 +23,53 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="BRAND NAME"
-            android:textColor="@color/dark"
             android:textSize="24sp"
+            android:textColor="@color/dark"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/back_image"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:onClick="onClickBack"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_back"
+            tools:ignore="VectorDrawableCompat" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="Your cart"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="Check out"
             android:textColor="@color/dark"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/back_image"
+            app:layout_constraintStart_toEndOf="@+id/back_image"
+            app:layout_constraintTop_toTopOf="@+id/back_image" />
 
         <View
+            android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@drawable/rectangle"
             app:layout_constraintBottom_toBottomOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/bottomLinearLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/topLinearLayout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -60,78 +77,141 @@
             android:layout_height="0dp">
 
             <ProgressBar
-                android:id="@+id/progressBar"
+                android:id="@+id/progressBar_checkOut"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="32dp"
                 android:indeterminate="true"
                 android:indeterminateTint="@color/primary"
                 android:indeterminateTintMode="src_atop"
-                app:layout_constraintBottom_toTopOf="@+id/layoutCouponCode"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:text="Cart"
+                android:textColor="@color/dark"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview_cart"
+                android:id="@+id/recyclerView_checkOut"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
                 android:minHeight="90dp"
                 android:paddingLeft="16dp"
-                android:paddingTop="8dp"
+                android:paddingTop="0dp"
                 android:paddingRight="16dp"
-                android:paddingBottom="8dp"
+                android:paddingBottom="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutCouponCode"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="10dp"
+                android:text="Address"
+                android:textColor="@color/dark"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerView_checkOut" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/address_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
+                android:background="@drawable/corner_radius"
+                android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerview_cart">
+                app:layout_constraintTop_toBottomOf="@+id/textView3">
 
-                <EditText
-                    android:id="@+id/editText_CouponCode"
-                    android:layout_width="0dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/corner_radius"
-                    android:hint="Enter Coupon Code"
-                    android:inputType="textCapWords"
-                    android:maxLength="20"
-                    android:maxLines="1"
-                    android:paddingLeft="10dp"
-                    android:singleLine="true"
+                <TextView
+                    android:id="@+id/textView_name_checkOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:textAllCaps="true"
                     android:textColor="@color/dark"
-                    android:textColorHint="@color/gray"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/button_apply"
-                    android:layout_width="90dp"
-                    android:layout_height="0dp"
-                    android:background="@drawable/button_corner_right"
-                    android:text="Apply"
-                    android:onClick="onClickApplyCode"
-                    android:textColor="@color/white"
+                <TextView
+                    android:id="@+id/textView_address_checkOut"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="Số 5 Đinh Tiên Hoàng, P. Đa Kao, Quận 1 "
+                    android:textColor="@color/gray"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toStartOf="@+id/button_select_address"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/textView_name_checkOut"
+                    app:layout_constraintTop_toBottomOf="@id/textView_name_checkOut" />
+
+                <TextView
+                    android:id="@+id/textView_phone_checkOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="0123456789"
+                    android:textColor="@color/gray"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/textView_address_checkOut"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_address_checkOut" />
+
+                <ImageView
+                    android:id="@+id/button_select_address"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_weight="1"
+                    android:onClick="onClickSelectAddress"
+                    android:rotation="180"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.0" />
+                    app:srcCompat="@drawable/ic_back"
+                    tools:ignore="VectorDrawableCompat" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:text="Details"
+                android:textColor="@color/dark"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/address_item" />
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
@@ -139,14 +219,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:background="@drawable/corner_radius"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layoutCouponCode">
+                app:layout_constraintTop_toBottomOf="@+id/textView4">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -169,7 +249,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView_sub_total"
+                        android:id="@+id/textView_sub_checkOut"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -201,7 +281,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textview_discount"
+                        android:id="@+id/textView_discount_checkOut"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -241,7 +321,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView_total"
+                        android:id="@+id/textView_total_checkOut"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -256,7 +336,7 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnCheckout"
+                android:id="@+id/button_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginStart="16dp"
@@ -268,8 +348,8 @@
                 android:background="@drawable/button_corner_primary"
                 android:backgroundTint="@color/primary"
                 android:gravity="center"
-                android:text="CHECK OUT"
-                android:onClick="onClickCheckOut"
+                android:text="Confirm"
+                android:onClick="onClickConfirm"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="18sp"
@@ -277,51 +357,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <RelativeLayout
-        android:id="@+id/bottomLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:paddingLeft="30dp"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnMeCart"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@id/btnCartCart"
-            android:background="@color/white"
-            android:text="Me"
-            tools:ignore="MissingConstraints" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnHomeCart"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:text="Home"
-            tools:ignore="MissingConstraints" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnCartCart"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@id/btnWishlistCart"
-            android:background="@color/white"
-            android:text="Cart"
-            tools:ignore="MissingConstraints" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnWishlistCart"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@id/btnHomeCart"
-            android:background="@color/white"
-            android:text="Wishlist"
-            tools:ignore="MissingConstraints" />
-    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

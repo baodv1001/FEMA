@@ -38,6 +38,8 @@ class RecommendAdapter(
         holder.item.layoutParams.width = (getScreenWidth(context) - 128) / 2;
         holder.itemView.setOnClickListener {
             val i = Intent(context, ProductDetailsActivity::class.java)
+            i.putExtra("idProduct", recommendedList[position].idProduct)
+            i.putExtra("quantity", recommendedList[position].quantity)
             i.putExtra("name", recommendedList[position].name)
             i.putExtra("price", recommendedList[position].price)
             i.putExtra("discount", recommendedList[position].discount)

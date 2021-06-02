@@ -1,9 +1,12 @@
 package com.example.fashionecommercemobileapp.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-class CartInfo() {
+@Parcelize
+class CartInfo(): Parcelable {
 
     @SerializedName("idCart")
     @Expose

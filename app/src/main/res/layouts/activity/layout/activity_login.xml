@@ -29,8 +29,7 @@
             android:scaleType="fitEnd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/logoshop" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:layout_width="match_parent"

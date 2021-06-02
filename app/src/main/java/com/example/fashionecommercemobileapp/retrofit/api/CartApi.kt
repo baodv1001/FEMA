@@ -41,6 +41,13 @@ interface CartApi {
         @Field("quantity") quantity: Int
     ): Call<Boolean>
 
+    @POST("Cart/delete_cart_info.php")
+    @FormUrlEncoded
+    fun deleteCartInfo(
+        @Field("idCart") idCart: Int,
+        @Field("idProduct") idProduct: Int
+    ): Call<Boolean>
+
     @POST("Cart/get_cart_info_product.php")
     @FormUrlEncoded
     suspend fun getCartInfo(

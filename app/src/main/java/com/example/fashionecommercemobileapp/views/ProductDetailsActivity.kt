@@ -18,11 +18,13 @@ import kotlinx.android.synthetic.main.activity_product_details.*
 class ProductDetailsActivity : AppCompatActivity() {
     var isLiked: Boolean = true
     var id: Int = 0
+    var quantity: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_details)
         var intent: Intent = intent
-        id = intent.getStringExtra("id")?.toInt() ?: 0
+        id = intent.getStringExtra("idProduct")?.toInt() ?: 0
+        quantity = intent.getStringExtra("quantity")?.toInt() ?: 0
         var name: String? = intent.getStringExtra("name")
         var price: String? = intent.getStringExtra("price")
         var discount: String? = intent.getStringExtra("discount")
@@ -53,19 +55,28 @@ class ProductDetailsActivity : AppCompatActivity() {
     }
 
     fun addToCart(view: View) {
+        if (quantity == 0) {
+            Toast.makeText(this, "Out of stock!", Toast.LENGTH_SHORT).show()
+        }
         val cartViewModel: CartViewModel =
             ViewModelProviders.of(this).get(CartViewModel::class.java)
         cartViewModel!!.init()
-
-        cartViewModel!!.getCartInfoByProduct(1, id!!)?.observe(this, Observer { it ->
+        cartViewModel!!.getCartInfoByProduct(1, id)?.observe(this, Observer { it ->
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
                         if (it.data != null) {
-                            val quantity: Int = it.data.quantity!! + 1
-                            cartViewModel.updateCartInfo(1, id, quantity)
-                        } else
+                            if (quantity > it.data.quantity!!) {
+                                cartViewModel.updateCartInfo(1, id, 1)
+                                Toast.makeText(this, "Successful", Toast.LENGTH_SHORT).show()
+
+                            } else {
+                                Toast.makeText(this, "Out of stock!", Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
                             cartViewModel.postCartInfo(1, id, 1)
+                            Toast.makeText(this, "Successful", Toast.LENGTH_SHORT).show()
+                        }
                     }
                     Status.ERROR -> {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()

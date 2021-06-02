@@ -42,9 +42,23 @@ class CartRepository {
                 call: Call<Boolean>,
                 response: Response<Boolean>
             ) {
-                if (response.body() == true)
-                    response.body()
-                        ?.let { Toast.makeText(context, "Successful", Toast.LENGTH_SHORT).show() }
+
+            }
+
+            override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    fun deleteCartInfo(idCart: Int, idProduct: Int) {
+        val cartCall: Call<Boolean> = apiCart!!.deleteCartInfo(idCart, idProduct)
+        cartCall.enqueue(object : Callback<Boolean> {
+            override fun onResponse(
+                call: Call<Boolean>,
+                response: Response<Boolean>
+            ) {
+
             }
 
             override fun onFailure(call: Call<Boolean>, t: Throwable) {
@@ -60,9 +74,7 @@ class CartRepository {
                 call: Call<Boolean>,
                 response: Response<Boolean>
             ) {
-                if (response.body() == true)
-                    response.body()
-                        ?.let { Toast.makeText(context, "Successful", Toast.LENGTH_SHORT).show() }
+
             }
 
             override fun onFailure(call: Call<Boolean>, t: Throwable) {
@@ -78,9 +90,7 @@ class CartRepository {
                 call: Call<Boolean>,
                 response: Response<Boolean>
             ) {
-                if (response.body() == true)
-                    response.body()
-                        ?.let { Toast.makeText(context, "Successful", Toast.LENGTH_SHORT).show() }
+
             }
 
             override fun onFailure(call: Call<Boolean>, t: Throwable) {

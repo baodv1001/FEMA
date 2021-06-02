@@ -33,6 +33,10 @@ class CartViewModel : ViewModel() {
         cartRepository!!.postCartInfo(idCart, idProduct, quantity)
     }
 
+    fun deleteCartInfo(idCart: Int, idProduct: Int) {
+        cartRepository!!.deleteCartInfo(idCart, idProduct)
+    }
+
     fun updateCartInfo(idCart: Int, idProduct: Int, quantity: Int) {
         cartRepository!!.updateCartInfo(idCart, idProduct, quantity)
     }

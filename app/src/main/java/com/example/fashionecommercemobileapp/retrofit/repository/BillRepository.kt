@@ -37,27 +37,12 @@ class BillRepository {
         }
     }
 
-    fun createBill(bill: Bill) {
-        val callBill: Call<Boolean> = billApi!!.createBill(
-            bill.id,
-            bill.idAccount,
-            bill.invoiceDate,
-            bill.status,
-            bill.totalMoney
-        )
-        callBill.enqueue(object : Callback<Boolean> {
-            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
-                if (response.body() == true)
-                    response.body()
-                        ?.let { Toast.makeText(context, "Successful", Toast.LENGTH_SHORT).show() }
-            }
-
-            override fun onFailure(call: Call<Boolean>, t: Throwable) {
-                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
-            }
-
-        })
-    }
+    suspend fun createBill(bill: Bill) = billApi?.createBill(
+        bill.idAccount,
+        bill.invoiceDate,
+        bill.status,
+        bill.totalMoney
+    )
 
     fun doBillRequest(idAccount: String) {
         val callBill: Call<List<Bill>> = billApi!!.getBillData(idAccount)

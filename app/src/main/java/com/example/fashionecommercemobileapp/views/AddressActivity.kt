@@ -1,12 +1,12 @@
 package com.example.fashionecommercemobileapp.views
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.GridLayout
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,31 +18,63 @@ import com.example.fashionecommercemobileapp.viewmodels.AddressViewModel
 import kotlinx.android.synthetic.main.activity_address.*
 
 class AddressActivity : AppCompatActivity() {
-    lateinit var addressRecyclerView : RecyclerView
-    private var addressViewModel : AddressViewModel? = null
+    private var addressViewModel: AddressViewModel? = null
+    private lateinit var addressAdapter: AddressAdapter
+    private var isCheckOut: Boolean = false
+    private lateinit var isSelected: LiveData<Boolean>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_address)
 
-        var intent: Intent = intent
-        var idAccount: Int? = intent.getIntExtra("idAccount",0)
+        val intent: Intent = intent
+        val idAccount: Int = intent.getIntExtra("idAccount", 0)
+        isCheckOut = intent.getBooleanExtra("isCheckOut", false)
+
+        setUpAddressRecyclerView()
 
         AddressRepository.setContext(this@AddressActivity)
         addressViewModel = ViewModelProviders.of(this).get(AddressViewModel::class.java)
         addressViewModel!!.init()
+        addressViewModel!!.getAddressData(idAccount.toString())
+            ?.observe(this, Observer { retrieveList(it as ArrayList<Address>) })
 
-        addressViewModel!!.getAddressData(idAccount.toString())?.observe(this, Observer { setUpAddressRecyclerView(it) })
+
+        isSelected = addressAdapter.getSate()
+        val observer = Observer<Boolean> { it ->
+            if (it) {
+                onBackPressed()
+            }
+        }
+        isSelected.observe(this, observer)
+
     }
 
-    private fun setUpAddressRecyclerView(listAddress: List<Address>) {
-        addressRecyclerView = findViewById(R.id.address_recycler)
-        val addressAdapter: AddressAdapter = AddressAdapter(this, listAddress)
-        val layoutManager: RecyclerView.LayoutManager = GridLayoutManager(this,1, GridLayoutManager.VERTICAL, false)
-        addressRecyclerView.layoutManager = layoutManager
-        addressRecyclerView.adapter = addressAdapter
+    private fun setUpAddressRecyclerView() {
+        addressAdapter = AddressAdapter(this, arrayListOf(), isCheckOut)
+        val layoutManager: RecyclerView.LayoutManager =
+            GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
+        address_recycler.layoutManager = layoutManager
+        address_recycler.adapter = addressAdapter
     }
-    fun onClickBack(view: View) {
-        super.onBackPressed()
+
+    fun retrieveList(listAddress: ArrayList<Address>) {
+        addressAdapter.changeData(listAddress)
     }
+
+    override fun onBackPressed() {
+        val intent: Intent = Intent()
+        val address: MutableLiveData<Address> = addressAdapter.getAddress()
+        intent.putExtra("name", address.value?.name)
+        intent.putExtra("address", address.value?.address)
+        intent.putExtra("phoneNumber", address.value?.phoneNumber)
+        setResult(RESULT_OK, intent)
+        finish()
+    }
+//    override fun onBackPressed(view: View) {
+//        val intent: Intent = Intent()
+//        intent.putExtra("mess", "test")
+//        setResult(RESULT_OK, intent)
+//        finish()
+//    }
 }

@@ -12,24 +12,24 @@ import com.example.fashionecommercemobileapp.R
 import com.example.fashionecommercemobileapp.adapters.BillAdapter
 import com.example.fashionecommercemobileapp.model.Bill
 import com.example.fashionecommercemobileapp.retrofit.repository.BillRepository
-import com.example.fashionecommercemobileapp.viewmodels.OrderViewModel
+import com.example.fashionecommercemobileapp.viewmodels.BillViewModel
 
 class OrderActivity : AppCompatActivity() {
     lateinit var billRecyclerView: RecyclerView
-    private var orderViewModel: OrderViewModel? = null
-
+    private var billViewModel: BillViewModel? = null
+    private var idCart: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order)
 
         val intent: Intent = intent
-        var idAccount: Int? = intent.getIntExtra("idAccount",0)
+        val idAccount: Int? = intent.getIntExtra("idAccount",0)
+        idCart = intent.getIntExtra("idCart", 0)
 
         BillRepository.Companion.setContext(this@OrderActivity)
-        orderViewModel = ViewModelProviders.of(this).get(OrderViewModel::class.java)
-        orderViewModel!!.init()
-
-        orderViewModel!!.getBillData(idAccount.toString())?.observe(this, Observer { setUpOrderRecyclerView(it) })
+        billViewModel = ViewModelProviders.of(this).get(BillViewModel::class.java)
+        billViewModel!!.init()
+        billViewModel!!.getBillData(idAccount.toString())?.observe(this, Observer { setUpOrderRecyclerView(it) })
     }
 
     private fun setUpOrderRecyclerView(listBill: List<Bill>) {
@@ -39,7 +39,17 @@ class OrderActivity : AppCompatActivity() {
         billRecyclerView.layoutManager = layoutManager
         billRecyclerView.adapter = billAdapter
     }
+
     fun onClickBack(view: View) {
         super.onBackPressed()
+    }
+
+    fun onClickViewDetails(view: View) {
+        val intent = Intent(this, CheckOutActivity::class.java).apply {
+            putExtra("idCart", idCart)
+            putExtra("idAccount", idCart)
+            putExtra("isViewing", true)
+        }
+        startActivity(intent)
     }
 }

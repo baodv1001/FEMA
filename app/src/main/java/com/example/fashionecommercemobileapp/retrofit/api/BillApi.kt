@@ -11,21 +11,12 @@ interface BillApi {
 
     @POST("Bill/post_bill.php")
     @FormUrlEncoded
-    fun createBill(
-        @Field("idBill") idBill: Int?,
+    suspend fun createBill(
         @Field("idAccount") idAccount: Int?,
-        @Field("invoiceDate") invoiceDate: Date?,
+        @Field("invoiceDate") invoiceDate: String?,
         @Field("status") status: String?,
         @Field("totalMoney") totalMoney: Int?
-    ): Call<Boolean>
-
-    @POST("Bill/post_bill_info.php")
-    @FormUrlEncoded
-    fun createBillInfo(
-        @Field("idBill") idBill: Int,
-        @Field("idProduct") idProduct: Int,
-        @Field("quantity") quantity: Int
-    ): Call<Boolean>
+    ): Int
 
     @FormUrlEncoded
     @POST("get_invoice.php")
