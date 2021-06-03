@@ -30,4 +30,21 @@ class WishListViewModel : ViewModel() {
     {
         wishListRepository!!.doDeleteWishProduct(idAccount, idProduct)
     }
+
+    fun addWishToCart(idAccount: Int, idProduct: Int)
+    {
+        wishListRepository!!.doAddWishToCart(idAccount, idProduct)
+    }
+
+    fun addNewWishItem(idAccount: Int, idProduct: Int)
+    {
+        wishListRepository!!.doAddNewWishItem(idAccount, idProduct)
+    }
+
+    fun checkWishItem(idAccount: Int, idProduct: Int) : LiveData<Boolean>?
+    {
+        wishListRepository!!.doCheckWishItem(idAccount,idProduct)
+
+        return wishListRepository!!.getCheckWishItem()
+    }
 }
