@@ -1,6 +1,8 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -23,6 +25,8 @@ class WishListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wishlist)
 
+        val sp: SharedPreferences = getSharedPreferences("Login", Context.MODE_PRIVATE)
+        idAccount = sp.getString("Id", "")?.toInt()!!
         WishListRepository.Companion.setContext(this@WishListActivity)
         wishListViewModel = ViewModelProviders.of(this).get(WishListViewModel::class.java)
         wishListViewModel!!.init()

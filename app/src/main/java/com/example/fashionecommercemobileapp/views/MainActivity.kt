@@ -1,6 +1,8 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -51,6 +53,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val sp: SharedPreferences = getSharedPreferences("Login", Context.MODE_PRIVATE)
+        idAccount = sp.getString("Id", "")?.toInt()!!
         ProductRepository.Companion.setContext(this@MainActivity)
         CategoryRepository.Companion.setContext(this@MainActivity)
         WishListRepository.Companion.setContext(this@MainActivity)

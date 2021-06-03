@@ -2,8 +2,10 @@ package com.example.fashionecommercemobileapp.views
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.InsetDrawable
@@ -15,7 +17,6 @@ import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
-import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -38,8 +39,6 @@ import kotlinx.android.synthetic.main.product_recycler_item.view.*
 
 class MoreProductsActivity : AppCompatActivity() {
     var idAccount: Int = 1
-    var idProductCode: String? = null
-    var productViewModel: ProductViewModel? = null
     private var wishListViewModel: WishListViewModel? = null
     var btnOne: ToggleButton? = null
     var btnTwo: ToggleButton? = null
@@ -59,6 +58,9 @@ class MoreProductsActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_more_products)
+
+        val sp: SharedPreferences = getSharedPreferences("Login", Context.MODE_PRIVATE)
+        idAccount = sp.getString("Id", "")?.toInt()!!
         var intent: Intent = intent
         idProductCode = intent.getStringExtra("idProductCode").toString()
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
@@ -78,7 +80,13 @@ class MoreProductsActivity : AppCompatActivity() {
                     })
             } else {
                 productViewModel!!.getAllFlashSaleData()
-                        ?.observe(this, Observer { setupProductRecyclerView(it) })
+                        ?.observe(this, Observer {
+                            val listProduct = it
+                            wishListViewModel!!.getWishListProductData(idAccount)
+                                    ?.observe(this, Observer { it ->
+                                        setupProductRecyclerView(listProduct, it)
+                                    })
+                        })
             }
         }
         searchProduct()
@@ -128,7 +136,13 @@ class MoreProductsActivity : AppCompatActivity() {
                         currentProducts = currentProducts?.sortedByDescending { x -> x.price }
                     }
                 }
-                currentProducts?.let { setupProductRecyclerView(it) }
+                currentProducts?.let {
+                    val listProduct = it
+                    wishListViewModel!!.getWishListProductData(idAccount)
+                            ?.observe(this, Observer { it ->
+                                setupProductRecyclerView(listProduct, it)
+                            })
+                }
             }
         }
     }
@@ -142,7 +156,13 @@ class MoreProductsActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int,
                                        count: Int) {
                 productViewModel!!.getProductDataByName(txtSearchProduct.text.toString(), idProductCode)
-                        ?.observe(this@MoreProductsActivity, Observer { setupProductRecyclerView(it) })
+                        ?.observe(this@MoreProductsActivity, Observer {
+                            val listProduct = it
+                            wishListViewModel!!.getWishListProductData(idAccount)
+                                    ?.observe(this@MoreProductsActivity, Observer { it ->
+                                        setupProductRecyclerView(listProduct, it)
+                                    })
+                        })
             }
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int,
@@ -238,7 +258,13 @@ class MoreProductsActivity : AppCompatActivity() {
         filterDialog?.hide()
         var res = rating.filter { it.isDigit() }
         productViewModel!!.getProductDataByRating(res, idProductCode, minPrice, maxPrice, if (idProductCode == "0") "0" else "-1")
-                ?.observe(this@MoreProductsActivity, Observer { setupProductRecyclerView(it) })
+                ?.observe(this@MoreProductsActivity, Observer {
+                    val listProduct = it
+                    wishListViewModel!!.getWishListProductData(idAccount)
+                            ?.observe(this@MoreProductsActivity, Observer { it ->
+                                setupProductRecyclerView(listProduct, it)
+                            })
+                })
     }
 
     fun onClickConfirm(view: View) {
