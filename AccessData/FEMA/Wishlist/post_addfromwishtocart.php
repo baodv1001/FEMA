@@ -44,8 +44,13 @@
 
 		$addcartitem = "INSERT INTO cartinfo VALUES('$idCart', '$idProduct', '$quantity')";
 
-		mysqli_query($db->connect(), $addcartitem);
-
+		$result = mysqli_query($db->connect(), $addcartitem);
+			
+		if (!$result)
+			{
+				$updateCartItem = "UPDATE cartinfo SET quantity = quantity + '$quantity' WHERE idCart = '$idCart' AND idProduct = '$idProduct'";
+				mysqli_query($db->connect(), $updateCartItem);
+			}
 		echo "Success";
 	} else echo "Failed";
  }

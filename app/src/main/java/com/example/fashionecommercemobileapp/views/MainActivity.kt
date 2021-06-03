@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
+import androidx.core.view.size
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -39,6 +40,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_more_products.*
 import kotlinx.android.synthetic.main.flash_sale_recycler_item.view.*
 import kotlinx.android.synthetic.main.product_recycler_item.view.*
+import kotlinx.android.synthetic.main.product_recycler_item.view.button_like
+import kotlinx.android.synthetic.main.recommended_recycler_item.view.*
 import java.util.*
 
 
@@ -117,11 +120,11 @@ class MainActivity : AppCompatActivity() {
                 val pos = data.getIntExtra("position", 0)
                 if (check)
                 {
-                    Glide.with(this).load(R.drawable.ic_heartbutton).into(flash_sale_recycler[pos].button)
+                    Glide.with(this).load(R.drawable.ic_heartbutton).into(recommend_recycler[pos].button_like)
                 }
                 else
                 {
-                    Glide.with(this).load(R.drawable.ic_un_heart_button).into(flash_sale_recycler[pos].button)
+                    Glide.with(this).load(R.drawable.ic_un_heart_button).into(recommend_recycler[pos].button_like)
                 }
                 productViewModel!!.getFlashSaleData()
                         ?.observe(this, Observer {
