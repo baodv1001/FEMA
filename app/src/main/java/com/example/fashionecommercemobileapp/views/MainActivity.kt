@@ -97,14 +97,15 @@ class MainActivity : AppCompatActivity() {
             if (resultCode == RESULT_OK && data != null) {
                 val check = data.getBooleanExtra("check", true)
                 val pos = data.getIntExtra("position", 0)
-                if (check)
-                {
-                    Glide.with(this).load(R.drawable.ic_heartbutton).into(flash_sale_recycler[pos].button)
-                }
-                else
-                {
-                    Glide.with(this).load(R.drawable.ic_un_heart_button).into(flash_sale_recycler[pos].button)
-                }
+                if (pos  != flash_sale_recycler.size)
+                    if (check)
+                    {
+                        Glide.with(this).load(R.drawable.ic_heartbutton).into(flash_sale_recycler[pos].button)
+                    }
+                    else
+                    {
+                        Glide.with(this).load(R.drawable.ic_un_heart_button).into(flash_sale_recycler[pos].button)
+                    }
                 productViewModel!!.getRecommendedData()
                         ?.observe(this, Observer {
                             val listRecommend = it
