@@ -102,49 +102,14 @@
             android:layout_width="match_parent"
             android:layout_height="63dp"/>
     </TableLayout>
-    <LinearLayout
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bnvMain"
         android:layout_width="match_parent"
-        android:layout_height="62dp"
+        android:layout_height="wrap_content"
+        app:itemBackground="@color/white"
+        app:itemIconTint="@color/selector"
+        app:itemTextColor="@color/selector"
+        app:menu="@menu/menu_navigation"
         app:layout_constraintBottom_toBottomOf="parent">
-
-        <Button
-            android:id="@+id/home_button"
-            android:layout_width="110dp"
-            android:layout_height="match_parent"
-            app:backgroundTint="#FFFFFF"
-            android:drawableTop="@drawable/ic_outline_home_24"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:paddingHorizontal="0dp"
-            style="@style/Widget.MaterialComponents.Button.TextButton" />
-
-        <Button
-            android:id="@+id/whislist_button"
-            android:layout_height="match_parent"
-            android:layout_width="110dp"
-            app:backgroundTint="#FFFFFF"
-            android:drawableTop="@drawable/ic_baseline_favorite_border_24"
-            android:gravity="center"
-            android:layout_weight="1"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_toRightOf="@+id/home_button" />
-        <Button
-            android:id="@+id/cart_button"
-            android:layout_height="match_parent"
-            android:layout_width="110dp"
-            app:backgroundTint="#FFFFFF"
-            android:drawableTop="@drawable/ic_outline_shopping_cart_24"
-            android:layout_weight="1"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_toRightOf="@+id/whislist_button" />
-        <Button
-            android:id="@+id/me_button"
-            android:layout_height="match_parent"
-            android:layout_width="110dp"
-            android:layout_toRightOf="@id/cart_button"
-            app:backgroundTint="#FFFFFF"
-            android:drawableTop="@drawable/ic_baseline_person_24"
-            android:layout_weight="1"
-            style="@style/Widget.MaterialComponents.Button.TextButton"/>
-    </LinearLayout>
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 </androidx.constraintlayout.widget.ConstraintLayout>

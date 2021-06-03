@@ -20,13 +20,13 @@ import java.util.concurrent.TimeUnit
 class SignUpActivity : AppCompatActivity() {
     private var forceResendingToken: PhoneAuthProvider.ForceResendingToken? = null
     private var mCallbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks? = null
-    private var mVertificationId : String?= null
+    private var mVertificationId: String? = null
     private lateinit var firebaseAuth: FirebaseAuth
-    private var phoneNumberSignUpSuccess : String? = null
+    private var phoneNumberSignUpSuccess: String? = null
 
     private lateinit var progressDialog: ProgressDialog
 
-    private var accountViewModel : AccountViewModel? = null
+    private var accountViewModel: AccountViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,8 +64,8 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
 
-        btnSendOTP.setOnClickListener(){
-            var phone : String = txtPhone.text.toString()
+        btnSendOTP.setOnClickListener() {
+            var phone: String = txtPhone.text.toString()
             if (checkEnterInfo()) {
                 if (phone[0] == '0') {
                     phone = phone.drop(1)
@@ -75,8 +75,8 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
 
-        btnResendOTP.setOnClickListener(){
-            var phone : String = txtPhone.text.toString()
+        btnResendOTP.setOnClickListener() {
+            var phone: String = txtPhone.text.toString()
             if (checkEnterInfo()) {
                 if (phone[0] == '0') {
                     phone = phone.drop(1)
@@ -86,49 +86,44 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
 
-        btnSign.setOnClickListener(){
-            if (txtOTP.text.toString().isEmpty())
-            {
+        btnSign.setOnClickListener() {
+            if (txtOTP.text.toString().isEmpty()) {
                 Toast.makeText(this@SignUpActivity, "Please enter your verification code...", Toast.LENGTH_SHORT).show()
-            }
-            else
-            {
+            } else {
                 if (checkEnterInfo())
-                    verifyPhoneNumberWithCode(mVertificationId , txtOTP.text.toString())
+                    verifyPhoneNumberWithCode(mVertificationId, txtOTP.text.toString())
             }
         }
     }
 
-    private fun sendVerificationCode(phone: String)
-    {
+    private fun sendVerificationCode(phone: String) {
         progressDialog.setMessage("Verifying Phone Number...")
         progressDialog.show()
 
         val options = PhoneAuthOptions.newBuilder(firebaseAuth)
-            .setPhoneNumber(phone)
-            .setTimeout(60L, TimeUnit.SECONDS)
-            .setActivity(this)
-            .setCallbacks(mCallbacks)
-            .build()
+                .setPhoneNumber(phone)
+                .setTimeout(60L, TimeUnit.SECONDS)
+                .setActivity(this)
+                .setCallbacks(mCallbacks)
+                .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
-    private fun reSendVerificationCode(phone:String, token : PhoneAuthProvider.ForceResendingToken?)
-    {
+
+    private fun reSendVerificationCode(phone: String, token: PhoneAuthProvider.ForceResendingToken?) {
         progressDialog.setMessage("Resending code...")
         progressDialog.show()
 
         val options = PhoneAuthOptions.newBuilder(firebaseAuth)
-            .setPhoneNumber(phone)
-            .setTimeout(60L, TimeUnit.SECONDS)
-            .setActivity(this)
-            .setCallbacks(mCallbacks)
-            .setForceResendingToken(token)
-            .build()
+                .setPhoneNumber(phone)
+                .setTimeout(60L, TimeUnit.SECONDS)
+                .setActivity(this)
+                .setCallbacks(mCallbacks)
+                .setForceResendingToken(token)
+                .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
-    private fun verifyPhoneNumberWithCode(verificationId:  String?, code :String)
-    {
+    private fun verifyPhoneNumberWithCode(verificationId: String?, code: String) {
         progressDialog.setMessage("Verifying code...")
         progressDialog.show()
 
@@ -141,23 +136,21 @@ class SignUpActivity : AppCompatActivity() {
         progressDialog.show()
 
         firebaseAuth.signInWithCredential(credential)
-            .addOnSuccessListener {
-                phoneNumberSignUpSuccess = firebaseAuth.currentUser.phoneNumber
-                regiter()
-                progressDialog.dismiss()
-                //finish()
-            }
-            .addOnFailureListener{ e->
-                progressDialog.dismiss()
-                Toast.makeText(this@SignUpActivity, "${e.message}", Toast.LENGTH_SHORT).show()
-            }
+                .addOnSuccessListener {
+                    phoneNumberSignUpSuccess = firebaseAuth.currentUser.phoneNumber
+                    regiter()
+                    progressDialog.dismiss()
+                    //finish()
+                }
+                .addOnFailureListener { e ->
+                    progressDialog.dismiss()
+                    Toast.makeText(this@SignUpActivity, "${e.message}", Toast.LENGTH_SHORT).show()
+                }
     }
 
-    private  fun checkEnterInfo() :Boolean
-    {
+    private fun checkEnterInfo(): Boolean {
         if (txtUsername.text.toString().isEmpty() || txtPhone.text.toString().isEmpty() || txtName.text.toString().isEmpty()
-            || txtPassword.text.toString().isEmpty() || txtRepassword.text.toString().isEmpty())
-        {
+                || txtPassword.text.toString().isEmpty() || txtRepassword.text.toString().isEmpty()) {
             Toast.makeText(this@SignUpActivity, "Field must be fill...!", Toast.LENGTH_SHORT).show()
             return false
         } else if (!txtPassword.text.toString().equals(txtRepassword.text.toString())) {
@@ -168,8 +161,7 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun regiter()
-    {
+    private fun regiter() {
         val username = txtUsername.text.toString()
         val password = txtPassword.text.toString()
         val name = txtName.text.toString()

@@ -1,10 +1,13 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -13,14 +16,18 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
-import com.example.fashionecommercemobileapp.adapters.*
+import com.example.fashionecommercemobileapp.R
+import com.example.fashionecommercemobileapp.adapters.CategoryAdapter
+import com.example.fashionecommercemobileapp.adapters.FlashSaleAdapter
+import com.example.fashionecommercemobileapp.adapters.RecommendAdapter
+import com.example.fashionecommercemobileapp.adapters.SwipeAdapter
 import com.example.fashionecommercemobileapp.model.Category
 import com.example.fashionecommercemobileapp.model.Product
-import com.example.fashionecommercemobileapp.R
 import com.example.fashionecommercemobileapp.retrofit.repository.CategoryRepository
 import com.example.fashionecommercemobileapp.retrofit.repository.ProductRepository
 import com.example.fashionecommercemobileapp.viewmodels.CategoryViewModel
 import com.example.fashionecommercemobileapp.viewmodels.ProductViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -39,20 +46,21 @@ class MainActivity : AppCompatActivity() {
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
         productViewModel!!.init()
         productViewModel!!.getRecommendedData()
-            ?.observe(this, Observer { setupRecommendedRecyclerView(it) })
+                ?.observe(this, Observer { setupRecommendedRecyclerView(it) })
         productViewModel!!.getFlashSaleData()
-            ?.observe(this, Observer { setupFlashSaleRecyclerView(it) })
+                ?.observe(this, Observer { setupFlashSaleRecyclerView(it) })
         categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel::class.java)
         categoryViewModel!!.init()
         categoryViewModel!!.getCategoryData()
-            ?.observe(this, Observer { setupCategoryRecyclerView(it) })
+                ?.observe(this, Observer { setupCategoryRecyclerView(it) })
         initSlideShow()
+        handleNavigation()
     }
 
     private fun setupRecommendedRecyclerView(productList: List<Product>) {
         var recommendAdapter: RecommendAdapter = RecommendAdapter(this, productList)
         val layoutManager: RecyclerView.LayoutManager =
-            GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
+                GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
         recommend_recycler.layoutManager = layoutManager
         recommend_recycler.adapter = recommendAdapter
     }
@@ -60,7 +68,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupFlashSaleRecyclerView(flashSaleList: List<Product>) {
         var flashSaleAdapter: FlashSaleAdapter = FlashSaleAdapter(this, flashSaleList)
         val layoutManager: RecyclerView.LayoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         flash_sale_recycler.layoutManager = layoutManager
         flash_sale_recycler.adapter = flashSaleAdapter
     }
@@ -68,7 +76,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupCategoryRecyclerView(categoryList: List<Category>) {
         var categoryAdapter: CategoryAdapter = CategoryAdapter(this, categoryList)
         val layoutManager: RecyclerView.LayoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         category_recycler.layoutManager = layoutManager
         category_recycler.adapter = categoryAdapter
     }
@@ -112,9 +120,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
             ) {
 
             }
@@ -151,25 +159,50 @@ class MainActivity : AppCompatActivity() {
             listdots?.set(i, ImageView(this))
             if (i == currentSlidePosition)
                 listdots[i].setImageDrawable(
-                    ContextCompat.getDrawable(
-                        this,
-                        R.drawable.active_dots
-                    )
+                        ContextCompat.getDrawable(
+                                this,
+                                R.drawable.active_dots
+                        )
                 )
             else
                 listdots[i].setImageDrawable(
-                    ContextCompat.getDrawable(
-                        this,
-                        R.drawable.inactive_dots
-                    )
+                        ContextCompat.getDrawable(
+                                this,
+                                R.drawable.inactive_dots
+                        )
                 )
             var layoutParam: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
             )
             layoutParam.setMargins(4, 0, 4, 0)
             dotsContainer.addView(listdots[i], layoutParam)
 
         }
+    }
+
+    private fun handleNavigation() {
+        var navigationBar: BottomNavigationView = bnvMain
+
+        navigationBar.selectedItemId = R.id.home_nvg
+        navigationBar.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.wish_list -> startActivity(Intent(this@MainActivity, WishListActivity::class.java))
+                R.id.cart -> startActivity(Intent(this@MainActivity, CartActivity::class.java))
+                R.id.profile -> startActivity(Intent(this@MainActivity, AccountActivity::class.java))
+            }
+            this.finish()
+            true
+        })
+    }
+
+    fun onClickOpenSearch(view: View) {
+        startActivity(Intent(this@MainActivity, SearchActivity::class.java))
+    }
+
+    fun onClickViewFlashSale(view: View) {
+        val intent = Intent(this, MoreProductsActivity::class.java).apply { }
+        intent.putExtra("idProductCode", "0")
+        startActivity(intent)
     }
 }
