@@ -30,14 +30,14 @@ class RecommendAdapter(
     private val recommendedList: List<Product> = recommendedList
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecommendedViewHolder {
         val view: View =
-            LayoutInflater.from(context).inflate(R.layout.recommended_recycler_item, parent, false)
+                LayoutInflater.from(context).inflate(R.layout.recommended_recycler_item, parent, false)
         return RecommendedViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecommendedViewHolder, position: Int) {
         holder.recommendName.text = recommendedList[position].name
         holder.recommendSalePrice.text =
-            (recommendedList[position].discount!!.toFloat() * recommendedList[position].price!!.toFloat()).toString()
+                (recommendedList[position].discount!!.toFloat() * recommendedList[position].price!!.toFloat()).toString()
         holder.recommendedRating.rating = recommendedList[position].rating?.toFloat()!!
         holder.recommendPrice.text = recommendedList[position].price
         Glide.with(context).load(recommendedList[position].imageFile).into(holder.recommendImage)
@@ -78,7 +78,7 @@ class RecommendAdapter(
     }
 
     class RecommendedViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
+            RecyclerView.ViewHolder(itemView) {
         var recommendImage: ImageView = itemView.findViewById(R.id.recommend_image)
         var recommendName: TextView = itemView.findViewById(R.id.recommend_name)
         var recommendSalePrice: TextView = itemView.findViewById(R.id.recommend_sale_price)
@@ -89,7 +89,7 @@ class RecommendAdapter(
 
     private fun getScreenWidth(context: Context): Int {
         val wm = context
-            .getSystemService(Context.WINDOW_SERVICE) as WindowManager
+                .getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val dm = DisplayMetrics()
         wm.defaultDisplay.getMetrics(dm)
         return dm.widthPixels

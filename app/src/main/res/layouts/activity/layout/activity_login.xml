@@ -115,6 +115,7 @@
             android:gravity="right"
             android:minHeight="38dip"
             android:text="Quên mật khẩu"
+            android:onClick="onClickForgotPassword"
             android:textAllCaps="false"
             android:textColor="@color/dark"
             android:textStyle="bold" />
