@@ -46,7 +46,8 @@ android {
                         'src\\main\\res\\layouts\\swipe',
                         'src\\main\\res\\layours\\wishlist',
                         'src\\main\\res\\layouts\\wishlist',
-                        'src\\main\\res\\layouts\\cart'
+                        'src\\main\\res\\layouts\\cart',
+                        'src\\main\\res\\layouts\\others'
 
             }
         }

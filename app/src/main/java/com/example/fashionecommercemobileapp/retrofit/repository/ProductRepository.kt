@@ -79,7 +79,44 @@ class ProductRepository {
 
         })
     }
+    fun doProductByNameRequest(name: String,idProductCode: String) {
+        val callProduct: Call<List<Product>> = productApi!!.getProductByName(name,idProductCode)
+        callProduct.enqueue(object : Callback<List<Product>> {
+            override fun onResponse(
+                    call: Call<List<Product>>,
+                    response: Response<List<Product>>
+            ) {
+                response.body()?.let { setProductData(it) }
+            }
 
+            override fun onFailure(
+                    call: Call<List<Product>>,
+                    t: Throwable
+            ) {
+                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+    fun getProductByRatingPrice(rating: String,idProductCode: String,minPrice:String,maxPrice:String,discount:String) {
+        val callProduct: Call<List<Product>> = productApi!!.getProductByRating(rating,idProductCode,minPrice,maxPrice,discount)
+        callProduct.enqueue(object : Callback<List<Product>> {
+            override fun onResponse(
+                    call: Call<List<Product>>,
+                    response: Response<List<Product>>
+            ) {
+                response.body()?.let { setProductData(it) }
+            }
+
+            override fun onFailure(
+                    call: Call<List<Product>>,
+                    t: Throwable
+            ) {
+                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
     fun doFlashSaleRequest() {
         val callProduct: Call<List<Product>> = productApi!!.getFlashSale()
         callProduct.enqueue(object : Callback<List<Product>> {
@@ -93,6 +130,25 @@ class ProductRepository {
             override fun onFailure(
                 call: Call<List<Product>>,
                 t: Throwable
+            ) {
+                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+    fun doAllFlashSaleRequest() {
+        val callProduct: Call<List<Product>> = productApi!!.getAllFlashSale()
+        callProduct.enqueue(object : Callback<List<Product>> {
+            override fun onResponse(
+                    call: Call<List<Product>>,
+                    response: Response<List<Product>>
+            ) {
+                response.body()?.let { setFlashSaleData(it) }
+            }
+
+            override fun onFailure(
+                    call: Call<List<Product>>,
+                    t: Throwable
             ) {
                 Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
             }

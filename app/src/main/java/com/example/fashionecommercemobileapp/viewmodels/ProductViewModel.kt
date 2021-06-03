@@ -16,6 +16,7 @@ import com.example.fashionecommercemobileapp.retrofit.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import java.util.*
 import kotlin.concurrent.schedule
+import kotlin.math.min
 
 
 class ProductViewModel : ViewModel() {
@@ -29,9 +30,8 @@ class ProductViewModel : ViewModel() {
             return
         }
         productRepository = ProductRepository()
-        productRepository!!.doFlashSaleRequest()
+
         productRepository!!.doRecommendedRequest()
-        flashSaleData = productRepository?.getFlashSaleData()
         recommendedData = productRepository?.getRecommendedData()
     }
 
@@ -50,7 +50,27 @@ class ProductViewModel : ViewModel() {
         return productData
     }
 
+    fun getProductDataByName(name: String, idProductCode: String): LiveData<List<Product>>? {
+        productRepository!!.doProductByNameRequest(name, idProductCode)
+        productData = productRepository?.getProductData()
+        return productData
+    }
+
+    fun getProductDataByRating(rating: String, idProductCode: String, minPrice: String, maxPrice: String, discount: String): LiveData<List<Product>>? {
+        productRepository!!.getProductByRatingPrice(rating, idProductCode, minPrice, maxPrice, discount)
+        productData = productRepository?.getProductData()
+        return productData
+    }
+
     fun getFlashSaleData(): LiveData<List<Product>>? {
+        productRepository!!.doFlashSaleRequest()
+        flashSaleData = productRepository?.getFlashSaleData()
+        return flashSaleData
+    }
+
+    fun getAllFlashSaleData(): LiveData<List<Product>>? {
+        productRepository!!.doAllFlashSaleRequest()
+        flashSaleData = productRepository?.getFlashSaleData()
         return flashSaleData
     }
 

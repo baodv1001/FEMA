@@ -1,5 +1,6 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -32,6 +33,8 @@ class AddressActivity : AppCompatActivity() {
         isCheckOut = intent.getBooleanExtra("isCheckOut", false)
 
         setUpAddressRecyclerView()
+        val sp1 = getSharedPreferences("Login", Context.MODE_PRIVATE)
+        val idAccount = sp1.getString("Id", null)
 
         AddressRepository.setContext(this@AddressActivity)
         addressViewModel = ViewModelProviders.of(this).get(AddressViewModel::class.java)

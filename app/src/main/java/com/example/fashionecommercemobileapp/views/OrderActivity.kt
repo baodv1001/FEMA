@@ -1,5 +1,6 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -25,6 +26,8 @@ class OrderActivity : AppCompatActivity() {
         val intent: Intent = intent
         val idAccount: Int? = intent.getIntExtra("idAccount",0)
         idCart = intent.getIntExtra("idCart", 0)
+        val sp1 = getSharedPreferences("Login", Context.MODE_PRIVATE)
+        val idAccount = sp1.getString("Id", null)
 
         BillRepository.Companion.setContext(this@OrderActivity)
         billViewModel = ViewModelProviders.of(this).get(BillViewModel::class.java)

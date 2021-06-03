@@ -6,9 +6,9 @@ import com.google.gson.annotations.SerializedName
 class ProductCode {
     @SerializedName ("id")
     @Expose
-    var id : Int? = null
+    private var id : Int? = null
 
     @SerializedName ("name")
     @Expose
-    var name : String? = null
+    private var name : String? = null
 }
