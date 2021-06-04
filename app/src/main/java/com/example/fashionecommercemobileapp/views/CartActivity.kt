@@ -1,6 +1,7 @@
 package com.example.fashionecommercemobileapp.views
 
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -48,6 +49,10 @@ class CartActivity : AppCompatActivity() {
         CartRepository.Companion.setContext(this@CartActivity)
         ProductRepository.Companion.setContext(this@CartActivity)
         CouponRepository.Companion.setContext(this@CartActivity)
+
+        val spf = getSharedPreferences("Login", Context.MODE_PRIVATE)
+        idCart = spf.getString("Id", "0")?.toInt() ?: 0
+        Toast.makeText(this, idCart.toString(), Toast.LENGTH_SHORT).show()
 
         setUpViewModel()
         setUpRecyclerView()
@@ -217,7 +222,7 @@ class CartActivity : AppCompatActivity() {
     }
 
     private fun handleNavigation() {
-        var navigationBar: BottomNavigationView = bnvMain
+        var navigationBar: BottomNavigationView = bnvMain_cart
 
         navigationBar.selectedItemId = R.id.cart
         navigationBar.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->

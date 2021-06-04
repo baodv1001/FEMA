@@ -310,22 +310,22 @@
             android:id="@+id/btnCartCart"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_toRightOf="@id/btnWishlistCart"
+            android:layout_toRightOf="@id/btnWishListCart"
             android:background="@color/white"
             android:text="Cart"
             tools:ignore="MissingConstraints" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnWishlistCart"
+            android:id="@+id/btnWishListCart"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_toRightOf="@id/btnHomeCart"
             android:background="@color/white"
-            android:text="Wishlist"
+            android:text="WishList"
             tools:ignore="MissingConstraints" />
     </RelativeLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bnvMain"
+        android:id="@+id/bnvMain_cart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:itemBackground="@color/white"

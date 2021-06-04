@@ -29,18 +29,19 @@ class AddressActivity : AppCompatActivity() {
         setContentView(R.layout.activity_address)
 
         val intent: Intent = intent
-        val idAccount: Int = intent.getIntExtra("idAccount", 0)
         isCheckOut = intent.getBooleanExtra("isCheckOut", false)
 
         setUpAddressRecyclerView()
-        val sp1 = getSharedPreferences("Login", Context.MODE_PRIVATE)
-        val idAccount = sp1.getString("Id", null)
+        val spf = getSharedPreferences("Login", Context.MODE_PRIVATE)
+        val idAccount = spf.getString("Id", null)
 
         AddressRepository.setContext(this@AddressActivity)
         addressViewModel = ViewModelProviders.of(this).get(AddressViewModel::class.java)
         addressViewModel!!.init()
-        addressViewModel!!.getAddressData(idAccount.toString())
-            ?.observe(this, Observer { retrieveList(it as ArrayList<Address>) })
+        if (idAccount != null) {
+            addressViewModel!!.getAddressData(idAccount)
+                ?.observe(this, Observer { retrieveList(it as ArrayList<Address>) })
+        }
 
 
         isSelected = addressAdapter.getSate()
@@ -74,10 +75,4 @@ class AddressActivity : AppCompatActivity() {
         setResult(RESULT_OK, intent)
         finish()
     }
-//    override fun onBackPressed(view: View) {
-//        val intent: Intent = Intent()
-//        intent.putExtra("mess", "test")
-//        setResult(RESULT_OK, intent)
-//        finish()
-//    }
 }

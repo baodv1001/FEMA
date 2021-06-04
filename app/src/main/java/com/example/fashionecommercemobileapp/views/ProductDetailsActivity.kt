@@ -9,7 +9,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import android.widget.RadioButton
-import android.widget.Toast
 import androidx.core.view.get
 import androidx.core.view.size
 import androidx.lifecycle.Observer
@@ -24,10 +23,12 @@ import com.example.fashionecommercemobileapp.viewmodels.ProductInfoViewModel
 import com.example.fashionecommercemobileapp.viewmodels.ProductViewModel
 import kotlinx.android.synthetic.main.activity_product_details.*
 
+class ProductDetailsActivity : AppCompatActivity() {
     var isLiked: Boolean = true
     var id: Int = 0
     var quantity: Int = 0
     var productInfoViewModel: ProductInfoViewModel? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_details)
         id = intent.getStringExtra("idProduct")?.toInt() ?: 0

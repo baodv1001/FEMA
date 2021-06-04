@@ -2,9 +2,9 @@ package com.example.fashionecommercemobileapp.views
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,22 +23,22 @@ class OrderActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order)
 
-        val intent: Intent = intent
-        val idAccount: Int? = intent.getIntExtra("idAccount",0)
-        idCart = intent.getIntExtra("idCart", 0)
         val sp1 = getSharedPreferences("Login", Context.MODE_PRIVATE)
         val idAccount = sp1.getString("Id", null)
+        idCart = idAccount?.toInt() ?: 0
 
         BillRepository.Companion.setContext(this@OrderActivity)
         billViewModel = ViewModelProviders.of(this).get(BillViewModel::class.java)
         billViewModel!!.init()
-        billViewModel!!.getBillData(idAccount.toString())?.observe(this, Observer { setUpOrderRecyclerView(it) })
+        billViewModel!!.getBillData(idAccount.toString())
+            ?.observe(this, Observer { setUpOrderRecyclerView(it) })
     }
 
     private fun setUpOrderRecyclerView(listBill: List<Bill>) {
         billRecyclerView = findViewById(R.id.order_recycler)
         val billAdapter: BillAdapter = BillAdapter(this, listBill)
-        val layoutManager: RecyclerView.LayoutManager = GridLayoutManager(this,1,GridLayoutManager.VERTICAL,false)
+        val layoutManager: RecyclerView.LayoutManager =
+            GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         billRecyclerView.layoutManager = layoutManager
         billRecyclerView.adapter = billAdapter
     }
