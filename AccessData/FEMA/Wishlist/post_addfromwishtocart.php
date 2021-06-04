@@ -28,15 +28,6 @@
 		{
 			$idCart = $row[0];
 		}
-
-		$query1 = "SELECT * FROM wishlistinfo where idWishlist = '$idWishlist' and idProduct = '$idProduct'";
-
-		$check = mysqli_query($db->connect(), $query1);
-
-		while ($row = $check->fetch_row())
-		{
-			$quantity = $row[2];
-		}
 		
 		$deletewishitem = "DELETE FROM wishlistinfo where idProduct = '$idProduct' and idWishlist = '$idWishlist' ";
 
@@ -48,7 +39,7 @@
 			
 		if (!$result)
 			{
-				$updateCartItem = "UPDATE cartinfo SET quantity = quantity + '$quantity' WHERE idCart = '$idCart' AND idProduct = '$idProduct'";
+				$updateCartItem = "UPDATE cartinfo SET quantity = quantity + 1 WHERE idCart = '$idCart' AND idProduct = '$idProduct'";
 				mysqli_query($db->connect(), $updateCartItem);
 			}
 		echo "Success";

@@ -21,7 +21,7 @@
 				$idWishlist = $row[0];
 			}
 
-			$query2 = "INSERT INTO wishlistinfo VALUES ('$idWishlist', '$idProduct', 1)";
+			$query2 = "INSERT INTO wishlistinfo VALUES ('$idWishlist', '$idProduct')";
 			$result = mysqli_query($db->connect(),$query2);
 			
 			if ($result)

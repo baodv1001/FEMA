@@ -20,7 +20,7 @@
         tools:src="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/nameCartItem"
+        android:id="@+id/nameWishItem"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
@@ -45,10 +45,10 @@
         android:textColor="@color/gray"
         android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/imageProduct"
-        app:layout_constraintTop_toBottomOf="@+id/nameCartItem" />
+        app:layout_constraintTop_toBottomOf="@+id/nameWishItem" />
 
     <TextView
-        android:id="@+id/costCartItem"
+        android:id="@+id/costWishItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="14dp"
@@ -64,10 +64,10 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnDelaWishProduct"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/ic_delete_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -90,7 +90,7 @@
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginTop="16dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="24dp"
         android:background="@drawable/ic_baseline_shopping_cart_24"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

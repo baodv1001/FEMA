@@ -20,9 +20,9 @@ class WishlistAdapter(private val context: Context, private val wishList: Mutabl
     private var productDetailsCodeRequest: Int = 0
     private  var newWishList = wishList
     class ViewHolder(view: View):RecyclerView.ViewHolder(view){
-        var nameItem : TextView = view.findViewById(R.id.nameCartItem)
+        var nameItem : TextView = view.findViewById(R.id.nameWishItem)
         var infoItem : TextView = view.findViewById(R.id.infoWishlistItem)
-        var costItem : TextView = view.findViewById(R.id.costCartItem)
+        var costItem : TextView = view.findViewById(R.id.costWishItem)
         var imageItem: ImageView = view.findViewById(R.id.imageProduct)
         var idItem : TextView = view.findViewById(R.id.idProduct)
     }
