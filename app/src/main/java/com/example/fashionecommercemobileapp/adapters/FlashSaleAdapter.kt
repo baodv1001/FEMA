@@ -36,7 +36,7 @@ class FlashSaleAdapter(
     override fun onBindViewHolder(holder: FlashSaleViewHolder, position: Int) {
         holder.flashSaleName.text = flashSaleList[position].name
         holder.flashSaleSalePrice.text =
-            (flashSaleList[position].discount!!.toFloat() * flashSaleList[position].price!!.toFloat()).toString()
+                ((1 - flashSaleList[position].discount!!.toFloat()) * flashSaleList[position].price!!.toFloat()).toString()
         holder.flashSalePrice.text = flashSaleList[position].price
         Glide.with(context).load(flashSaleList[position].imageFile).into(holder.flashSaleImage)
         if (position == flashSaleList.size - 1) {
