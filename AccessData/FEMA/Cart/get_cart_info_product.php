@@ -5,10 +5,11 @@
     
     $idCart = $_REQUEST['idCart'];
     $idProduct = $_REQUEST['idProduct'];
+    
     $response = array();
     $result = mysqli_query($db->connect(), 
       "SELECT * FROM cartinfo 
-      WHERE idCart = $idCart and idProduct = $idProduct");
+      WHERE idCart = '$idCart' and idProduct = '$idProduct'");
     
     while($row = mysqli_fetch_assoc($result)) {
       $data = array();
@@ -18,9 +19,10 @@
       
       array_push($response, $data);
     }
-    
+    if(is_null($response))
+      echo json_encode(null);
     header("Content-Type: Json");
-    echo json_encode($response);
+    echo json_encode($response[0]);
   }
   getCartInfo();
 ?>

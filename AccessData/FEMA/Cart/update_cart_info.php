@@ -3,13 +3,13 @@
   function updateCartInfo() {
     $db = new dbConnect();
 
-    $idCart   = isset($_POST["idCart"]) ? $_POST["idCart"] : '';
-    $idProduct = isset($_POST["idProduct"]) ? $_POST["idProduct"] : '';
-    $quantity = isset($_POST["quantity"]) ? $_POST["quantity"] : '';
-    
+    $idCart = $_REQUEST['idCart'];
+    $idProduct = $_REQUEST['idProduct'];
+    $quantity = $_REQUEST['quantity'];
+
     if (!empty($idCart) && !empty($idProduct) && !empty($quantity)) {
-      $query = "UPDATE CartInfo SET quantity = $quantity WHERE idCart = $idCart and idProduct = $idProduct";
-      $result = mysqli_query($con, $query);
+      $query = "UPDATE CartInfo SET quantity = '$quantity' WHERE idCart = $idCart and idProduct = $idProduct";
+      $result = mysqli_query($db->connect(), $query);
       if ($result) {
         $resultData = true;
       } else {

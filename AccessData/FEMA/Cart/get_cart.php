@@ -16,7 +16,6 @@
       
       array_push($response, $data);
     }
-
     header("Content-Type: Json");
     echo json_encode($response[0]);
   }

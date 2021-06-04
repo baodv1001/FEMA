@@ -3,18 +3,24 @@
   function createBill() {
     $db = new dbConnect();
 
-    $idBill = $_REQUEST['idBill'];
     $idAccount = $_REQUEST['idAccount'];
     $invoiceDate = $_REQUEST['invoiceDate'];
     $status = $_REQUEST['status'];
     $totalMoney = $_REQUEST['totalMoney'];
 
     $result = mysqli_query($db->connect(), 
-      "INSERT INTO `bill` (`idBill`, `idAccount`, `invoiceDate`, `status`, `totalMoney`) 
-      VALUES ('$idBill', '$idAccount',' $invoiceDate', '$status', '$totalMoney');");
+      "INSERT INTO bill (idAccount, invoiceDate, `status`, totalMoney) 
+      VALUES ('$idAccount',' $invoiceDate', '$status', '$totalMoney')");
 
     header("Content-Type: Json");
-    echo json_encode($result);
+    if($result) {
+      $res = mysqli_query($db->connect(), 
+      "SELECT MAX(idBill) as idBill FROM bill");
+      $row = mysqli_fetch_assoc($res);
+      echo json_encode($row['idBill']);
+    } else {
+      echo json_encode("0");
+    }
   }
   createBill();
 ?>
