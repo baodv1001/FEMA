@@ -50,7 +50,7 @@ class MoreProductsActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_more_products)
-        var intent: Intent = intent
+        val intent: Intent = intent
         idProductCode = intent.getStringExtra("idProductCode").toString()
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
         productViewModel!!.init()

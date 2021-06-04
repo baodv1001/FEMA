@@ -53,28 +53,6 @@ class CheckOutActivity : AppCompatActivity() {
         setUpCartInfoObservers(idCart)
         getAddress()
 
-
-//        val pref = applicationContext.getSharedPreferences("Address", 0)
-//
-//        loadAddress(
-//            pref.getString("name", ""),
-//            pref.getString("address", ""),
-//            pref.getString("phoneNumber", "")
-//        )
-
-//        val addressAdapter = AddressAdapter(this, arrayListOf(), false)
-//        val address: LiveData<Boolean> = addressAdapter.getSate()
-//        val observer = Observer<Boolean> { it ->
-//            if (it) {
-//                loadAddress(
-//                    pref.getString("name", ""),
-//                    pref.getString("address", ""),
-//                    pref.getString("phoneNumber", "")
-//                )
-//            }
-//        }
-//        address.observe(this, observer)
-
         if (isViewing) {
             button_confirm.visibility = View.GONE
             button_select_address.visibility = View.GONE
