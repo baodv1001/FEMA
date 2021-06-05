@@ -7,6 +7,7 @@ import com.example.fashionecommercemobileapp.retrofit.repository.UserRepository
 import com.example.fashionecommercemobileapp.model.User
 import com.example.fashionecommercemobileapp.retrofit.utils.Resource
 import kotlinx.coroutines.Dispatchers
+import java.util.*
 
 class UserViewModel: ViewModel() {
     private var userData: MutableLiveData<List<User>>? = null
@@ -25,5 +26,9 @@ class UserViewModel: ViewModel() {
         catch (exception: Exception) {
             emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
         }
+    }
+
+    fun updateUserDate(idAccount: Int, name: String, gender: String, dateOfBirth: String) {
+        userRepository?.doUpdateUserRequest(idAccount, name, gender, dateOfBirth)
     }
 }

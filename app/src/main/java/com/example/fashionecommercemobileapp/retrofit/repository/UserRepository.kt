@@ -10,6 +10,7 @@ import com.example.fashionecommercemobileapp.retrofit.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
 
 class UserRepository {
     private var listUsers: MutableLiveData<List<User>>? = MutableLiveData<List<User>>()
@@ -38,6 +39,18 @@ class UserRepository {
         }
     }
     suspend fun doUserRequest(idAccount: String) = userApi.getUser(idAccount)
+    fun doUpdateUserRequest(idAccount: Int, name: String, gender: String, dateOfBirth: String) {
+        val call = userApi.updateUser(idAccount, name, gender, dateOfBirth)
+        call.enqueue(object: Callback<String> {
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+
+            }
+        })
+    }
 
     /*init {
         val retrofit = RetrofitClient()
