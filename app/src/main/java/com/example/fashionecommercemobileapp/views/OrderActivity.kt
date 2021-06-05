@@ -23,8 +23,8 @@ class OrderActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order)
 
-        val sp1 = getSharedPreferences("Login", Context.MODE_PRIVATE)
-        val idAccount = sp1.getString("Id", null)
+        val spf = getSharedPreferences("Login", Context.MODE_PRIVATE)
+        val idAccount = spf.getString("Id", null)
         idCart = idAccount?.toInt() ?: 0
 
         BillRepository.Companion.setContext(this@OrderActivity)

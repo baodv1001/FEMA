@@ -22,18 +22,18 @@ import com.example.fashionecommercemobileapp.retrofit.utils.Status
 import com.example.fashionecommercemobileapp.viewmodels.CartViewModel
 import com.example.fashionecommercemobileapp.viewmodels.CouponViewModel
 import com.example.fashionecommercemobileapp.viewmodels.ProductViewModel
-import kotlinx.android.synthetic.main.activity_cart.*
-import kotlinx.android.synthetic.main.activity_login.*
-import java.text.NumberFormat
-import java.util.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_account.*
+import kotlinx.android.synthetic.main.activity_cart.*
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_profile.*
+import java.text.NumberFormat
+import java.util.*
 
 class CartActivity : AppCompatActivity() {
     private var cartInfoList: ArrayList<CartInfo> = arrayListOf()
     private var productList: ArrayList<Product> = arrayListOf()
-    private var idCart: Int = 0
+    private var idAccount: Int = 0
 
     private lateinit var idDeleteProduct: LiveData<Int>
     private lateinit var isUpdatedCart: LiveData<Boolean>
@@ -51,8 +51,7 @@ class CartActivity : AppCompatActivity() {
         CouponRepository.Companion.setContext(this@CartActivity)
 
         val spf = getSharedPreferences("Login", Context.MODE_PRIVATE)
-        idCart = spf.getString("Id", "0")?.toInt() ?: 0
-        Toast.makeText(this, idCart.toString(), Toast.LENGTH_SHORT).show()
+        idAccount = spf.getString("Id", "0")?.toInt() ?: 0
 
         setUpViewModel()
         setUpRecyclerView()
@@ -61,7 +60,7 @@ class CartActivity : AppCompatActivity() {
         idDeleteProduct = cartAdapter.getIdDeletedProduct()
         val observer = Observer<Int> { idDeletedProduct ->
             if (idDeletedProduct != 0) {
-                cartViewModel.deleteCartInfo(idCart, idDeletedProduct)
+                cartViewModel.deleteCartInfo(idAccount, idDeletedProduct)
             }
         }
         idDeleteProduct.observe(this, observer)
@@ -72,18 +71,23 @@ class CartActivity : AppCompatActivity() {
                 val id = cartAdapter.getIdProduct().value
                 val quantity = cartAdapter.getQuantity().value
                 if (quantity != null && id != null) {
-                    cartViewModel.updateCartInfo(idCart, id, quantity)
+                    cartViewModel.updateCartInfo(idAccount, id, quantity)
                     loadData(cartInfoList, productList)
                 }
             }
         }
         isUpdatedCart.observe(this, updatedObserver)
+
+        handleNavigation()
     }
 
     fun onClickCheckOut(view: View) {
+        if (cartInfoList.isEmpty()) {
+            Toast.makeText(this, "Your cart is empty", Toast.LENGTH_SHORT).show()
+            return
+        }
         val intent = Intent(this, CheckOutActivity::class.java).apply {
-            putExtra("idCart", idCart)
-            putExtra("idAccount", idCart)
+            putExtra("idAccount", idAccount)
         }
         startActivity(intent)
     }
@@ -143,14 +147,14 @@ class CartActivity : AppCompatActivity() {
                 it?.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {
-                            idCart = it.data?.idCart!!
-                            setUpCartInfoObservers(idCart)
+                            idAccount = it.data?.idCart!!
+                            setUpCartInfoObservers(idAccount)
                         }
                         Status.ERROR -> {
                             Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                         }
                         Status.LOADING -> {
-                            Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+//                            Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -169,7 +173,7 @@ class CartActivity : AppCompatActivity() {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                     }
                     Status.LOADING -> {
-                        Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -181,7 +185,10 @@ class CartActivity : AppCompatActivity() {
         cartInfoList.forEach { info ->
             list.add(info.idProduct.toString())
         }
-
+        if (list.isEmpty()) {
+            progressBar.visibility = View.GONE
+            return
+        }
         productViewModel!!.getProduct(list)?.observe(this, Observer { it ->
             it?.let { resource ->
                 when (resource.status) {
@@ -218,18 +225,27 @@ class CartActivity : AppCompatActivity() {
 
         val total: Int = subTotal - textview_discount.text.toString().replace(".", "").toInt()
         textView_total.text = NumberFormat.getIntegerInstance(Locale.GERMANY).format(total)
-        handleNavigation()
     }
 
     private fun handleNavigation() {
-        var navigationBar: BottomNavigationView = bnvMain_cart
+        val navigationBar: BottomNavigationView = bnvMain_cart
 
         navigationBar.selectedItemId = R.id.cart
         navigationBar.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.home_nvg -> startActivity(Intent(this@CartActivity, MainActivity::class.java))
-                R.id.profile -> startActivity(Intent(this@CartActivity, AccountActivity::class.java))
-                R.id.wish_list -> startActivity(Intent(this@CartActivity, WishListActivity::class.java))
+                R.id.profile -> startActivity(
+                    Intent(
+                        this@CartActivity,
+                        AccountActivity::class.java
+                    )
+                )
+                R.id.wish_list -> startActivity(
+                    Intent(
+                        this@CartActivity,
+                        WishListActivity::class.java
+                    )
+                )
             }
             this.finish()
             true

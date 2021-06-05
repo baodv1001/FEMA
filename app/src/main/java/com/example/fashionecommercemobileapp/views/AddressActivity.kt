@@ -62,7 +62,7 @@ class AddressActivity : AppCompatActivity() {
         address_recycler.adapter = addressAdapter
     }
 
-    fun retrieveList(listAddress: ArrayList<Address>) {
+    private fun retrieveList(listAddress: ArrayList<Address>) {
         addressAdapter.changeData(listAddress)
     }
 

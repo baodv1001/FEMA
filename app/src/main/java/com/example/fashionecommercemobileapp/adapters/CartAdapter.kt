@@ -58,8 +58,9 @@ class CartAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        if (listCart.isEmpty() || listProduct.isEmpty())
+        if (listCart.isEmpty() || listProduct.isEmpty()) {
             return
+        }
         Glide.with(context)
             .load(listProduct[position].imageFile)
             .fitCenter()

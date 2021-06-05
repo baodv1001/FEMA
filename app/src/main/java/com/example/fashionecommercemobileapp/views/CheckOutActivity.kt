@@ -16,8 +16,10 @@ import com.example.fashionecommercemobileapp.retrofit.repository.CartRepository
 import com.example.fashionecommercemobileapp.retrofit.repository.ProductRepository
 import com.example.fashionecommercemobileapp.retrofit.utils.Status
 import com.example.fashionecommercemobileapp.viewmodels.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_cart.*
 import kotlinx.android.synthetic.main.activity_check_out.*
+import kotlinx.android.synthetic.main.activity_main.*
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -26,7 +28,6 @@ import java.util.*
 class CheckOutActivity : AppCompatActivity() {
     private var cartInfoList: ArrayList<CartInfo> = arrayListOf()
     private var productList: ArrayList<Product> = arrayListOf()
-    private var idCart: Int = 0
     private var idAccount: Int = 0
     private var isViewing: Boolean = false
 
@@ -44,19 +45,35 @@ class CheckOutActivity : AppCompatActivity() {
         AddressRepository.setContext(this@CheckOutActivity)
 
         val intent: Intent = intent
-        idCart = intent.getIntExtra("idCart", 0)
         idAccount = intent.getIntExtra("idAccount", 0)
         isViewing = intent.getBooleanExtra("isViewing", false)
 
         setUpViewModel()
         setUpRecyclerView()
-        setUpCartInfoObservers(idCart)
+        setUpCartInfoObservers(idAccount)
         getAddress()
 
         if (isViewing) {
             button_confirm.visibility = View.GONE
             button_select_address.visibility = View.GONE
         }
+
+        handleNavigation()
+    }
+
+    private fun handleNavigation() {
+        var navigationBar: BottomNavigationView = bnvMain
+
+        navigationBar.selectedItemId = R.id.home_nvg
+        navigationBar.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.wish_list -> startActivity(Intent(this@CheckOutActivity, WishListActivity::class.java))
+                R.id.cart -> startActivity(Intent(this@CheckOutActivity, CartActivity::class.java))
+                R.id.profile -> startActivity(Intent(this@CheckOutActivity, AccountActivity::class.java))
+            }
+            this.finish()
+            true
+        })
     }
 
     private fun setUpViewModel() {
@@ -89,7 +106,7 @@ class CheckOutActivity : AppCompatActivity() {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                     }
                     Status.LOADING -> {
-                        Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -199,7 +216,7 @@ class CheckOutActivity : AppCompatActivity() {
                     }
                 }
             })
-            cartViewModel.deleteCartInfo(idCart, billInfo.idProduct!!)
+            cartViewModel.deleteCartInfo(idAccount, billInfo.idProduct!!)
         }
         if (isSuccess) {
             Toast.makeText(this, "Check out successfully", Toast.LENGTH_SHORT).show()

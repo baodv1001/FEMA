@@ -19,7 +19,6 @@ class AddressAdapter(
     RecyclerView.Adapter<AddressAdapter.ViewHolder>() {
     private var isSelected: MutableLiveData<Boolean> = MutableLiveData(false)
     private var address: MutableLiveData<Address> = MutableLiveData(Address(0, "", "", ""))
-    private val contextVal: Context = context
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var name: TextView = view.findViewById(R.id.textView_name)

@@ -1,17 +1,11 @@
 package com.example.fashionecommercemobileapp.viewmodels
 
-import androidx.lifecycle.LiveData
-
 import androidx.lifecycle.MutableLiveData
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.fashionecommercemobileapp.model.Cart
 import com.example.fashionecommercemobileapp.model.CartInfo
-import com.example.fashionecommercemobileapp.model.Product
-import com.example.fashionecommercemobileapp.model.ShaPW
 import com.example.fashionecommercemobileapp.retrofit.repository.CartRepository
-import com.example.fashionecommercemobileapp.retrofit.repository.ProductRepository
 import com.example.fashionecommercemobileapp.retrofit.utils.Resource
 import kotlinx.coroutines.Dispatchers
 
