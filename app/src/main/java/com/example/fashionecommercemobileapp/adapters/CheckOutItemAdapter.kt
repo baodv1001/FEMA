@@ -54,7 +54,7 @@ class CheckOutItemAdapter(
             .into(holder.imageCart)
 
         holder.productCart.text = listProduct[position].name
-        holder.infoCart.text = listProduct[position].unit
+        holder.infoCart.text = "Quantity: " + listProduct[position].quantity
         holder.costCart.text = listProduct[position].price
     }
 

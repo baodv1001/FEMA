@@ -1,5 +1,6 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -57,23 +58,6 @@ class CheckOutActivity : AppCompatActivity() {
             button_confirm.visibility = View.GONE
             button_select_address.visibility = View.GONE
         }
-
-        handleNavigation()
-    }
-
-    private fun handleNavigation() {
-        var navigationBar: BottomNavigationView = bnvMain
-
-        navigationBar.selectedItemId = R.id.home_nvg
-        navigationBar.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.wish_list -> startActivity(Intent(this@CheckOutActivity, WishListActivity::class.java))
-                R.id.cart -> startActivity(Intent(this@CheckOutActivity, CartActivity::class.java))
-                R.id.profile -> startActivity(Intent(this@CheckOutActivity, AccountActivity::class.java))
-            }
-            this.finish()
-            true
-        })
     }
 
     private fun setUpViewModel() {
@@ -181,6 +165,9 @@ class CheckOutActivity : AppCompatActivity() {
                 when (resource.status) {
                     Status.SUCCESS -> {
                         it.data?.let { idBill -> createBillInfo(idBill) }
+                        val intent = Intent(this, MainActivity::class.java).apply { }
+                        startActivity(intent)
+                        this.finish()
                     }
                     Status.ERROR -> {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
