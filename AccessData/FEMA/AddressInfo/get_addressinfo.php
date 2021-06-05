@@ -1,5 +1,5 @@
 <?php
-  include_once './dbConnect.php';
+  include_once '../dbConnect.php';
   function dispInfo(){
     $db = new dbConnect();
     // Mảng JSON
@@ -14,6 +14,7 @@
       $t["name"] = $row["name"];
       $t["address"] = $row["address"];
       $t["phoneNumber"] = $row["phoneNumber"];
+      $t["idAddress"] = $row["idAddress"];
       // Mảng JSON
       array_push($response, $t);
     }

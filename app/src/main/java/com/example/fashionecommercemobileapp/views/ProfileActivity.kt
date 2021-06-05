@@ -1,14 +1,15 @@
-package com.example.fashionecommercemobileapp.views
+    package com.example.fashionecommercemobileapp.views
 
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
-import android.app.DatePickerDialog
-import android.app.Dialog
+import android.app.*
 import android.content.DialogInterface
 import android.content.Intent
 import android.database.DatabaseErrorHandler
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.icu.text.SimpleDateFormat
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -21,6 +22,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.fashionecommercemobileapp.R
+import com.example.fashionecommercemobileapp.model.URIPathHelper
 import com.example.fashionecommercemobileapp.retrofit.repository.UserRepository
 import com.example.fashionecommercemobileapp.model.User
 import com.example.fashionecommercemobileapp.retrofit.utils.Status
@@ -32,6 +34,10 @@ import java.util.*
 class ProfileActivity : AppCompatActivity(){
     private var userViewModel: UserViewModel? = null
     private var listUser: List<User>? = null
+    private val uriPathHelper = URIPathHelper()
+    val REQUEST_CODE = 100
+    lateinit var uri: Uri
+    lateinit var bitmap: Bitmap
     @SuppressLint("SimpleDateFormat")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,11 +109,34 @@ class ProfileActivity : AppCompatActivity(){
             }
             DatePickerDialog(this, dateSetListener, year,month,day).show()
         }
+        //pick image
+        imageView_user.setOnClickListener {
+            openGalleryForImage()
+            bitmap = (imageView_user.drawable as BitmapDrawable).bitmap
+
+        }
     }
 
     fun onClickBack(view: View) {
         super.onBackPressed()
     }
 
+    //pick image from gallery
+    private fun openGalleryForImage()
+    {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, REQUEST_CODE)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
+            imageView_user.setImageURI(data?.data) //handle chosen image
+            val filePath = data?.data
+            val imagePath = uriPathHelper.getImagePath(this, filePath!!)
+        }
+    }
 }
 

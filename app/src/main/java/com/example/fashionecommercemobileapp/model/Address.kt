@@ -20,4 +20,8 @@ class Address {
     @SerializedName ("phoneNumber")
     @Expose
     var phoneNumber : String? = null
+
+    @SerializedName("idAddress")
+    @Expose
+    var idAddress: Int? = null
 }

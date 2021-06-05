@@ -1,6 +1,9 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -21,23 +24,35 @@ class AddressActivity : AppCompatActivity() {
     lateinit var addressRecyclerView : RecyclerView
     private var addressViewModel : AddressViewModel? = null
 
+    var idAccount : String = ""
+    private lateinit var addressAdapter: AddressAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_address)
 
-        var intent: Intent = intent
-        var idAccount: Int? = intent.getIntExtra("idAccount",0)
+        val sp: SharedPreferences = getSharedPreferences("Login", Context.MODE_PRIVATE)
+        idAccount = sp.getString("Id", "").toString()
+
 
         AddressRepository.setContext(this@AddressActivity)
         addressViewModel = ViewModelProviders.of(this).get(AddressViewModel::class.java)
         addressViewModel!!.init()
 
         addressViewModel!!.getAddressData(idAccount.toString())?.observe(this, Observer { setUpAddressRecyclerView(it) })
+        //add address
+        add_address_button.setOnClickListener {
+            val intent = Intent(this, AddAddressActivity::class.java).apply { }
+                intent.putExtra("idAccount",idAccount)
+            (this as Activity).startActivityForResult(intent, 0)
+
+            addressAdapter.notifyDataSetChanged()
+        }
     }
 
     private fun setUpAddressRecyclerView(listAddress: List<Address>) {
         addressRecyclerView = findViewById(R.id.address_recycler)
-        val addressAdapter: AddressAdapter = AddressAdapter(this, listAddress)
+        addressAdapter = AddressAdapter(this, listAddress.toMutableList(), addressViewModel, idAccount)
         val layoutManager: RecyclerView.LayoutManager = GridLayoutManager(this,1, GridLayoutManager.VERTICAL, false)
         addressRecyclerView.layoutManager = layoutManager
         addressRecyclerView.adapter = addressAdapter

@@ -19,6 +19,32 @@
         android:textAllCaps="true"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
+    <Button
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/button_delete"
+        android:id="@+id/button_edit"
+        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        app:backgroundTint="#FFFFFF"
+        android:textColor="@color/dark"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:drawableLeft="@drawable/ic_baseline_edit_24"
+        android:gravity="center"
+        style="@style/Widget.MaterialComponents.Button.TextButton"/>
+    <Button
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/button_delete"
+        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        app:backgroundTint="#FFFFFF"
+        android:textColor="@color/dark"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:drawableLeft="@drawable/ic_baseline_delete_outline_24"
+        android:gravity="center"
+        style="@style/Widget.MaterialComponents.Button.TextButton"/>
     <TextView
         android:id="@+id/receiver_address"
         android:layout_width="wrap_content"

@@ -1,5 +1,6 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +15,8 @@ class AccountActivity : AppCompatActivity() {
         setContentView(R.layout.activity_account)
         val username: String? = intent.getStringExtra("username")
         val idAccount: Int = intent.getIntExtra("idAccount",0)
+
+        val sp1 = getSharedPreferences("Login", Context.MODE_PRIVATE)
 
         /*Start ProfileActivity*/
         button_profile.setOnClickListener {

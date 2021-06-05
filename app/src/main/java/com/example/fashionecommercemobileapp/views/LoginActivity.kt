@@ -1,5 +1,6 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -42,8 +43,14 @@ class LoginActivity : AppCompatActivity() {
                             listAccount = it?.data
                             if (listAccount?.isEmpty() == false) {
                                 val intent = Intent(this, AccountActivity::class.java).apply { }
+                                val sp = getSharedPreferences("Login", Context.MODE_PRIVATE)
                                 intent.putExtra("username", username)
                                 intent.putExtra("idAccount",listAccount?.first()?.id)
+                                val Ed = sp.edit()
+                                Ed.putString("Unm", username)
+                                Ed.putString("Psw", password)
+                                Ed.putString("Id", listAccount?.first()?.id.toString())
+                                Ed.commit()
                                 startActivity(intent)
                             }
                             else
