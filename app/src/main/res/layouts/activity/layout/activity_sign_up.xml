@@ -90,7 +90,7 @@
             android:hint="Your name"
             app:boxStrokeColor="@color/black"
             android:textColorHint="@color/gray"
-            app:startIconDrawable="@drawable/ic_lock"
+            app:startIconDrawable="@drawable/ic_baseline_info_24"
             app:startIconTint="@color/gray">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -107,7 +107,7 @@
             android:hint="Phone Number"
             app:boxStrokeColor="@color/black"
             android:textColorHint="@color/gray"
-            app:startIconDrawable="@drawable/ic_email"
+            app:startIconDrawable="@drawable/ic_baseline_smartphone_24"
             app:startIconTint="@color/gray">
 
             <com.google.android.material.textfield.TextInputEditText
