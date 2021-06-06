@@ -116,7 +116,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray"
                 android:inputType="phone"
-                android:maxLength="10"
+                android:maxLength="11"
                 android:digits="1234567890"/>
         </com.google.android.material.textfield.TextInputLayout>
 
