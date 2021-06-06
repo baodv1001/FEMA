@@ -4,6 +4,8 @@
 import android.annotation.SuppressLint
 import android.app.*
 import android.content.DialogInterface
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -25,6 +27,8 @@ import com.example.fashionecommercemobileapp.model.User
 import com.example.fashionecommercemobileapp.retrofit.repository.UserRepository
 import com.example.fashionecommercemobileapp.retrofit.utils.Status
 import com.example.fashionecommercemobileapp.viewmodels.UserViewModel
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_profile.*
 import java.util.*
 
@@ -39,8 +43,6 @@ class ProfileActivity : AppCompatActivity(){
     @SuppressLint("SimpleDateFormat")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
-
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
@@ -48,14 +50,14 @@ class ProfileActivity : AppCompatActivity(){
         userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
         userViewModel!!.init()
 
-        var intent: Intent = intent
-        var idAccount: Int? = intent.getIntExtra("idAccount", 0)
-        var username: String? = intent.getStringExtra("username")
         var pickDate: String? = null
 
+        val sp1 = getSharedPreferences("Login", Context.MODE_PRIVATE)
+        val username = sp1.getString("Unm", null)
+        val idAccount = sp1.getString("Id", null)
         userViewModel?.getUserData(idAccount.toString())?.observe(this, Observer {
             it?.let { resource ->
-                when(resource.status) {
+                when (resource.status) {
                     Status.SUCCESS -> {
                         listUser = it?.data
                         text_username.text = username
@@ -67,9 +69,10 @@ class ProfileActivity : AppCompatActivity(){
                         pickDate = listUser!![0].dateOfBirth?.toString()
                         text_user_email.text = listUser!![0].email
                         text_phone_number.text = listUser!![0].phoneNumber
+
                     }
                     Status.ERROR -> {
-                        Toast.makeText(this,it.message, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                     }
                     Status.LOADING -> {
 
@@ -183,3 +186,22 @@ class ProfileActivity : AppCompatActivity(){
     }
 }
 
+    fun onClickLogOut(view: View) {
+        val sp = getSharedPreferences("Login", Context.MODE_PRIVATE)
+        val Ed = sp.edit()
+        Ed.putString("Unm", null)
+        Ed.putString("Psw", null)
+        Ed.putInt("Id", 0)
+        Ed.commit()
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        this.startActivity(intent)
+
+        if (this is Activity) {
+            (this as Activity).finish()
+        }
+
+        Runtime.getRuntime().exit(0)
+    }
+
+}

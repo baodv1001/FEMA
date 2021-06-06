@@ -26,15 +26,8 @@
         <activity
             android:name=".views.SignUpActivity"
             android:parentActivityName=".views.LoginActivity">
-
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
         </activity>
+        <activity android:name=".views.SearchActivity"></activity>
         <activity android:name=".views.OnBoardingActivity" />
         <activity android:name=".views.SplashActivity" />
         <activity android:name=".views.LoginActivity">
