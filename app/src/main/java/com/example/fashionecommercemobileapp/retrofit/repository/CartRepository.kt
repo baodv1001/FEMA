@@ -35,54 +35,6 @@ class CartRepository {
         }
     }
 
-    fun postCartInfo(idCart: Int, idProduct: Int, quantity: Int) {
-        val cartCall: Call<Boolean> = apiCart!!.postCartInfo(idCart, idProduct, quantity)
-        cartCall.enqueue(object : Callback<Boolean> {
-            override fun onResponse(
-                call: Call<Boolean>,
-                response: Response<Boolean>
-            ) {
-
-            }
-
-            override fun onFailure(call: Call<Boolean>, t: Throwable) {
-                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-    fun deleteCartInfo(idCart: Int, idProduct: Int) {
-        val cartCall: Call<Boolean> = apiCart!!.deleteCartInfo(idCart, idProduct)
-        cartCall.enqueue(object : Callback<Boolean> {
-            override fun onResponse(
-                call: Call<Boolean>,
-                response: Response<Boolean>
-            ) {
-
-            }
-
-            override fun onFailure(call: Call<Boolean>, t: Throwable) {
-                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
-    fun updateCartInfo(idCart: Int, idProduct: Int, quantity: Int) {
-        val cartCall: Call<Boolean> = apiCart!!.updateCartInfo(idCart, idProduct, quantity)
-        cartCall.enqueue(object : Callback<Boolean> {
-            override fun onResponse(
-                call: Call<Boolean>,
-                response: Response<Boolean>
-            ) {
-
-            }
-
-            override fun onFailure(call: Call<Boolean>, t: Throwable) {
-                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
-            }
-        })
-    }
-
     fun updateCart(idCart: Int, idAccount: Int, isPaid: Boolean) {
         val cartCall: Call<Boolean> = apiCart!!.updateCart(idCart, idAccount, isPaid)
         cartCall.enqueue(object : Callback<Boolean> {
@@ -101,11 +53,9 @@ class CartRepository {
     }
 
     suspend fun getCartRequest(idAccount: Int) = apiCart?.getCart(idAccount)
-    suspend fun getCartInfoRequest(idCart: Int) = apiCart?.getCartInfo(idCart)
-    suspend fun getCartInfoByProduct(idCart: Int, idProduct: Int) = apiCart?.getCartInfo(idCart, idProduct)
 
     init {
-        var retrofit: RetrofitClient = RetrofitClient()
+        val retrofit: RetrofitClient = RetrofitClient()
         apiCart = retrofit.getRetrofitInstance()!!.create(CartApi::class.java)
     }
 }

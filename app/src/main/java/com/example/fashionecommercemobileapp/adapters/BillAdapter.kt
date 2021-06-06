@@ -26,7 +26,7 @@ class BillAdapter(context: Context, private val listBill: List<Bill>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.idBill.text = listBill[position].id.toString()
         holder.date.text = listBill[position].invoiceDate
-        holder.status.text = listBill[position].status
+        holder.status.text = listBill[position].status.toString()
         holder.total.text = listBill[position].totalMoney.toString()
     }
 

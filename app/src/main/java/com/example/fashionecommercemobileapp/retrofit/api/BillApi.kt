@@ -12,9 +12,10 @@ interface BillApi {
     @POST("Bill/post_bill.php")
     @FormUrlEncoded
     suspend fun createBill(
+        @Field("idAddress") idAddress: Int?,
         @Field("idAccount") idAccount: Int?,
         @Field("invoiceDate") invoiceDate: String?,
-        @Field("status") status: String?,
+        @Field("status") status: Int?,
         @Field("totalMoney") totalMoney: Int?
     ): Int
 

@@ -1,6 +1,5 @@
 package com.example.fashionecommercemobileapp.views
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -12,12 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fashionecommercemobileapp.R
 import com.example.fashionecommercemobileapp.adapters.CheckOutItemAdapter
 import com.example.fashionecommercemobileapp.model.*
-import com.example.fashionecommercemobileapp.retrofit.repository.AddressRepository
-import com.example.fashionecommercemobileapp.retrofit.repository.CartRepository
-import com.example.fashionecommercemobileapp.retrofit.repository.ProductRepository
+import com.example.fashionecommercemobileapp.retrofit.repository.*
 import com.example.fashionecommercemobileapp.retrofit.utils.Status
 import com.example.fashionecommercemobileapp.viewmodels.*
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_cart.*
 import kotlinx.android.synthetic.main.activity_check_out.*
 import kotlinx.android.synthetic.main.activity_main.*
@@ -29,25 +25,32 @@ import java.util.*
 class CheckOutActivity : AppCompatActivity() {
     private var cartInfoList: ArrayList<CartInfo> = arrayListOf()
     private var productList: ArrayList<Product> = arrayListOf()
+    private var sizeList: ArrayList<Size> = arrayListOf()
+    private var colorList: ArrayList<Color> = arrayListOf()
     private var idAccount: Int = 0
     private var isViewing: Boolean = false
 
     private lateinit var checkOutItemAdapter: CheckOutItemAdapter
     private lateinit var productViewModel: ProductViewModel
     private lateinit var cartViewModel: CartViewModel
+    private lateinit var cartInfoViewModel: CartInfoViewModel
     private lateinit var addressViewModel: AddressViewModel
+    private lateinit var productInfoViewModel: ProductInfoViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_check_out)
 
         CartRepository.Companion.setContext(this@CheckOutActivity)
+        CartInfoRepository.Companion.setContext(this@CheckOutActivity)
         ProductRepository.Companion.setContext(this@CheckOutActivity)
+        ProductInfoRepository.Companion.setContext(this@CheckOutActivity)
         AddressRepository.setContext(this@CheckOutActivity)
 
         val intent: Intent = intent
         idAccount = intent.getIntExtra("idAccount", 0)
         isViewing = intent.getBooleanExtra("isViewing", false)
+        textView_discount_checkOut.text = intent.getStringExtra("discount")
 
         setUpViewModel()
         setUpRecyclerView()
@@ -62,24 +65,33 @@ class CheckOutActivity : AppCompatActivity() {
 
     private fun setUpViewModel() {
         cartViewModel = ViewModelProviders.of(this).get(CartViewModel::class.java)
-        cartViewModel!!.init()
+        cartViewModel.init()
+
+        cartInfoViewModel = ViewModelProviders.of(this).get(CartInfoViewModel::class.java)
+        cartInfoViewModel.init()
 
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
-        productViewModel!!.init()
+        productViewModel.init()
+
+        productInfoViewModel = ViewModelProviders.of(this).get(ProductInfoViewModel::class.java)
+        productInfoViewModel.init()
 
         addressViewModel = ViewModelProviders.of(this).get(AddressViewModel::class.java)
         addressViewModel.init()
     }
 
     private fun setUpRecyclerView() {
-        checkOutItemAdapter = CheckOutItemAdapter(this, arrayListOf(), arrayListOf())
+        checkOutItemAdapter = CheckOutItemAdapter(
+            this, arrayListOf(), arrayListOf(),
+            sizeList, colorList
+        )
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView_checkOut.layoutManager = layoutManager
         recyclerView_checkOut.adapter = checkOutItemAdapter
     }
 
     private fun setUpCartInfoObservers(idCart: Int) {
-        cartViewModel!!.getCartInfo(idCart)?.observe(this, Observer { it ->
+        cartInfoViewModel.getCartInfo(idCart).observe(this, Observer { it ->
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
@@ -90,7 +102,7 @@ class CheckOutActivity : AppCompatActivity() {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                     }
                     Status.LOADING -> {
-//                        Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+                        //                        Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -103,13 +115,13 @@ class CheckOutActivity : AppCompatActivity() {
             list.add(info.idProduct.toString())
         }
 
-        productViewModel!!.getProduct(list)?.observe(this, Observer { it ->
+        productViewModel.getProduct(list).observe(this, Observer { it ->
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
                         productList = it.data as ArrayList<Product>
-                        loadData(this.cartInfoList, this.productList);
-                        retrieveList(this.cartInfoList, this.productList)
+                        loadData(this.cartInfoList, this.productList)
+                        loadSize()
                     }
                     Status.ERROR -> {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
@@ -122,12 +134,60 @@ class CheckOutActivity : AppCompatActivity() {
         })
     }
 
-    private fun retrieveList(cartList: ArrayList<CartInfo>, productList: ArrayList<Product>) {
+    private fun retrieveList(
+        cartList: ArrayList<CartInfo>,
+        productList: ArrayList<Product>,
+        sizeList: List<Size>,
+        colorList: List<Color>
+    ) {
         checkOutItemAdapter.apply {
-            changeData(cartList, productList)
+            changeData(cartList, productList, sizeList, colorList)
             notifyDataSetChanged()
         }
         progressBar_checkOut.visibility = View.GONE
+    }
+
+    private fun loadSize() {
+        productInfoViewModel.getSizeData().observe(this, Observer {
+            it?.let { resource ->
+                when (resource.status) {
+                    Status.SUCCESS -> {
+                        sizeList = it.data as ArrayList<Size>
+                        loadColor()
+                    }
+                    Status.ERROR -> {
+                        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                    }
+                    Status.LOADING -> {
+
+                    }
+                }
+            }
+        })
+    }
+
+    private fun loadColor() {
+        productInfoViewModel.getColorData().observe(this, Observer {
+            it?.let { resource ->
+                when (resource.status) {
+                    Status.SUCCESS -> {
+                        colorList = it.data as ArrayList<Color>
+                        retrieveList(
+                            this.cartInfoList,
+                            this.productList,
+                            this.sizeList,
+                            this.colorList
+                        )
+                    }
+                    Status.ERROR -> {
+                        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                    }
+                    Status.LOADING -> {
+
+                    }
+                }
+            }
+        })
     }
 
     private fun loadData(cartInfoList: List<CartInfo>, productList: List<Product>) {
@@ -149,22 +209,24 @@ class CheckOutActivity : AppCompatActivity() {
     fun onClickConfirm(view: View) {
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
         val date = simpleDateFormat.format(Date())
-
+        val idAddress: Int = textView_idAddress_checkOut.text.toString().toInt()
         val bill: Bill = Bill(
             0,
             idAccount,
             date,
-            "0",
+            0,
+            idAddress,
             textView_total_checkOut.text.toString().replace(".", "").toInt()
         )
         val billViewModel: BillViewModel =
             ViewModelProviders.of(this).get(BillViewModel::class.java)
-        billViewModel!!.init()
-        billViewModel.createBill(bill)?.observe(this, Observer { it ->
+        billViewModel.init()
+        billViewModel.createBill(bill).observe(this, Observer { it ->
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
                         it.data?.let { idBill -> createBillInfo(idBill) }
+                        Toast.makeText(this, "Check out successfully", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, MainActivity::class.java).apply { }
                         startActivity(intent)
                         this.finish()
@@ -182,17 +244,27 @@ class CheckOutActivity : AppCompatActivity() {
 
     private fun createBillInfo(idBill: Int) {
         var isSuccess: Boolean = true
-        cartInfoList.forEach {
-            val billInfo: BillInfo = BillInfo(idBill, it.idProduct!!, it.quantity!!)
+        cartInfoList.forEach {cartInfo ->
+            val billInfo: BillInfo =
+                BillInfo(idBill, cartInfo.idProduct!!, cartInfo.idSize!!, cartInfo.idColor!!, cartInfo.quantity!!)
             val billInfoViewModel: BillInfoViewModel =
                 ViewModelProviders.of(this).get(BillInfoViewModel::class.java)
-            billInfoViewModel!!.init()
-            billInfoViewModel.createBillInfo(billInfo)?.observe(this, Observer { it ->
+            billInfoViewModel.init()
+            billInfoViewModel.createBillInfo(billInfo).observe(this, Observer { it ->
                 it?.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {
                             if (it.data == false) {
                                 isSuccess = false
+                            }
+                            else {
+                                cartInfoViewModel.deleteCartInfo(
+                                    idAccount,
+                                    billInfo.idProduct!!,
+                                    cartInfo.idSize!!,
+                                    cartInfo.idColor!!
+                                )
+                                productViewModel.updateProduct(billInfo.idProduct.toString(), billInfo.quantity!!)
                             }
                         }
                         Status.ERROR -> {
@@ -203,7 +275,6 @@ class CheckOutActivity : AppCompatActivity() {
                     }
                 }
             })
-            cartViewModel.deleteCartInfo(idAccount, billInfo.idProduct!!)
         }
         if (isSuccess) {
             Toast.makeText(this, "Check out successfully", Toast.LENGTH_SHORT).show()
@@ -223,24 +294,36 @@ class CheckOutActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && resultCode == RESULT_OK) {
+            val idAddress = data?.getStringExtra("idAddress")
             val name = data?.getStringExtra("name")
             val address = data?.getStringExtra("address")
             val phoneNumber = data?.getStringExtra("phoneNumber")
-            loadAddress(name, address, phoneNumber)
+            loadAddress(idAddress, name, address, phoneNumber)
         }
     }
 
     private fun getAddress() {
         addressViewModel.getAddressData(idAccount.toString())?.observe(this, Observer {
             if (it.isNotEmpty()) {
-                loadAddress(it[0].name, it[0].address, it[0].phoneNumber)
+                loadAddress(
+                    it[0].idAddress.toString(),
+                    it[0].name,
+                    it[0].address,
+                    it[0].phoneNumber
+                )
             } else {
                 Toast.makeText(this, "Please add your address!", Toast.LENGTH_SHORT).show()
             }
         })
     }
 
-    private fun loadAddress(name: String?, address: String?, phoneNumber: String?) {
+    private fun loadAddress(
+        idAddress: String?,
+        name: String?,
+        address: String?,
+        phoneNumber: String?
+    ) {
+        textView_idAddress_checkOut.text = idAddress
         textView_name_checkOut.text = name
         textView_address_checkOut.text = address
         textView_phone_checkOut.text = phoneNumber

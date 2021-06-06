@@ -15,6 +15,8 @@ interface BillInfoApi {
     suspend fun createBillInfo(
         @Field("idBill") idBill: Int?,
         @Field("idProduct") idProduct: Int?,
+        @Field("idSize") idSize: Int?,
+        @Field("idColor") idColor: Int?,
         @Field("quantity") quantity: Int?
     ): Boolean
 }

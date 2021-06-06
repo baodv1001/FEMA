@@ -4,6 +4,10 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 class Address {
+    @SerializedName("idAddress")
+    @Expose
+    var idAddress: Int? = null
+
     @SerializedName("idAccount")
     @Expose
     var idAccount: Int? = null
@@ -20,8 +24,9 @@ class Address {
     @Expose
     var phoneNumber: String? = null
 
-    constructor(id: Int?, name: String?, add: String?, phoneNum: String?) {
-        this.idAccount = id
+    constructor(idAddress: Int?, idAcc: Int?, name: String?, add: String?, phoneNum: String?) {
+        this.idAddress = idAddress
+        this.idAccount = idAcc
         this.name = name
         this.address = add
         this.phoneNumber = phoneNum

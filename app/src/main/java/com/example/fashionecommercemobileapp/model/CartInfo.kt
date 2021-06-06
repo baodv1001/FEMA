@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-class CartInfo(): Parcelable {
+class CartInfo() : Parcelable {
 
     @SerializedName("idCart")
     @Expose
@@ -15,6 +15,14 @@ class CartInfo(): Parcelable {
     @SerializedName("idProduct")
     @Expose
     var idProduct: Int? = null
+
+    @SerializedName("idSize")
+    @Expose
+    var idSize: Int? = null
+
+    @SerializedName("idColor")
+    @Expose
+    var idColor: Int? = null
 
     @SerializedName("quantity")
     @Expose

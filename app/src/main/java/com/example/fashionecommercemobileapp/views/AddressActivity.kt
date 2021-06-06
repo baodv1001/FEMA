@@ -69,6 +69,7 @@ class AddressActivity : AppCompatActivity() {
     override fun onBackPressed() {
         val intent: Intent = Intent()
         val address: MutableLiveData<Address> = addressAdapter.getAddress()
+        intent.putExtra("idAddress", address.value?.idAddress.toString())
         intent.putExtra("name", address.value?.name)
         intent.putExtra("address", address.value?.address)
         intent.putExtra("phoneNumber", address.value?.phoneNumber)

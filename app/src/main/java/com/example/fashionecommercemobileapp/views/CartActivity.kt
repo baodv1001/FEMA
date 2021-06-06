@@ -14,14 +14,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fashionecommercemobileapp.R
 import com.example.fashionecommercemobileapp.adapters.CartAdapter
 import com.example.fashionecommercemobileapp.model.CartInfo
+import com.example.fashionecommercemobileapp.model.Color
 import com.example.fashionecommercemobileapp.model.Product
-import com.example.fashionecommercemobileapp.retrofit.repository.CartRepository
-import com.example.fashionecommercemobileapp.retrofit.repository.CouponRepository
-import com.example.fashionecommercemobileapp.retrofit.repository.ProductRepository
+import com.example.fashionecommercemobileapp.model.Size
+import com.example.fashionecommercemobileapp.retrofit.repository.*
 import com.example.fashionecommercemobileapp.retrofit.utils.Status
-import com.example.fashionecommercemobileapp.viewmodels.CartViewModel
-import com.example.fashionecommercemobileapp.viewmodels.CouponViewModel
-import com.example.fashionecommercemobileapp.viewmodels.ProductViewModel
+import com.example.fashionecommercemobileapp.viewmodels.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_account.*
 import kotlinx.android.synthetic.main.activity_cart.*
@@ -33,6 +31,8 @@ import java.util.*
 class CartActivity : AppCompatActivity() {
     private var cartInfoList: ArrayList<CartInfo> = arrayListOf()
     private var productList: ArrayList<Product> = arrayListOf()
+    private var sizeList: ArrayList<Size> = arrayListOf()
+    private var colorList: ArrayList<Color> = arrayListOf()
     private var idAccount: Int = 0
 
     private lateinit var idDeleteProduct: LiveData<Int>
@@ -41,13 +41,17 @@ class CartActivity : AppCompatActivity() {
     private lateinit var cartAdapter: CartAdapter
     private lateinit var productViewModel: ProductViewModel
     private lateinit var cartViewModel: CartViewModel
+    private lateinit var cartInfoViewModel: CartInfoViewModel
+    private lateinit var productInfoViewModel: ProductInfoViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
 
         CartRepository.Companion.setContext(this@CartActivity)
+        CartInfoRepository.Companion.setContext(this@CartActivity)
         ProductRepository.Companion.setContext(this@CartActivity)
+        ProductInfoRepository.Companion.setContext(this@CartActivity)
         CouponRepository.Companion.setContext(this@CartActivity)
 
         val spf = getSharedPreferences("Login", Context.MODE_PRIVATE)
@@ -60,7 +64,11 @@ class CartActivity : AppCompatActivity() {
         idDeleteProduct = cartAdapter.getIdDeletedProduct()
         val observer = Observer<Int> { idDeletedProduct ->
             if (idDeletedProduct != 0) {
-                cartViewModel.deleteCartInfo(idAccount, idDeletedProduct)
+                val idSize = cartAdapter.getIdSize().value
+                val idColor = cartAdapter.getIdColor().value
+                if (idSize != null && idColor != null) {
+                    cartInfoViewModel.deleteCartInfo(idAccount, idDeletedProduct, idSize, idColor)
+                }
             }
         }
         idDeleteProduct.observe(this, observer)
@@ -68,10 +76,18 @@ class CartActivity : AppCompatActivity() {
         isUpdatedCart = cartAdapter.getIsUpdated()
         val updatedObserver = Observer<Boolean> { it ->
             if (it) {
-                val id = cartAdapter.getIdProduct().value
+                val idProduct = cartAdapter.getIdProduct().value
+                val idSize = cartAdapter.getIdSize().value
+                val idColor = cartAdapter.getIdColor().value
                 val quantity = cartAdapter.getQuantity().value
-                if (quantity != null && id != null) {
-                    cartViewModel.updateCartInfo(idAccount, id, quantity)
+                if (quantity != null && idProduct != null && idSize != null && idColor != null) {
+                    cartInfoViewModel.updateCartInfo(
+                        idAccount,
+                        idProduct,
+                        idSize,
+                        idColor,
+                        quantity
+                    )
                     loadData(cartInfoList, productList)
                 }
             }
@@ -88,6 +104,7 @@ class CartActivity : AppCompatActivity() {
         }
         val intent = Intent(this, CheckOutActivity::class.java).apply {
             putExtra("idAccount", idAccount)
+            putExtra("discount", textview_discount.text)
         }
         startActivity(intent)
     }
@@ -95,9 +112,9 @@ class CartActivity : AppCompatActivity() {
     fun onClickApplyCode(view: View) {
         val couponViewModel: CouponViewModel =
             ViewModelProviders.of(this).get(CouponViewModel::class.java)
-        couponViewModel!!.init()
+        couponViewModel.init()
         val coupon: String = editText_CouponCode.text.toString()
-        couponViewModel.getCoupon(coupon)?.observe(this, Observer { it ->
+        couponViewModel.getCoupon(coupon).observe(this, Observer { it ->
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
@@ -107,12 +124,12 @@ class CartActivity : AppCompatActivity() {
                             textview_discount.text =
                                 NumberFormat.getIntegerInstance(Locale.GERMANY)
                                     .format(it.data?.value)
-                            loadData(this.cartInfoList, this.productList)
                             Toast.makeText(
                                 this,
                                 "Your code was entered successfully!",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            loadData(this.cartInfoList, this.productList)
                         }
                     }
                     Status.ERROR -> {
@@ -128,22 +145,28 @@ class CartActivity : AppCompatActivity() {
 
     private fun setUpViewModel() {
         cartViewModel = ViewModelProviders.of(this).get(CartViewModel::class.java)
-        cartViewModel!!.init()
+        cartViewModel.init()
+
+        cartInfoViewModel = ViewModelProviders.of(this).get(CartInfoViewModel::class.java)
+        cartInfoViewModel.init()
 
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
-        productViewModel!!.init()
+        productViewModel.init()
+
+        productInfoViewModel = ViewModelProviders.of(this).get(ProductInfoViewModel::class.java)
+        productInfoViewModel.init()
     }
 
     private fun setUpRecyclerView() {
-        cartAdapter = CartAdapter(this, arrayListOf(), arrayListOf())
+        cartAdapter = CartAdapter(this, arrayListOf(), arrayListOf(), sizeList, colorList)
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerview_cart.layoutManager = layoutManager
         recyclerview_cart.adapter = cartAdapter
     }
 
     private fun setUpCartObservers() {
-        cartViewModel!!.getCart(1)
-            ?.observe(this, Observer { it ->
+        cartViewModel.getCart(idAccount)
+            .observe(this, Observer { it ->
                 it?.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {
@@ -154,7 +177,7 @@ class CartActivity : AppCompatActivity() {
                             Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                         }
                         Status.LOADING -> {
-//                            Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+                            //                            Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -162,7 +185,7 @@ class CartActivity : AppCompatActivity() {
     }
 
     private fun setUpCartInfoObservers(idCart: Int) {
-        cartViewModel!!.getCartInfo(idCart)?.observe(this, Observer { it ->
+        cartInfoViewModel.getCartInfo(idCart).observe(this, Observer { it ->
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
@@ -173,7 +196,7 @@ class CartActivity : AppCompatActivity() {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                     }
                     Status.LOADING -> {
-//                        Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+                        //                        Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -189,13 +212,13 @@ class CartActivity : AppCompatActivity() {
             progressBar.visibility = View.GONE
             return
         }
-        productViewModel!!.getProduct(list)?.observe(this, Observer { it ->
+        productViewModel.getProduct(list).observe(this, Observer { it ->
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
                         productList = it.data as ArrayList<Product>
                         loadData(this.cartInfoList, this.productList);
-                        retrieveList(this.cartInfoList, this.productList)
+                        loadSize()
                     }
                     Status.ERROR -> {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
@@ -208,9 +231,57 @@ class CartActivity : AppCompatActivity() {
         })
     }
 
-    private fun retrieveList(cartList: ArrayList<CartInfo>, productList: ArrayList<Product>) {
+    private fun loadSize() {
+        productInfoViewModel.getSizeData().observe(this, Observer {
+            it?.let { resource ->
+                when (resource.status) {
+                    Status.SUCCESS -> {
+                        sizeList = it.data as ArrayList<Size>
+                        loadColor()
+                    }
+                    Status.ERROR -> {
+                        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                    }
+                    Status.LOADING -> {
+
+                    }
+                }
+            }
+        })
+    }
+
+    private fun loadColor() {
+        productInfoViewModel.getColorData().observe(this, Observer {
+            it?.let { resource ->
+                when (resource.status) {
+                    Status.SUCCESS -> {
+                        colorList = it.data as ArrayList<Color>
+                        retrieveList(
+                            this.cartInfoList,
+                            this.productList,
+                            this.sizeList,
+                            this.colorList
+                        )
+                    }
+                    Status.ERROR -> {
+                        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                    }
+                    Status.LOADING -> {
+
+                    }
+                }
+            }
+        })
+    }
+
+    private fun retrieveList(
+        cartList: ArrayList<CartInfo>,
+        productList: ArrayList<Product>,
+        sizeList: List<Size>,
+        colorList: List<Color>
+    ) {
         cartAdapter.apply {
-            changeData(cartList, productList)
+            changeData(cartList, productList, sizeList, colorList)
             notifyDataSetChanged()
         }
         progressBar.visibility = View.GONE

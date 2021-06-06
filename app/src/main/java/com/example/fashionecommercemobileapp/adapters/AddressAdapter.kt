@@ -18,7 +18,7 @@ class AddressAdapter(
 ) :
     RecyclerView.Adapter<AddressAdapter.ViewHolder>() {
     private var isSelected: MutableLiveData<Boolean> = MutableLiveData(false)
-    private var address: MutableLiveData<Address> = MutableLiveData(Address(0, "", "", ""))
+    private var address: MutableLiveData<Address> = MutableLiveData(Address(0,0, "", "", ""))
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var name: TextView = view.findViewById(R.id.textView_name)
@@ -42,6 +42,7 @@ class AddressAdapter(
             holder.button_edit.visibility = View.GONE
             holder.button_select.setOnClickListener {
                 address.value = Address(
+                    listAddress[position].idAddress,
                     listAddress[position].idAccount,
                     listAddress[position].name,
                     listAddress[position].address,

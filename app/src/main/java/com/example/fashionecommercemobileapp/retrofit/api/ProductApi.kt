@@ -42,4 +42,10 @@ interface ProductApi {
 
     @GET("get_all_flash_sale.php")
     fun getAllFlashSale(): Call<List<Product>>
+
+    @GET("update_product.php")
+    fun updateProduct(
+        @Field("idProduct") idProduct: String,
+        @Field("quantity") quantity: Int
+    ): Call<Boolean>
 }

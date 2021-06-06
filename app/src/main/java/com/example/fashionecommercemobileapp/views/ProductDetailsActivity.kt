@@ -18,21 +18,23 @@ import com.example.fashionecommercemobileapp.R
 import com.example.fashionecommercemobileapp.model.Color
 import com.example.fashionecommercemobileapp.model.Size
 import com.example.fashionecommercemobileapp.retrofit.utils.Status
-import com.example.fashionecommercemobileapp.viewmodels.CartViewModel
+import com.example.fashionecommercemobileapp.viewmodels.CartInfoViewModel
 import com.example.fashionecommercemobileapp.viewmodels.ProductInfoViewModel
 import kotlinx.android.synthetic.main.activity_product_details.*
 
 class ProductDetailsActivity : AppCompatActivity() {
     var isLiked: Boolean = true
-    var id: Int = 0
+    var idProduct: Int = 0
     var quantity: Int = 0
     var productInfoViewModel: ProductInfoViewModel? = null
+    var sizeMap: MutableMap<String, String> = mutableMapOf<String, String>()
+    var colorMap: MutableMap<String, String> = mutableMapOf<String, String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_details)
 
         val intent: Intent = intent
-        id = intent.getStringExtra("idProduct")?.toInt() ?: 0
+        idProduct = intent.getStringExtra("idProduct")?.toInt() ?: 0
         var name: String? = intent.getStringExtra("name")
         var price: String? = intent.getStringExtra("price")
         var discount: String? = intent.getStringExtra("discount")
@@ -106,6 +108,7 @@ class ProductDetailsActivity : AppCompatActivity() {
             var radioButton: RadioButton = RadioButton(this)
             (radio_group_size[i] as RadioButton).text = size.name
             i++
+            sizeMap[size.idSize!!] = size.name!!
         }
         radio_group_size.removeViews(i, radio_group_size.size - i)
     }
@@ -116,6 +119,7 @@ class ProductDetailsActivity : AppCompatActivity() {
             var radioButton: RadioButton = RadioButton(this)
             (radio_group_color[i] as RadioButton).text = color.name
             i++
+            colorMap[color.idColor!!] = color.name!!
         }
         radio_group_color.removeViews(i, radio_group_color.size - i)
     }
@@ -133,41 +137,67 @@ class ProductDetailsActivity : AppCompatActivity() {
     }
 
     fun addToCart(view: View) {
+        val selectedSizeButton: RadioButton = findViewById(radio_group_size.checkedRadioButtonId)
+        val size: String = selectedSizeButton.text.toString()
+        val idSize: Int = sizeMap.filterValues { it == size }.keys.first().toString().toInt()
+
+        val selectedColorButton: RadioButton = findViewById(radio_group_color.checkedRadioButtonId)
+        val color: String = selectedColorButton.text.toString()
+        val idColor: Int = colorMap.filterValues { it == color }.keys.first().toString().toInt()
+
         val spf = getSharedPreferences("Login", Context.MODE_PRIVATE)
         val idAccount = spf.getString("Id", "0")?.toInt() ?: 0
         if (quantity == 0) {
             Toast.makeText(this, "Out of stock!", Toast.LENGTH_SHORT).show()
         }
-        val cartViewModel: CartViewModel =
-            ViewModelProviders.of(this).get(CartViewModel::class.java)
-        cartViewModel!!.init()
-        cartViewModel!!.getCartInfoByProduct(idAccount, id)?.observe(this, Observer { it ->
-            it?.let { resource ->
-                when (resource.status) {
-                    Status.SUCCESS -> {
-                        if (it.data?.idCart != 0) {
-                            if (quantity > it.data?.quantity!!) {
-                                val updatedQuantity: Int = it.data.quantity!! + 1
-                                cartViewModel.updateCartInfo(idAccount, id, updatedQuantity)
+
+        val cartInfoViewModel: CartInfoViewModel =
+            ViewModelProviders.of(this).get(CartInfoViewModel::class.java)
+        cartInfoViewModel.init()
+        cartInfoViewModel.getCartInfoByProduct(idAccount, idProduct, idSize, idColor)
+            .observe(this, Observer { it ->
+                it?.let { resource ->
+                    when (resource.status) {
+                        Status.SUCCESS -> {
+                            if (it.data?.idCart != 0) {
+                                if (quantity > it.data?.quantity!!) {
+                                    val updatedQuantity: Int = it.data.quantity!! + 1
+                                    cartInfoViewModel.updateCartInfo(
+                                        idAccount,
+                                        idProduct,
+                                        idSize,
+                                        idColor,
+                                        updatedQuantity
+                                    )
+                                    Toast.makeText(
+                                        this,
+                                        "Add to cart successfully",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                        .show()
+                                } else {
+                                    Toast.makeText(this, "Out of stock!", Toast.LENGTH_SHORT).show()
+                                }
+                            } else {
+                                cartInfoViewModel.postCartInfo(
+                                    idAccount,
+                                    idProduct,
+                                    idSize,
+                                    idColor,
+                                    1
+                                )
                                 Toast.makeText(this, "Add to cart successfully", Toast.LENGTH_SHORT)
                                     .show()
-                            } else {
-                                Toast.makeText(this, "Out of stock!", Toast.LENGTH_SHORT).show()
                             }
-                        } else {
-                            cartViewModel.postCartInfo(idAccount, id, 1)
-                            Toast.makeText(this, "Add to cart successfully", Toast.LENGTH_SHORT)
-                                .show()
+                        }
+                        Status.ERROR -> {
+                            Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                        }
+                        Status.LOADING -> {
+                            Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
                         }
                     }
-                    Status.ERROR -> {
-                        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
-                    }
-                    Status.LOADING -> {
-                        Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
-                    }
                 }
-            }
-        })
+            })
     }
 }

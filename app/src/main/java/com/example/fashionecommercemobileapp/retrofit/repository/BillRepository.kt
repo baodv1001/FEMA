@@ -38,6 +38,7 @@ class BillRepository {
     }
 
     suspend fun createBill(bill: Bill) = billApi?.createBill(
+        bill.idAddress,
         bill.idAccount,
         bill.invoiceDate,
         bill.status,

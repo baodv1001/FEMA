@@ -1,22 +1,13 @@
 package com.example.fashionecommercemobileapp.viewmodels
 
-import android.os.Handler
 import androidx.lifecycle.LiveData
-
 import androidx.lifecycle.MutableLiveData
-
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.fashionecommercemobileapp.model.Product
-import com.example.fashionecommercemobileapp.retrofit.RetrofitClient
-import com.example.fashionecommercemobileapp.retrofit.api.CartApi
-import com.example.fashionecommercemobileapp.retrofit.api.ProductApi
 import com.example.fashionecommercemobileapp.retrofit.repository.ProductRepository
 import com.example.fashionecommercemobileapp.retrofit.utils.Resource
 import kotlinx.coroutines.Dispatchers
-import java.util.*
-import kotlin.concurrent.schedule
-import kotlin.math.min
 
 
 class ProductViewModel : ViewModel() {
@@ -56,8 +47,20 @@ class ProductViewModel : ViewModel() {
         return productData
     }
 
-    fun getProductDataByRating(rating: String, idProductCode: String, minPrice: String, maxPrice: String, discount: String): LiveData<List<Product>>? {
-        productRepository!!.getProductByRatingPrice(rating, idProductCode, minPrice, maxPrice, discount)
+    fun getProductDataByRating(
+        rating: String,
+        idProductCode: String,
+        minPrice: String,
+        maxPrice: String,
+        discount: String
+    ): LiveData<List<Product>>? {
+        productRepository!!.getProductByRatingPrice(
+            rating,
+            idProductCode,
+            minPrice,
+            maxPrice,
+            discount
+        )
         productData = productRepository?.getProductData()
         return productData
     }
@@ -76,5 +79,9 @@ class ProductViewModel : ViewModel() {
 
     fun getRecommendedData(): LiveData<List<Product>>? {
         return recommendedData
+    }
+
+    fun updateProduct(idProduct: String, quantity: Int) {
+        productRepository!!.updateProduct(idProduct, quantity)
     }
 }

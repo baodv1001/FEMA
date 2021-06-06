@@ -2,7 +2,6 @@ package com.example.fashionecommercemobileapp.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import java.util.*
 
 class Bill {
     @SerializedName("id")
@@ -19,17 +18,29 @@ class Bill {
 
     @SerializedName("status")
     @Expose
-    var status: String? = null
+    var status: Int? = null
+
+    @SerializedName("idAddress")
+    @Expose
+    var idAddress: Int? = null
 
     @SerializedName("totalMoney")
     @Expose
     var totalMoney: Int? = null
 
-    constructor(id: Int, idAccount: Int, invoiceDate: String, status: String, totalMoney: Int) {
+    constructor(
+        id: Int,
+        idAccount: Int,
+        invoiceDate: String,
+        status: Int,
+        idAddress: Int,
+        totalMoney: Int
+    ) {
         this.id = id
         this.idAccount = idAccount
         this.invoiceDate = invoiceDate
         this.status = status
+        this.idAddress = idAddress
         this.totalMoney = totalMoney
     }
 }
