@@ -70,19 +70,26 @@ class ForgetPasswordActivity : AppCompatActivity() {
             var phone: String = txtPhoneForgot.text.toString()
             var username: String = txtUsernameForgot.text.toString()
             var result: Boolean? = null
-            accountViewModel!!.checkPW(username, phone)
-                    ?.observe(this, Observer { result = it })
 
-            if (result == true) {
-                if (phone[0] == '0') {
-                    phone = phone.drop(1)
-                    phone = "+84" + phone
-                }
-                sendVerificationCode(phone)
+            if (!validationPhone() || !validationUsername())
+            {
+
             } else {
-                Toast.makeText(this@ForgetPasswordActivity, "Username or number phone is not available", Toast.LENGTH_SHORT).show()
-            }
+                accountViewModel!!.checkPW(username, phone)
+                        ?.observe(this, Observer {
+                            result = it
 
+                            if (result == true) {
+                                if (phone[0] == '0') {
+                                    phone = phone.drop(1)
+                                    phone = "+84" + phone
+                                }
+                                sendVerificationCode(phone)
+                            } else {
+                                Toast.makeText(this@ForgetPasswordActivity, "Username or number phone is not available", Toast.LENGTH_SHORT).show()
+                            }
+                        })
+            }
         }
 
         btnReSendOTPForgot.setOnClickListener() {
@@ -99,17 +106,94 @@ class ForgetPasswordActivity : AppCompatActivity() {
             var pass: String = txtPasswordForgot.text.toString()
             var rePass: String = txtRepasswordForgot.text.toString()
 
-            if (txtOTPForgot.text.toString().isEmpty()) {
-                Toast.makeText(this@ForgetPasswordActivity, "Please enter your verification code...", Toast.LENGTH_SHORT).show()
+            if (!validationOtp()) {
+
             } else {
-                if (pass.isEmpty() || rePass.isEmpty()) {
-                    Toast.makeText(this@ForgetPasswordActivity, "Field must be fill...!", Toast.LENGTH_SHORT).show()
-                } else if (!pass.equals(rePass)) {
-                    Toast.makeText(this@ForgetPasswordActivity, "Password is not match...!", Toast.LENGTH_SHORT).show()
+                if (!validationPass() || !validationRePass())
+                {
+
                 } else {
                     verifyPhoneNumberWithCode(mVertificationId, txtOTPForgot.text.toString())
                 }
             }
+        }
+    }
+    fun validationUsername(): Boolean{
+        val user: String = txtUsernameForgot.text.toString()
+        if (user.isEmpty()){
+            txtUsernameForgot.error = "Field cannot be empty"
+            false
+        } else {
+            txtUsernameForgot.error = null
+            true
+        }
+        return true
+    }
+    fun validationPhone(): Boolean{
+        val phone: String = txtPhoneForgot.text.toString()
+        if (phone.isEmpty()){
+            txtPhoneForgot.error = "Field cannot be empty"
+            false
+        } else {
+            txtPhoneForgot.error = null
+            true
+        }
+        return true
+    }
+    fun validationPass(): Boolean{
+        val pass: String = txtPasswordForgot.text.toString()
+        val noWhite: Regex = Regex("(?=\\S+$)")
+        if (pass.isEmpty()){
+            txtPasswordForgot.error = "Field cannot be empty"
+            false
+        } else if (pass.length < 6)
+        {
+            txtPasswordForgot.error  = "Password must be more than 6 char"
+            return false
+        } else if (pass.matches(noWhite))
+        {
+            txtPasswordForgot.error = "White space is not allowed"
+            return false
+        } else {
+            txtPasswordForgot.error = null
+            true
+        }
+        return true
+    }
+
+    fun validationRePass(): Boolean{
+        val rePass: String = txtRepasswordForgot.text.toString()
+        val noWhite: Regex = Regex("(?=\\S+$)")
+        if (rePass.isEmpty()){
+            txtRepasswordForgot.error = "Field cannot be empty"
+            return false
+        } else if (rePass.length < 6)
+        {
+            txtRepasswordForgot.error  = "Repassword must be more than 6 char"
+            return false
+        } else if (rePass.matches(noWhite))
+        {
+            txtRepasswordForgot.error = "White space is not allowed"
+            return false
+        }else if (rePass != txtPasswordForgot.text.toString())
+        {
+            txtRepasswordForgot.error = "Repassword is not match"
+            return false
+        } else {
+            txtRepasswordForgot.error = null
+            return true
+        }
+    }
+
+    fun validationOtp(): Boolean{
+        val otp: String = txtOTPForgot.text.toString()
+
+        if (otp.isEmpty()){
+            txtOTPForgot.error = "Field cannot be empty"
+            return false
+        } else {
+            txtOTPForgot.error = null
+            return true
         }
     }
 

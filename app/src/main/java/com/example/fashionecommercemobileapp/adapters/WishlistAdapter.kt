@@ -49,14 +49,6 @@ class WishlistAdapter(private val context: Context, private val wishList: Mutabl
             notifyDataSetChanged()
         })
 
-        holder.itemView.btnAddCartFromWishItem.setOnClickListener(View.OnClickListener{
-            wishListViewModel!!.addWishToCart(id.toInt(), holder.idItem!!.text.toString().toInt())
-            newWishList.removeAt(position)
-
-            notifyItemRemoved(position)
-            notifyDataSetChanged()
-        })
-
         holder.itemView.setOnClickListener(View.OnClickListener{
             val i = Intent(context, ProductDetailsActivity::class.java)
             i.putExtra("id", newWishList[position].idProduct)

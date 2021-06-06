@@ -31,11 +31,6 @@ class WishListViewModel : ViewModel() {
         wishListRepository!!.doDeleteWishProduct(idAccount, idProduct)
     }
 
-    fun addWishToCart(idAccount: Int, idProduct: Int)
-    {
-        wishListRepository!!.doAddWishToCart(idAccount, idProduct)
-    }
-
     fun addNewWishItem(idAccount: Int, idProduct: Int)
     {
         wishListRepository!!.doAddNewWishItem(idAccount, idProduct)

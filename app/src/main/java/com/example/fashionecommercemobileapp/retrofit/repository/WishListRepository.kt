@@ -76,21 +76,6 @@ class WishListRepository {
         })
     }
 
-    fun doAddWishToCart(idAccount: Int, idProduct: Int)
-    {
-        val call: Call<String> = wishListApi!!.addWishToCart(idAccount, idProduct)
-        call.enqueue(object : Callback<String> {
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-
-            }
-
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
-            }
-
-        })
-    }
-
     fun doAddNewWishItem(idAccount: Int, idProduct: Int)
     {
         val call: Call<String> = wishListApi!!.addNewWish(idAccount, idProduct)

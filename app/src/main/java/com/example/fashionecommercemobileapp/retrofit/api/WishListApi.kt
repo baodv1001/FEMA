@@ -17,11 +17,6 @@ interface WishListApi {
                           @Field ("idProduct") idProduct : Int)  : Call<String>
 
     @FormUrlEncoded
-    @POST("Wishlist/post_addfromwishtocart.php")
-    fun addWishToCart(@Field ("idAccount") idAccount: Int,
-                          @Field ("idProduct") idProduct : Int)  : Call<String>
-
-    @FormUrlEncoded
     @POST("Wishlist/post_addnewwishitem.php")
     fun addNewWish(@Field ("idAccount") idAccount: Int,
                       @Field ("idProduct") idProduct : Int)  : Call<String>
