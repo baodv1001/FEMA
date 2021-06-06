@@ -157,6 +157,11 @@ class ProductDetailsActivity : AppCompatActivity() {
     }
 
     fun onClickBack(view: View) {
+        var data = Intent().apply {
+            putExtra("check", isLiked)
+            putExtra("position", position)
+        }
+        setResult(RESULT_OK, data)
         super.onBackPressed()
     }
 
