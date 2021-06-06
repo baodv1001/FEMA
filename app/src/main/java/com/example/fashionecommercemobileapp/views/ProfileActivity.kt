@@ -130,6 +130,11 @@ class ProfileActivity : AppCompatActivity(){
             Toast.makeText(this, "Saved Successfully", Toast.LENGTH_SHORT).show()
             super.onBackPressed()
         }
+        //change Phone Number
+        phone_number_layout.setOnClickListener {
+            val intent = Intent(this, ChangePhoneNumberActivity::class.java).apply {  }
+            startActivity(intent)
+        }
     }
 
     fun onClickBack(view: View) {

@@ -14,6 +14,7 @@ import java.util.*
 
 class UserRepository {
     private var listUsers: MutableLiveData<List<User>>? = MutableLiveData<List<User>>()
+    private var checkPhoneNumber: MutableLiveData<Boolean>? = MutableLiveData<Boolean>()
     private var userApi: UserApi = RetrofitClient().userApi
 
     fun setUserData(userData: List<User>) {
@@ -23,6 +24,12 @@ class UserRepository {
         return listUsers
     }
 
+    fun setCheckPhoneNumber (boolean: Boolean) {
+        checkPhoneNumber?.value = boolean
+    }
+    fun getCheckPhoneNumber (): MutableLiveData<Boolean>? {
+        return  checkPhoneNumber
+    }
     companion object {
         private var userRepository: UserRepository? = null
         val instance: UserRepository?
@@ -38,7 +45,9 @@ class UserRepository {
             context = con
         }
     }
+
     suspend fun doUserRequest(idAccount: String) = userApi.getUser(idAccount)
+
     fun doUpdateUserRequest(idAccount: Int, name: String, gender: String, dateOfBirth: String) {
         val call = userApi.updateUser(idAccount, name, gender, dateOfBirth)
         call.enqueue(object: Callback<String> {
@@ -51,6 +60,37 @@ class UserRepository {
             }
         })
     }
+
+    fun doChangePhoneNumberRequest(idAccount: Int, phoneNumber: String) {
+        val call = userApi.changePhoneNumber(idAccount, phoneNumber)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(context, t.message.toString(), Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+    fun doCheckPhoneNumberRequest(phoneNumber: String) {
+        val call = userApi.checkPhoneNumber(phoneNumber)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                response.let {
+                    if (response.body().toString() == "true") {
+                        setCheckPhoneNumber(true)
+                    } else {
+                        setCheckPhoneNumber(false)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
 
     /*init {
         val retrofit = RetrofitClient()

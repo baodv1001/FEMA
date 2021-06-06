@@ -19,4 +19,11 @@ interface UserApi {
                     @Field("name") name: String,
                     @Field("gender") gender: String,
                     @Field("dateOfBirth") dateOfBirth: String): Call<String>
+    @FormUrlEncoded
+    @POST("Profile/change_phone_number.php")
+    fun changePhoneNumber(@Field("idAccount") idAccount: Int,
+                            @Field("phoneNumber") phoneNumber: String): Call<String>
+    @FormUrlEncoded
+    @POST("Profile/check_phone_number.php")
+    fun checkPhoneNumber(@Field("phoneNumber") phoneNumber: String): Call<String>
 }
