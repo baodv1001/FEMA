@@ -126,7 +126,7 @@ class ProfileActivity : AppCompatActivity(){
         }
         //update User
         button_saved.setOnClickListener {
-            userViewModel!!.updateUserDate(idAccount!!,
+            userViewModel!!.updateUserDate(idAccount!!.toInt(),
                                             text_name_bottom.text.toString(),
                                             text_gender.text.toString(),
                                             pickDate!!)
@@ -184,7 +184,7 @@ class ProfileActivity : AppCompatActivity(){
 
         builder.show()
     }
-}
+
 
     fun onClickLogOut(view: View) {
         val sp = getSharedPreferences("Login", Context.MODE_PRIVATE)

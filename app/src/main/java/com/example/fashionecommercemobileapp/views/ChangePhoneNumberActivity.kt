@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.fashionecommercemobileapp.R
 import com.example.fashionecommercemobileapp.retrofit.repository.AccountRepository
-import com.example.fashionecommercemobileapp.viewmodels.AccountViewModel
 import com.example.fashionecommercemobileapp.viewmodels.UserViewModel
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth

@@ -41,7 +41,7 @@ android {
                         'src\\main\\res\\layouts\\activity',
                         'src\\main\\res\\layouts\\category',
                         'src\\main\\res\\address',
-                        'src\\main\\res\\layouts\\address', 
+                        'src\\main\\res\\layouts\\address',
                         'src\\main\\res\\layouts\\order',
                         'src\\main\\res\\layouts\\swipe',
                         'src\\main\\res\\layours\\wishlist',

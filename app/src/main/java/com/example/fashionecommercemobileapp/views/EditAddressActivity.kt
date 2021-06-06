@@ -1,16 +1,13 @@
 package com.example.fashionecommercemobileapp.views
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.fashionecommercemobileapp.R
 import com.example.fashionecommercemobileapp.retrofit.repository.AddressRepository
-import com.example.fashionecommercemobileapp.retrofit.utils.Status
 import com.example.fashionecommercemobileapp.viewmodels.AddressViewModel
 import kotlinx.android.synthetic.main.activity_add_address.*
 import kotlinx.android.synthetic.main.activity_edit_address.*
