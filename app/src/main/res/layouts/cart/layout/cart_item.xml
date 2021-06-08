@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:layout_marginBottom="8dp"
-    android:background="@drawable/corner_radius">
+    android:background="@drawable/corner_radius"
+    android:id="@+id/cart_item">
 
     <ImageView
         android:id="@+id/imageView_product_cart"
@@ -28,7 +29,6 @@
         android:layout_marginRight="8dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="Nike Air Zoom Pegasus 36 Miami"
         android:textColor="@color/dark"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -40,7 +40,6 @@
         android:id="@+id/textView_info_cart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Size: L, Color: Blue"
         android:textColor="@color/gray1"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/textView_product_cart"
@@ -51,7 +50,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="$299,43"
         android:textColor="@color/primary"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -77,6 +75,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/button_right_increase_count"
+        android:gravity="center_horizontal|center_vertical"
         android:text="+"
         android:textColor="@color/dark"
         android:textSize="14sp"
@@ -91,18 +90,18 @@
         android:digits="1234567890"
         android:gravity="center_horizontal"
         android:inputType="phone"
-        android:text="1"
         android:textAlignment="center"
         android:textColor="@color/dark"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/button_increase_cart"
-        app:layout_constraintEnd_toStartOf="@+id/button_increase_cart"></EditText>
+        app:layout_constraintEnd_toStartOf="@+id/button_increase_cart" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/button_decrease_cart"
         android:layout_width="32dp"
         android:layout_height="24dp"
         android:background="@drawable/button_left_decrease_count"
+        android:gravity="center_horizontal"
         android:text="-"
         android:textColor="@color/dark"
         android:textSize="16sp"

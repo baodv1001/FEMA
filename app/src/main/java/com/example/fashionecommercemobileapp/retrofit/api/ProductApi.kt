@@ -48,4 +48,18 @@ interface ProductApi {
         @Field("idProduct") idProduct: String,
         @Field("quantity") quantity: Int
     ): Call<Boolean>
+
+    @POST("update_product_list.php")
+    @FormUrlEncoded
+    fun updateProducts(
+        @Field("idProductList") idProductList: String,
+        @Field("quantity") quantity: String
+    ): Call<Boolean>
+
+    @POST("update_product_rating.php")
+    @FormUrlEncoded
+    fun updateProductRating(
+        @Field("idProductList") idProductList: String,
+        @Field("rating") rating: String
+    ): Call<Boolean>
 }

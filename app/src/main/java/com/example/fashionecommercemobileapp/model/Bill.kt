@@ -3,7 +3,7 @@ package com.example.fashionecommercemobileapp.model
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class Bill {
+class Bill() {
     @SerializedName("id")
     @Expose
     var id: Int? = null
@@ -28,19 +28,25 @@ class Bill {
     @Expose
     var totalMoney: Int? = null
 
+    @SerializedName("isRated")
+    @Expose
+    var isRated: Int? = null
+
     constructor(
-        id: Int,
-        idAccount: Int,
-        invoiceDate: String,
-        status: Int,
-        idAddress: Int,
-        totalMoney: Int
-    ) {
+        id: Int?,
+        idAccount: Int?,
+        invoiceDate: String?,
+        status: Int?,
+        idAddress: Int?,
+        totalMoney: Int?,
+        rated: Int?
+    ) : this() {
         this.id = id
         this.idAccount = idAccount
         this.invoiceDate = invoiceDate
         this.status = status
         this.idAddress = idAddress
         this.totalMoney = totalMoney
+        this.isRated = rated
     }
 }

@@ -5,7 +5,6 @@ import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
-import java.util.*
 
 interface BillApi {
 
@@ -21,5 +20,13 @@ interface BillApi {
 
     @FormUrlEncoded
     @POST("get_invoice.php")
-    fun getBillData(@Field("idAccount") idAccount : String) : Call<List<Bill>>
+    fun getBillData(@Field("idAccount") idAccount: String): Call<List<Bill>>
+
+    @POST("Bill/update_bill.php")
+    @FormUrlEncoded
+    fun updateBill(@Field("idBill") idBill: String): Call<Boolean>
+
+    @POST("Bill/update_bill_rated.php")
+    @FormUrlEncoded
+    fun updateBillRated(@Field("idBill") idBill: String): Call<Boolean>
 }

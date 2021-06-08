@@ -28,7 +28,6 @@ class CheckOutActivity : AppCompatActivity() {
     private var sizeList: ArrayList<Size> = arrayListOf()
     private var colorList: ArrayList<Color> = arrayListOf()
     private var idAccount: Int = 0
-    private var isViewing: Boolean = false
 
     private lateinit var checkOutItemAdapter: CheckOutItemAdapter
     private lateinit var productViewModel: ProductViewModel
@@ -49,18 +48,12 @@ class CheckOutActivity : AppCompatActivity() {
 
         val intent: Intent = intent
         idAccount = intent.getIntExtra("idAccount", 0)
-        isViewing = intent.getBooleanExtra("isViewing", false)
         textView_discount_checkOut.text = intent.getStringExtra("discount")
 
         setUpViewModel()
         setUpRecyclerView()
         setUpCartInfoObservers(idAccount)
         getAddress()
-
-        if (isViewing) {
-            button_confirm.visibility = View.GONE
-            button_select_address.visibility = View.GONE
-        }
     }
 
     private fun setUpViewModel() {
@@ -102,7 +95,6 @@ class CheckOutActivity : AppCompatActivity() {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                     }
                     Status.LOADING -> {
-                        //                        Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -144,7 +136,6 @@ class CheckOutActivity : AppCompatActivity() {
             changeData(cartList, productList, sizeList, colorList)
             notifyDataSetChanged()
         }
-        progressBar_checkOut.visibility = View.GONE
     }
 
     private fun loadSize() {
@@ -216,7 +207,8 @@ class CheckOutActivity : AppCompatActivity() {
             date,
             0,
             idAddress,
-            textView_total_checkOut.text.toString().replace(".", "").toInt()
+            textView_total_checkOut.text.toString().replace(".", "").toInt(),
+            0
         )
         val billViewModel: BillViewModel =
             ViewModelProviders.of(this).get(BillViewModel::class.java)
@@ -244,9 +236,15 @@ class CheckOutActivity : AppCompatActivity() {
 
     private fun createBillInfo(idBill: Int) {
         var isSuccess: Boolean = true
-        cartInfoList.forEach {cartInfo ->
+        cartInfoList.forEach { cartInfo ->
             val billInfo: BillInfo =
-                BillInfo(idBill, cartInfo.idProduct!!, cartInfo.idSize!!, cartInfo.idColor!!, cartInfo.quantity!!)
+                BillInfo(
+                    idBill,
+                    cartInfo.idProduct!!,
+                    cartInfo.idSize!!,
+                    cartInfo.idColor!!,
+                    cartInfo.quantity!!
+                )
             val billInfoViewModel: BillInfoViewModel =
                 ViewModelProviders.of(this).get(BillInfoViewModel::class.java)
             billInfoViewModel.init()
@@ -256,15 +254,17 @@ class CheckOutActivity : AppCompatActivity() {
                         Status.SUCCESS -> {
                             if (it.data == false) {
                                 isSuccess = false
-                            }
-                            else {
+                            } else {
                                 cartInfoViewModel.deleteCartInfo(
                                     idAccount,
                                     billInfo.idProduct!!,
                                     cartInfo.idSize!!,
                                     cartInfo.idColor!!
                                 )
-                                productViewModel.updateProduct(billInfo.idProduct.toString(), billInfo.quantity!!)
+                                productViewModel.updateProduct(
+                                    billInfo.idProduct.toString(),
+                                    billInfo.quantity!!
+                                )
                             }
                         }
                         Status.ERROR -> {
@@ -282,13 +282,11 @@ class CheckOutActivity : AppCompatActivity() {
     }
 
     fun onClickSelectAddress(view: View) {
-        if (!isViewing) {
-            val intent = Intent(this, AddressActivity::class.java).apply {
-                putExtra("idAccount", idAccount)
-                putExtra("isCheckOut", true)
-            }
-            startActivityForResult(intent, 1)
+        val intent = Intent(this, AddressActivity::class.java).apply {
+            putExtra("idAccount", idAccount)
+            putExtra("isCheckOut", true)
         }
+        startActivityForResult(intent, 1)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

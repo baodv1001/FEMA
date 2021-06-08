@@ -32,6 +32,8 @@ class BillInfoRepository {
             billInfo.quantity
         )
 
+    suspend fun getBillInfo(idBill: String) = billInfoApi?.getBillInfo(idBill)
+
     init {
         val retrofit: RetrofitClient = RetrofitClient()
         billInfoApi = retrofit.getRetrofitInstance()!!.create(BillInfoApi::class.java)

@@ -206,8 +206,48 @@ class ProductRepository {
         })
     }
 
+    fun updateProducts(idProductList: List<String>, quantity: List<String>) {
+        val callProduct: Call<Boolean> = productApi!!.updateProducts(idProductList.joinToString(), quantity.joinToString())
+        callProduct.enqueue(object : Callback<Boolean> {
+            override fun onResponse(
+                call: Call<Boolean>,
+                response: Response<Boolean>
+            ) {
+
+            }
+
+            override fun onFailure(
+                call: Call<Boolean>,
+                t: Throwable
+            ) {
+                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
+    fun updateProductRating(idProductList: List<String>, rating: String) {
+        val callProduct: Call<Boolean> = productApi!!.updateProductRating(idProductList.joinToString(), rating)
+        callProduct.enqueue(object : Callback<Boolean> {
+            override fun onResponse(
+                call: Call<Boolean>,
+                response: Response<Boolean>
+            ) {
+
+            }
+
+            override fun onFailure(
+                call: Call<Boolean>,
+                t: Throwable
+            ) {
+                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
     init {
-        var retrofit: RetrofitClient = RetrofitClient()
+        val retrofit: RetrofitClient = RetrofitClient()
         productApi = retrofit.getRetrofitInstance()!!.create(ProductApi::class.java)
     }
 }

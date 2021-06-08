@@ -39,6 +39,7 @@
         <activity android:name=".views.ForgetPasswordActivity" />
         <activity android:name=".views.CartActivity" />
         <activity android:name=".views.CheckOutActivity" />
+        <activity android:name=".views.OrderDetailsActivity" />
         <activity android:name=".views.WishListActivity" />
         <activity
             android:name=".views.AddressActivity"

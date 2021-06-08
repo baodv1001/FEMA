@@ -59,19 +59,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp">
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="24dp"
-                android:indeterminate="true"
-                android:indeterminateTint="@color/primary"
-                android:indeterminateTintMode="src_atop"
-                app:layout_constraintBottom_toTopOf="@+id/layoutCouponCode"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerview_cart"
                 android:layout_width="match_parent"

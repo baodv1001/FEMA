@@ -134,6 +134,7 @@ class ProductDetailsActivity : AppCompatActivity() {
 
     fun onClickBack(view: View) {
         super.onBackPressed()
+        finish()
     }
 
     fun addToCart(view: View) {

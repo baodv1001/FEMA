@@ -84,4 +84,12 @@ class ProductViewModel : ViewModel() {
     fun updateProduct(idProduct: String, quantity: Int) {
         productRepository!!.updateProduct(idProduct, quantity)
     }
+
+    fun updateProducts(idProductList: List<String>, quantity: List<String>) {
+        productRepository!!.updateProducts(idProductList, quantity)
+    }
+
+    fun updateProductRating(idProductList: List<String>, rating: String) {
+        productRepository!!.updateProductRating(idProductList, rating)
+    }
 }

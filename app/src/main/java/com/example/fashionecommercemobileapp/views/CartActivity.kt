@@ -37,6 +37,7 @@ class CartActivity : AppCompatActivity() {
 
     private lateinit var idDeleteProduct: LiveData<Int>
     private lateinit var isUpdatedCart: LiveData<Boolean>
+    private lateinit var isSelected: LiveData<Boolean>
 
     private lateinit var cartAdapter: CartAdapter
     private lateinit var productViewModel: ProductViewModel
@@ -73,6 +74,26 @@ class CartActivity : AppCompatActivity() {
         }
         idDeleteProduct.observe(this, observer)
 
+        isSelected = cartAdapter.getIsSelected()
+        val selectedObserver = Observer<Boolean> { it ->
+            if (it) {
+                val product: Product? = cartAdapter.getSelectedProduct().value
+                val intent = Intent(this, ProductDetailsActivity::class.java).apply {
+                    if (product != null) {
+                        putExtra("idProduct", product.idProduct)
+                        putExtra("name", product.name)
+                        putExtra("price", product.price)
+                        putExtra("discount", product.discount)
+                        putExtra("rating", product.rating)
+                        putExtra("image", product.imageFile)
+                        putExtra("quantity", product.quantity)
+                    }
+                }
+                startActivity(intent)
+            }
+        }
+        isSelected.observe(this, selectedObserver)
+
         isUpdatedCart = cartAdapter.getIsUpdated()
         val updatedObserver = Observer<Boolean> { it ->
             if (it) {
@@ -95,6 +116,11 @@ class CartActivity : AppCompatActivity() {
         isUpdatedCart.observe(this, updatedObserver)
 
         handleNavigation()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setUpCartObservers()
     }
 
     fun onClickCheckOut(view: View) {
@@ -177,7 +203,6 @@ class CartActivity : AppCompatActivity() {
                             Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                         }
                         Status.LOADING -> {
-                            //                            Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -196,7 +221,6 @@ class CartActivity : AppCompatActivity() {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                     }
                     Status.LOADING -> {
-                        //                        Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -204,12 +228,11 @@ class CartActivity : AppCompatActivity() {
     }
 
     private fun setUpProductObservers() {
-        var list: ArrayList<String> = arrayListOf()
+        val list: ArrayList<String> = arrayListOf()
         cartInfoList.forEach { info ->
             list.add(info.idProduct.toString())
         }
         if (list.isEmpty()) {
-            progressBar.visibility = View.GONE
             return
         }
         productViewModel.getProduct(list).observe(this, Observer { it ->
@@ -284,7 +307,6 @@ class CartActivity : AppCompatActivity() {
             changeData(cartList, productList, sizeList, colorList)
             notifyDataSetChanged()
         }
-        progressBar.visibility = View.GONE
     }
 
     private fun loadData(cartList: List<CartInfo>, productList: List<Product>) {

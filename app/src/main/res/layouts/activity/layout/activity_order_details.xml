@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".views.CheckOutActivity">
+    tools:context=".views.OrderDetailsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/topLinearLayout"
@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:text="Check out"
+            android:text="Order details"
             android:textColor="@color/dark"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -58,7 +58,6 @@
             app:layout_constraintTop_toTopOf="@+id/back_image" />
 
         <View
-            android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@drawable/rectangle"
@@ -74,7 +73,30 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:paddingBottom="16dp">
+
+            <com.kofigyan.stateprogressbar.StateProgressBar
+                android:id="@+id/stateProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:spb_checkStateCompleted="true"
+                app:spb_currentStateDescriptionColor="@color/success"
+                app:spb_maxStateNumber="three"
+                app:spb_currentStateNumber="two"
+                app:spb_descriptionTopSpaceIncrementer="12dp"
+                app:spb_animateToCurrentProgressState="true"
+                app:spb_animationDuration="2000"
+                app:spb_stateBackgroundColor="@color/gray3"
+                app:spb_stateDescriptionColor="@color/gray1"
+                app:spb_stateForegroundColor="@color/success"
+                app:spb_stateNumberBackgroundColor="@color/gray1"
+                app:spb_stateNumberForegroundColor="@color/light"
+                app:spb_stateSize="30dp" />
 
             <TextView
                 android:id="@+id/textView2"
@@ -82,16 +104,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="16dp"
                 android:text="Cart"
                 android:textColor="@color/dark"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@+id/stateProgressBar" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView_checkOut"
+                android:id="@+id/recyclerView_orderDetails"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
@@ -116,7 +138,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recyclerView_checkOut" />
+                app:layout_constraintTop_toBottomOf="@+id/recyclerView_orderDetails" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/address_item"
@@ -128,16 +150,13 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:background="@drawable/corner_radius"
-                android:paddingLeft="12dp"
-                android:paddingTop="12dp"
-                android:paddingRight="8dp"
-                android:paddingBottom="8dp"
+                android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3">
 
                 <TextView
-                    android:id="@+id/textView_idAddress_checkOut"
+                    android:id="@+id/textView_idAddress_orderDetails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
@@ -145,7 +164,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView_name_checkOut"
+                    android:id="@+id/textView_name_orderDetails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Name"
@@ -157,7 +176,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView_address_checkOut"
+                    android:id="@+id/textView_address_orderDetails"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -168,34 +187,21 @@
                     android:textSize="18sp"
                     app:layout_constraintEnd_toStartOf="@+id/button_select_address"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/textView_name_checkOut"
-                    app:layout_constraintTop_toBottomOf="@id/textView_name_checkOut" />
+                    app:layout_constraintStart_toStartOf="@+id/textView_name_orderDetails"
+                    app:layout_constraintTop_toBottomOf="@id/textView_name_orderDetails" />
 
                 <TextView
-                    android:id="@+id/textView_phone_checkOut"
+                    android:id="@+id/textView_phone_orderDetails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
                     android:layout_marginBottom="8dp"
                     android:text="0123456789"
                     android:textColor="@color/gray"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/textView_address_checkOut"
-                    app:layout_constraintTop_toBottomOf="@+id/textView_address_checkOut" />
-
-                <ImageView
-                    android:id="@+id/button_select_address"
-                    android:layout_width="26dp"
-                    android:layout_height="24dp"
-                    android:layout_weight="1"
-                    android:onClick="onClickSelectAddress"
-                    android:rotation="180"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_back"
-                    tools:ignore="VectorDrawableCompat" />
+                    app:layout_constraintStart_toStartOf="@+id/textView_address_orderDetails"
+                    app:layout_constraintTop_toBottomOf="@+id/textView_address_orderDetails" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -249,7 +255,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView_sub_checkOut"
+                        android:id="@+id/textView_sub_orderDetails"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -281,7 +287,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView_discount_checkOut"
+                        android:id="@+id/textView_discount_orderDetails"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -321,7 +327,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView_total_checkOut"
+                        android:id="@+id/textView_total_orderDetails"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
@@ -336,7 +342,7 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button_confirm"
+                android:id="@+id/button_cancel"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginStart="16dp"
@@ -346,17 +352,75 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/button_corner_primary"
-                android:backgroundTint="@color/primary"
+                android:backgroundTint="@color/gray"
                 android:gravity="center"
-                android:text="Confirm"
-                android:onClick="onClickConfirm"
+                android:onClick="onClickCancel"
+                android:text="Cancel my order"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="18sp"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+            <TextView
+                android:id="@+id/textView_review"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:text="Your review"
+                android:textColor="@color/dark"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+
+            <RatingBar
+                android:id="@+id/ratingBar_order"
+                style="@android:style/Widget.Holo.RatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:isIndicator="false"
+                android:numStars="5"
+                android:progressTint="@color/warning"
+                android:stepSize="1"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+                app:layout_constraintStart_toStartOf="@+id/textView_review"
+                app:layout_constraintTop_toBottomOf="@+id/textView_review" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_add_review"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@drawable/button_corner_primary"
+                android:backgroundTint="@color/success"
+                android:gravity="center"
+                android:onClick="onClickAddReview"
+                android:text="Add review"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ratingBar_order" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
