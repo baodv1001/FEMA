@@ -41,4 +41,8 @@ class UserViewModel: ViewModel() {
         userRepository?.doCheckPhoneNumberRequest(phoneNumber)
         return userRepository?.getCheckPhoneNumber()
     }
+    fun checkEmail(email: String): LiveData<Boolean>? {
+        userRepository?.doCheckEmailRequest(email)
+        return userRepository?.getCheckEmail()
+    }
 }

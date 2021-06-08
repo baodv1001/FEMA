@@ -138,6 +138,11 @@ class ProfileActivity : AppCompatActivity(){
             val intent = Intent(this, ChangePhoneNumberActivity::class.java).apply {  }
             startActivity(intent)
         }
+        //change Password
+        change_password_layout.setOnClickListener {
+            val intent = Intent(this, ChangePasswordActivity::class.java).apply {  }
+            startActivity(intent)
+        }
     }
 
     fun onClickBack(view: View) {
@@ -162,18 +167,17 @@ class ProfileActivity : AppCompatActivity(){
         }
     }
 
-    fun showDialog(name: String){
+    private fun showDialog(name: String){
         val builder: AlertDialog.Builder = android.app.AlertDialog.Builder(this)
         builder.setTitle("New name")
 
         // Set up the input
         val input = EditText(this)
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        input.setHint("name")
+        input.hint = "name"
         input.inputType = InputType.TYPE_CLASS_TEXT
         input.setText(name)
         builder.setView(input)
-
         // Set up the buttons
         builder.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
             // Here you get get input text from the Edittext
@@ -203,5 +207,4 @@ class ProfileActivity : AppCompatActivity(){
 
         Runtime.getRuntime().exit(0)
     }
-
 }

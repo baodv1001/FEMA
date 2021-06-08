@@ -15,6 +15,7 @@ import java.util.*
 class UserRepository {
     private var listUsers: MutableLiveData<List<User>>? = MutableLiveData<List<User>>()
     private var checkPhoneNumber: MutableLiveData<Boolean>? = MutableLiveData<Boolean>()
+    private var checkEmail: MutableLiveData<Boolean>? = MutableLiveData<Boolean>()
     private var userApi: UserApi = RetrofitClient().userApi
 
     fun setUserData(userData: List<User>) {
@@ -29,6 +30,13 @@ class UserRepository {
     }
     fun getCheckPhoneNumber (): MutableLiveData<Boolean>? {
         return  checkPhoneNumber
+    }
+
+    fun setCheckEmail(boolean: Boolean) {
+        checkEmail?.value = boolean
+    }
+    fun getCheckEmail(): MutableLiveData<Boolean>? {
+        return checkEmail
     }
     companion object {
         private var userRepository: UserRepository? = null
@@ -65,6 +73,7 @@ class UserRepository {
         val call = userApi.changePhoneNumber(idAccount, phoneNumber)
         call.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
+
             }
 
             override fun onFailure(call: Call<String>, t: Throwable) {
@@ -76,11 +85,29 @@ class UserRepository {
         val call = userApi.checkPhoneNumber(phoneNumber)
         call.enqueue(object : Callback<String> {
             override fun onResponse(call: Call<String>, response: Response<String>) {
-                response.let {
-                    if (response.body().toString() == "true") {
+                response.body().let {
+                    if (it == "true") {
                         setCheckPhoneNumber(true)
                     } else {
                         setCheckPhoneNumber(false)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<String>, t: Throwable) {
+                Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+    fun doCheckEmailRequest(email: String) {
+        val call = userApi.checkEmail(email)
+        call.enqueue(object : Callback<String> {
+            override fun onResponse(call: Call<String>, response: Response<String>) {
+                response.body().let {
+                    if (it == "true") {
+                        setCheckEmail(true)
+                    } else {
+                        setCheckEmail(false)
                     }
                 }
             }

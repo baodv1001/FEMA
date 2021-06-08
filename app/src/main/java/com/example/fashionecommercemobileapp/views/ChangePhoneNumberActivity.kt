@@ -72,17 +72,18 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
             var phone : String = text_input_Phone_Number.text.toString()
             var password: String = text_input_Password.text.toString()
             if (checkTextField(password)) {
-                if (phone[0] == '0') {
-                    phone = phone.drop(1)
-                    phone = "+84" + phone
-                }
                 userViewModel?.checkPhoneNumber(phone)?.observe(this, Observer {
-                    if (it == true) {
-                    sendVerificationCode(phone)}
+                    if (it == false) {
+                        if (phone[0] == '0') {
+                            phone = phone.drop(1)
+                            phone = "+84" + phone
+                        }
+                        sendVerificationCode(phone)}
                     else {
                         Toast.makeText(this, "phone number already in use",Toast.LENGTH_SHORT).show()
                     }
                 })
+
             }
         }
 
@@ -91,12 +92,13 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
             var phone : String = text_input_Phone_Number.text.toString()
             var password: String = text_input_Password.text.toString()
             if (checkTextField(password)) {
-                if (phone[0] == '0') {
-                    phone = phone.drop(1)
-                    phone = "+84" + phone
-                }
                 userViewModel?.checkPhoneNumber(phone)?.observe(this, Observer {
-                    if (it == true) {
+                    if (it == false) {
+
+                        if (phone[0] == '0') {
+                            phone = phone.drop(1)
+                            phone = "+84" + phone
+                        }
                         reSendVerificationCode(phone, forceResendingToken)
                     }
                     else {
@@ -114,8 +116,9 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
             }
             else
             {
-                if (checkTextField(password))
+                if (checkTextField(password)) {
                     verifyPhoneNumberWithCode(mVertificationId , text_input_OTP.text.toString())
+                }
             }
         }
     }
@@ -182,7 +185,12 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 phoneNumberSignUpSuccess = firebaseAuth.currentUser.phoneNumber
                 changePhoneNumber()
+                var phone : String = text_input_Phone_Number.text.toString()
+                val sp : SharedPreferences = getSharedPreferences("ChangePhone", MODE_PRIVATE)
+                val ed = sp.edit()
+                ed.putString("Phone", phone)
                 progressDialog.dismiss()
+                Toast.makeText(this@ChangePhoneNumberActivity, "Success", Toast.LENGTH_SHORT).show()
                 //finish()
             }
             .addOnFailureListener{ e->

@@ -26,4 +26,7 @@ interface UserApi {
     @FormUrlEncoded
     @POST("Profile/check_phone_number.php")
     fun checkPhoneNumber(@Field("phoneNumber") phoneNumber: String): Call<String>
+    @FormUrlEncoded
+    @POST("Profile/check_email.php")
+    fun checkEmail(@Field("phoneNumber") email: String): Call<String>
 }

@@ -16,6 +16,7 @@
         android:theme="@style/Theme.MaterialComponents.NoActionBar"
         android:usesCleartextTraffic="true"
         tools:ignore="MissingClass">
+        <activity android:name=".views.ChangePasswordActivity"></activity>
         <activity android:name=".views.ChangePhoneNumberActivity" />
         <activity android:name=".views.EditAddressActivity" />
         <activity
@@ -23,8 +24,7 @@
             android:parentActivityName=".views.AddressActivity" />
         <activity
             android:name=".views.SignUpActivity"
-            android:parentActivityName=".views.LoginActivity">
-        </activity>
+            android:parentActivityName=".views.LoginActivity"></activity>
         <activity android:name=".views.SearchActivity" />
         <activity android:name=".views.OnBoardingActivity" />
         <activity android:name=".views.SplashActivity" />
@@ -35,8 +35,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".views.AccountActivity" />
+        <activity android:name=".views.AccountActivity" />
         <activity
             android:name=".views.ProfileActivity"
             android:parentActivityName=".views.AccountActivity" />
@@ -51,8 +50,9 @@
         <activity
             android:name=".views.OrderActivity"
             android:parentActivityName=".views.AccountActivity" />
-        <activity android:name=".views.MainActivity"
-            android:parentActivityName=".views.LoginActivity"/>
+        <activity
+            android:name=".views.MainActivity"
+            android:parentActivityName=".views.LoginActivity" />
     </application>
 
 </manifest>

@@ -26,6 +26,12 @@ interface AccountApi {
                @Field("phoneNumber") phone: String?) : Call<String>
 
     @FormUrlEncoded
-    @POST("login.php")
-    suspend fun getAccount(@Field("username") username : String, @Field("password") password : String) : List<Account>
+    @POST("Account/login.php")
+    suspend fun getAccount(@Field("username") username : String,
+                           @Field("password") password : String) : List<Account>
+
+    @FormUrlEncoded
+    @POST("Account/change_password.php")
+    fun changePassword(@Field("idAccount") idAccount : Int,
+                        @Field("newPassword")  newPassword : String): Call<String>
 }
