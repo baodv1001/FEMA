@@ -97,7 +97,7 @@
             <ImageView
                 android:id="@+id/detail_image"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="200dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/recommend"
                 app:layout_constraintEnd_toEndOf="parent"

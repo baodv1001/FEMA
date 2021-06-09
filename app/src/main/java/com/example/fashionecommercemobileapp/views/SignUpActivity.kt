@@ -87,13 +87,125 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         btnSign.setOnClickListener() {
-            if (txtOTP.text.toString().isEmpty()) {
-                Toast.makeText(this@SignUpActivity, "Please enter your verification code...", Toast.LENGTH_SHORT).show()
+            if (!validationOtp()) {
+
             } else {
                 if (checkEnterInfo())
                     verifyPhoneNumberWithCode(mVertificationId, txtOTP.text.toString())
             }
         }
+    }
+    fun validationUsername(): Boolean{
+        val user: String = txtUsername.text.toString()
+        val noWhite: Regex = Regex("(?=\\S+$)")
+        if (user.isEmpty()){
+            txtUsername.error = "Field cannot be empty"
+            false
+        } else if (user.length > 50)
+        {
+            txtUsername.error = "Username too long"
+            return false
+        } else if (user.matches(noWhite))
+        {
+            txtUsername.error = "White space is not allowed"
+            return false
+        } else {
+            txtUsername.error = null
+            true
+        }
+        return true
+    }
+
+    fun validationName(): Boolean{
+        val name: String = txtName.text.toString()
+
+        if (name.isEmpty()){
+            txtName.error = "Field cannot be empty"
+            false
+        } else if (name.length > 50)
+        {
+            txtName.error = "Name too long"
+            return false
+        } else {
+            txtName.error = null
+            true
+        }
+        return true
+    }
+
+    fun validationPhone(): Boolean{
+        val phone: String = txtPhone.text.toString()
+        if (phone.isEmpty()){
+            txtPhone.error = "Field cannot be empty"
+            false
+        } else {
+            txtPhone.error = null
+            true
+        }
+        return true
+    }
+    fun validationPass(): Boolean{
+        val pass: String = txtPassword.text.toString()
+        val noWhite: Regex = Regex("(?=\\S+$)")
+        if (pass.isEmpty()){
+            txtPassword.error = "Field cannot be empty"
+            false
+        } else if (pass.length < 6)
+        {
+            txtPassword.error  = "Password must be more than 6 char"
+            return false
+        } else if (pass.matches(noWhite))
+        {
+            txtPassword.error = "White space is not allowed"
+            return false
+        } else {
+            txtPassword.error = null
+            true
+        }
+        return true
+    }
+
+    fun validationRePass(): Boolean{
+        val rePass: String = txtRepassword.text.toString()
+        val noWhite: Regex = Regex("(?=\\S+$)")
+        if (rePass.isEmpty()){
+            txtRepassword.error = "Field cannot be empty"
+            return false
+        } else if (rePass.length < 6)
+        {
+            txtRepassword.error  = "Repassword must be more than 6 char"
+            return false
+        } else if (rePass.matches(noWhite))
+        {
+            txtRepassword.error = "White space is not allowed"
+            return false
+        }else if (rePass != txtPassword.text.toString())
+        {
+            txtRepassword.error = "Repassword is not match"
+            return false
+        } else {
+            txtRepassword.error = null
+            return true
+        }
+    }
+
+    fun validationOtp(): Boolean{
+        val otp: String = txtOTP.text.toString()
+
+        if (otp.isEmpty()){
+            txtOTP.error = "Field cannot be empty"
+            return false
+        } else {
+            txtOTP.error = null
+            return true
+        }
+    }
+
+    fun checkEnterInfo(): Boolean{
+        if (!validationName() || !validationUsername() || !validationPhone()
+                || !validationPass() || !validationRePass())
+                    return false
+        return true
     }
 
     private fun sendVerificationCode(phone: String) {
@@ -146,19 +258,6 @@ class SignUpActivity : AppCompatActivity() {
                     progressDialog.dismiss()
                     Toast.makeText(this@SignUpActivity, "${e.message}", Toast.LENGTH_SHORT).show()
                 }
-    }
-
-    private fun checkEnterInfo(): Boolean {
-        if (txtUsername.text.toString().isEmpty() || txtPhone.text.toString().isEmpty() || txtName.text.toString().isEmpty()
-                || txtPassword.text.toString().isEmpty() || txtRepassword.text.toString().isEmpty()) {
-            Toast.makeText(this@SignUpActivity, "Field must be fill...!", Toast.LENGTH_SHORT).show()
-            return false
-        } else if (!txtPassword.text.toString().equals(txtRepassword.text.toString())) {
-            Toast.makeText(this@SignUpActivity, "Password not match", Toast.LENGTH_SHORT).show()
-            return false
-        } else {
-            return true
-        }
     }
 
     private fun regiter() {

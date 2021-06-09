@@ -1,19 +1,14 @@
 <?php
-	$hostname= "localhost";
-	$username = "root";
-	$password = "";
-	$databasename = "fashionecommercemobileapp";
-	
-	$con = mysqli_connect($hostname,$username,$password,$databasename);
+ include_once './dbConnect.php';
+ function dispInfo(){
+   $db = new dbConnect();
 	
 	$idAccount = $_REQUEST['idAccount'] ?? "";
-	$idAccount ='32';	
-
 	$query = "SELECT * FROM product
 			WHERE idProduct IN (SELECT A.idProduct FROM wishlistinfo AS A
 			WHERE A.idWishList IN (SELECT B.idWishList FROM wishlist AS B
 			WHERE B.idAccount ='$idAccount'))";
-	$resouter = mysqli_query($con,$query);
+	$resouter = mysqli_query($db->connect(),$query);
  
 	$temparray = array();
 	$total_records = mysqli_num_rows($resouter);
@@ -38,6 +33,6 @@
 }   
 header("Content-Type: Json");
 echo json_encode($temparray);
-
-
+ }
+dispInfo();
 ?>
