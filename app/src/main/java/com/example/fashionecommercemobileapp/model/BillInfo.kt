@@ -25,11 +25,16 @@ class BillInfo {
     @Expose
     var quantity: Int? = null
 
-    constructor(id: Int, idProduct: Int, idSize: Int, idColor: Int, quantity: Int) {
+    @SerializedName("price")
+    @Expose
+    var price: String? = null
+
+    constructor(id: Int, idProduct: Int, idSize: Int, idColor: Int, quantity: Int, price: String) {
         this.idBill = id
         this.idProduct = idProduct
         this.idSize = idSize
         this.idColor = idColor
         this.quantity = quantity
+        this.price = price
     }
 }

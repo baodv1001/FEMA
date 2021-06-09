@@ -29,7 +29,8 @@ class BillInfoRepository {
             billInfo.idProduct,
             billInfo.idSize,
             billInfo.idColor,
-            billInfo.quantity
+            billInfo.quantity,
+            billInfo.price
         )
 
     suspend fun getBillInfo(idBill: String) = billInfoApi?.getBillInfo(idBill)

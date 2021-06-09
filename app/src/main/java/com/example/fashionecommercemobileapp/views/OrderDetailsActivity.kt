@@ -212,13 +212,13 @@ class OrderDetailsActivity : AppCompatActivity() {
     }
 
     private fun loadData(billInfoList: List<BillInfo>, productList: List<Product>) {
-        var subTotal: Int = 0
+        var subTotal: Float = 0F
         for (i in billInfoList.indices) {
-            subTotal += billInfoList[i].quantity!! * (productList[i].price?.toInt() ?: 0)
+            subTotal += (billInfoList[i].quantity?.toFloat() ?: 0F) * (billInfoList[i].price?.toFloat() ?: 0F)
         }
         textView_sub_orderDetails.text =
             NumberFormat.getIntegerInstance(Locale.GERMANY).format(subTotal)
-        if (subTotal == total) {
+        if (subTotal.toInt() == total) {
             textView_discount_orderDetails.text = "0"
         } else {
             textView_discount_orderDetails.text =

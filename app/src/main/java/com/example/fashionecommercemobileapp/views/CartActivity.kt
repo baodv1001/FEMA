@@ -309,14 +309,17 @@ class CartActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadData(cartList: List<CartInfo>, productList: List<Product>) {
-        var subTotal: Int = 0
-        for (i in cartList.indices) {
-            subTotal += cartList[i].quantity!! * (productList[i].price?.toInt() ?: 0)
+    private fun loadData(cartInfoList: List<CartInfo>, productList: List<Product>) {
+        var subTotal: Float = 0F
+        for (i in cartInfoList.indices) {
+            val quantity: Float = cartInfoList[i].quantity?.toFloat() ?: 0F
+            val price: Float =
+                (productList[i].price?.toFloat() ?: 0F) * (1 - (productList[i].discount?.toFloat()
+                    ?: 0F))
+            subTotal += quantity * price
         }
         textView_sub_total.text = NumberFormat.getIntegerInstance(Locale.GERMANY).format(subTotal)
-
-        val total: Int = subTotal - textview_discount.text.toString().replace(".", "").toInt()
+        val total: Float = subTotal - textview_discount.text.toString().replace(".", "").toFloat()
         textView_total.text = NumberFormat.getIntegerInstance(Locale.GERMANY).format(total)
     }
 

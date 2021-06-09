@@ -16,7 +16,6 @@ import com.example.fashionecommercemobileapp.model.Product
 import com.example.fashionecommercemobileapp.model.Size
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class OrderDetailsAdapter(
@@ -36,7 +35,12 @@ class OrderDetailsAdapter(
         var quantity: TextView = view.findViewById(R.id.textView_quantity_checkOut)
     }
 
-    fun changeData(cartInfoList: List<BillInfo>, productList: List<Product>, sizeList: List<Size>, colorList: List<Color>) {
+    fun changeData(
+        cartInfoList: List<BillInfo>,
+        productList: List<Product>,
+        sizeList: List<Size>,
+        colorList: List<Color>
+    ) {
         this.listBillInfo.apply {
             clear()
             addAll(cartInfoList)
@@ -84,7 +88,9 @@ class OrderDetailsAdapter(
         }
         holder.infoCart.text = "Size: $sizeName, Color: $colorName"
         holder.productCart.text = listProduct[position].name
-        holder.costCart.text = NumberFormat.getIntegerInstance(Locale.GERMANY).format(listProduct[position].price?.toInt())
+        val price = listBillInfo[position].price?.toInt()
+        holder.costCart.text =
+            NumberFormat.getIntegerInstance(Locale.GERMANY).format(price)
         holder.quantity.text = "Quantity: " + listBillInfo[position].quantity.toString()
     }
 

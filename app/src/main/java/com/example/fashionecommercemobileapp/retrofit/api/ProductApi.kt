@@ -43,7 +43,8 @@ interface ProductApi {
     @GET("get_all_flash_sale.php")
     fun getAllFlashSale(): Call<List<Product>>
 
-    @GET("update_product.php")
+    @POST("update_product.php")
+    @FormUrlEncoded
     fun updateProduct(
         @Field("idProduct") idProduct: String,
         @Field("quantity") quantity: Int

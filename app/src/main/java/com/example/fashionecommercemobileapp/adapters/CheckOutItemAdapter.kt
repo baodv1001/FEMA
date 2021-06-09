@@ -84,7 +84,10 @@ class CheckOutItemAdapter(
         }
         holder.infoCart.text = "Size: $sizeName, Color: $colorName"
         holder.productCart.text = listProduct[position].name
-        holder.costCart.text = NumberFormat.getIntegerInstance(Locale.GERMANY).format(listProduct[position].price?.toInt())
+        val discount: Float = 1 - (listProduct[position].discount?.toFloat() ?: 0F)
+        val price: Float = (listProduct[position].price?.toFloat() ?: 0F)
+        holder.costCart.text =
+            NumberFormat.getIntegerInstance(Locale.GERMANY).format(discount * price)
         holder.quantity.text = "Quantity: " + listCartInfo[position].quantity.toString()
     }
 

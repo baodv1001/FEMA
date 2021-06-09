@@ -14,7 +14,8 @@ interface BillInfoApi {
         @Field("idProduct") idProduct: Int?,
         @Field("idSize") idSize: Int?,
         @Field("idColor") idColor: Int?,
-        @Field("quantity") quantity: Int?
+        @Field("quantity") quantity: Int?,
+        @Field("price") price: String?
     ): Boolean
 
     @POST("Bill/get_bill_info.php")

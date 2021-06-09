@@ -119,7 +119,6 @@ class CheckOutActivity : AppCompatActivity() {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                     }
                     Status.LOADING -> {
-                        Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -182,14 +181,17 @@ class CheckOutActivity : AppCompatActivity() {
     }
 
     private fun loadData(cartInfoList: List<CartInfo>, productList: List<Product>) {
-        var subTotal: Int = 0
+        var subTotal: Float = 0F
         for (i in cartInfoList.indices) {
-            subTotal += cartInfoList[i].quantity!! * (productList[i].price?.toInt() ?: 0)
+            val quantity: Float = cartInfoList[i].quantity?.toFloat() ?: 0F
+            val price: Float =
+                (productList[i].price?.toFloat() ?: 0F) * (1 - (productList[i].discount?.toFloat()
+                    ?: 0F))
+            subTotal += quantity * price
         }
         textView_sub_checkOut.text =
             NumberFormat.getIntegerInstance(Locale.GERMANY).format(subTotal)
-        val total: Int =
-            subTotal - textView_discount_checkOut.text.toString().replace(".", "").toInt()
+        val total: Float = subTotal - textView_discount_checkOut.text.toString().replace(".", "").toFloat()
         textView_total_checkOut.text = NumberFormat.getIntegerInstance(Locale.GERMANY).format(total)
     }
 
@@ -236,14 +238,18 @@ class CheckOutActivity : AppCompatActivity() {
 
     private fun createBillInfo(idBill: Int) {
         var isSuccess: Boolean = true
+        var i = 0
         cartInfoList.forEach { cartInfo ->
+            val price = ((productList[i].price?.toFloat() ?: 0F) * (1 - (productList[i].discount?.toFloat() ?: 0F))).toInt()
+            i++
             val billInfo: BillInfo =
                 BillInfo(
                     idBill,
                     cartInfo.idProduct!!,
                     cartInfo.idSize!!,
                     cartInfo.idColor!!,
-                    cartInfo.quantity!!
+                    cartInfo.quantity!!,
+                    price.toString()
                 )
             val billInfoViewModel: BillInfoViewModel =
                 ViewModelProviders.of(this).get(BillInfoViewModel::class.java)
@@ -269,6 +275,7 @@ class CheckOutActivity : AppCompatActivity() {
                         }
                         Status.ERROR -> {
                             Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                            isSuccess = false
                         }
                         Status.LOADING -> {
                         }
