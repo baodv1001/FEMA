@@ -15,6 +15,7 @@
       $data["idSize"] = $row["idSize"];
       $data["idColor"] = $row["idColor"];
       $data["quantity"] = $row["quantity"];
+      $data["price"] = $row["price"];
       
       array_push($response, $data);
     }

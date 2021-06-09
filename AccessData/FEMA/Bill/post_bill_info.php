@@ -3,15 +3,16 @@
   function createBillInfo() {
     $db = new dbConnect();
 
-    $idBill = $_REQUEST['idBill'];
-    $idProduct = $_REQUEST['idProduct'];
-    $idSize = $_REQUEST['idSize'];
-    $idColor = $_REQUEST['idColor'];
-    $quantity = $_REQUEST['quantity'];
+    $idBill = $_POST['idBill'];
+    $idProduct = $_POST['idProduct'];
+    $idSize = $_POST['idSize'];
+    $idColor = $_POST['idColor'];
+    $quantity = $_POST['quantity'];
+    $price = $_POST['price'];
 
     $result = mysqli_query($db->connect(), 
-      "INSERT INTO billinfo (idBill, idProduct, idSize, idColor, quantity) 
-      VALUES ('$idBill', '$idProduct', '$idSize', '$idColor', '$quantity')");
+      "INSERT INTO billinfo (idBill, idProduct, idSize, idColor, quantity, price) 
+      VALUES ('$idBill', '$idProduct', '$idSize', '$idColor', '$quantity', $price)");
 
     header("Content-Type: Json");
     echo json_encode($result);

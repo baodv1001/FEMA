@@ -3,15 +3,15 @@
   function updateProductRating() {
     $db = new dbConnect();
 
-    $idProductList = $_POST['idProductList'];
+    $idProductList = $_REQUEST['idProductList'];
     $idProductList = explode(",", $idProductList);
 
-    $rating = $_POST['rating'];
+    $rating = $_REQUEST['rating'];
 
     foreach ($idProductList as $idProduct) {
       $tmp = mysqli_fetch_assoc(mysqli_query($db->connect(), "SELECT rating FROM Product WHERE idProduct = $idProduct"));
       $rate = $tmp['rating'];
-      $quantity = mysqli_num_rows(mysqli_query($db->connect(), "SELECT idBill FROM BillInfo WHERE idProduct = $idProduct GROUP BY idBill"));
+      $quantity = mysqli_num_rows(mysqli_query($db->connect(), "SELECT BillInfo.idBill FROM BillInfo JOIN Bill ON BillInfo.idBill = Bill.idBill WHERE idProduct = $idProduct GROUP BY BillInfo.idBill"));
       $newRate = ($rate * $quantity + $rating) / ($quantity + 1);
       
       $result = mysqli_query($db->connect(), 

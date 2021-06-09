@@ -8,7 +8,7 @@
 
     $result = mysqli_query($db->connect(), 
     "UPDATE Product SET quantity = quantity - $quantity 
-    WHERE idProduct = $idProduct");
+    WHERE idProduct = '$idProduct'");
 
     header("Content-Type: Json");
     echo json_encode($result);
