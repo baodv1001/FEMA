@@ -1,36 +1,38 @@
-    package com.example.fashionecommercemobileapp.views
-
+package com.example.fashionecommercemobileapp.views
 
 import android.annotation.SuppressLint
 import android.app.*
-import android.content.DialogInterface
-import android.app.Activity
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.text.InputType
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.fashionecommercemobileapp.R
+import com.example.fashionecommercemobileapp.Utility.UploadUtility
 import com.example.fashionecommercemobileapp.model.URIPathHelper
 import com.example.fashionecommercemobileapp.model.User
 import com.example.fashionecommercemobileapp.retrofit.repository.UserRepository
 import com.example.fashionecommercemobileapp.retrofit.utils.Status
 import com.example.fashionecommercemobileapp.viewmodels.UserViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_profile.*
 import java.util.*
+import java.util.jar.Manifest
+
 
     @Suppress("DEPRECATION")
 class ProfileActivity : AppCompatActivity(){
@@ -40,11 +42,19 @@ class ProfileActivity : AppCompatActivity(){
     val REQUEST_CODE = 100
     lateinit var uri: Uri
     lateinit var bitmap: Bitmap
+    private var imagePath: String? = null
     @SuppressLint("SimpleDateFormat")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
+
+       /* ActivityCompat.requestPermissions(
+            this, arrayOf(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ), PackageManager.PERMISSION_GRANTED
+        )*/
 
         UserRepository.Companion.setContext(this@ProfileActivity)
         userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
@@ -121,7 +131,7 @@ class ProfileActivity : AppCompatActivity(){
         //pick image
         imageView_user.setOnClickListener {
             openGalleryForImage()
-            bitmap = (imageView_user.drawable as BitmapDrawable).bitmap
+            //bitmap = (imageView_user.drawable as BitmapDrawable).bitmap
 
         }
         //update User
@@ -130,7 +140,8 @@ class ProfileActivity : AppCompatActivity(){
                                             text_name_bottom.text.toString(),
                                             text_gender.text.toString(),
                                             pickDate!!)
-            Toast.makeText(this, "Saved Successfully", Toast.LENGTH_SHORT).show()
+            UploadUtility(this).uploadFile(imagePath.toString())
+            //Toast.makeText(this, "Saved Successfully", Toast.LENGTH_SHORT).show()
             super.onBackPressed()
         }
         //change Phone Number
@@ -163,7 +174,8 @@ class ProfileActivity : AppCompatActivity(){
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
             imageView_user.setImageURI(data?.data) //handle chosen image
             val filePath = data?.data
-            val imagePath = uriPathHelper.getImagePath(this, filePath!!)
+            imagePath = uriPathHelper.getImagePath(this, filePath!!)
+            //UploadUtility(this).uploadFile(filePath)
         }
     }
 
