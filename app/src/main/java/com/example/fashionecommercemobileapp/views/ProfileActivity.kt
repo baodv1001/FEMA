@@ -17,7 +17,6 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
@@ -31,8 +30,9 @@ import com.example.fashionecommercemobileapp.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_profile.*
 import java.util.*
-import java.util.jar.Manifest
-
+import okhttp3.RequestBody
+import okhttp3.MultipartBody
+import okhttp3.MediaType
 
     @Suppress("DEPRECATION")
 class ProfileActivity : AppCompatActivity(){
@@ -41,7 +41,6 @@ class ProfileActivity : AppCompatActivity(){
     private val uriPathHelper = URIPathHelper()
     val REQUEST_CODE = 100
     lateinit var uri: Uri
-    lateinit var bitmap: Bitmap
     private var imagePath: String? = null
     @SuppressLint("SimpleDateFormat")
     @RequiresApi(Build.VERSION_CODES.O)
