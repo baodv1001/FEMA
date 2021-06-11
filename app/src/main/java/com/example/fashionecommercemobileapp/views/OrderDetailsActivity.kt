@@ -283,7 +283,7 @@ class OrderDetailsActivity : AppCompatActivity() {
             idProductList.add(info.idProduct.toString())
         }
         billViewModel.updateBillRated(idBill)
-        productViewModel.updateProductRating(idProductList, ratingBar_order.numStars.toString())
+        productViewModel.updateProductRating(idProductList, ratingBar_order.rating.toString())
         isRated = 1
         button_add_review.visibility = View.GONE
         Toast.makeText(this, "Added review successfully!", Toast.LENGTH_SHORT).show()
