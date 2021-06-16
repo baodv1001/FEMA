@@ -12,7 +12,17 @@ interface WishListApi {
     fun getWishListProduct(@Field ("idAccount" ) idAccount : Int) : Call<List<Product>>
 
     @FormUrlEncoded
-    @POST("post_deletewishproduct.php")
+    @POST("Wishlist/post_deletewishproduct.php")
     fun deleteWishProduct(@Field ("idAccount") idAccount: Int,
                           @Field ("idProduct") idProduct : Int)  : Call<String>
+
+    @FormUrlEncoded
+    @POST("Wishlist/post_addnewwishitem.php")
+    fun addNewWish(@Field ("idAccount") idAccount: Int,
+                      @Field ("idProduct") idProduct : Int)  : Call<String>
+
+    @FormUrlEncoded
+    @POST("Wishlist/post_checkwishitem.php")
+    fun checkWishItem(@Field ("idAccount") idAccount: Int,
+                   @Field ("idProduct") idProduct : Int)  : Call<String>
 }

@@ -73,7 +73,8 @@
             android:hint="Username"
             app:boxStrokeColor="@color/black"
             android:textColorHint="@color/gray"
-            app:startIconDrawable="@drawable/ic_account_circle" >
+            app:startIconDrawable="@drawable/ic_account_circle"
+            app:startIconTint="@color/gray">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtUsername"
@@ -89,7 +90,8 @@
             android:hint="Your name"
             app:boxStrokeColor="@color/black"
             android:textColorHint="@color/gray"
-            app:startIconDrawable="@drawable/ic_lock">
+            app:startIconDrawable="@drawable/ic_baseline_info_24"
+            app:startIconTint="@color/gray">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtName"
@@ -105,7 +107,8 @@
             android:hint="Phone Number"
             app:boxStrokeColor="@color/black"
             android:textColorHint="@color/gray"
-            app:startIconDrawable="@drawable/ic_email">
+            app:startIconDrawable="@drawable/ic_baseline_smartphone_24"
+            app:startIconTint="@color/gray">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtPhone"
@@ -113,6 +116,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/gray"
                 android:inputType="phone"
+                android:maxLength="11"
                 android:digits="1234567890"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -124,7 +128,8 @@
             app:boxStrokeColor="@color/black"
             android:textColorHint="@color/gray"
             app:passwordToggleEnabled="true"
-            app:startIconDrawable="@drawable/ic_lock">
+            app:startIconDrawable="@drawable/ic_lock"
+            app:startIconTint="@color/gray">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtPassword"
@@ -142,7 +147,8 @@
             app:boxStrokeColor="@color/black"
             android:textColorHint="@color/gray"
             app:passwordToggleEnabled="true"
-            app:startIconDrawable="@drawable/ic_lock">
+            app:startIconDrawable="@drawable/ic_lock"
+            app:startIconTint="@color/gray">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/txtRepassword"
@@ -164,7 +170,8 @@
                 android:hint="Verification Code"
                 app:boxStrokeColor="@color/black"
                 android:textColorHint="@color/gray"
-                app:startIconDrawable="@drawable/ic_lock"
+                app:startIconDrawable="@drawable/ic_baseline_send_24"
+                app:startIconTint="@color/gray"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintRight_toLeftOf="@id/btnSendOTP"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -224,7 +231,7 @@
             android:layout_marginTop="16dp"
             android:height="60dp"
             android:backgroundTint="@color/primary"
-            android:text="Đăng ký"
+            android:text="Register"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="18sp"
