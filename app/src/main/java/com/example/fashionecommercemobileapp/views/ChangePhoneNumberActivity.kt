@@ -185,10 +185,10 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
             .addOnSuccessListener {
                 phoneNumberSignUpSuccess = firebaseAuth.currentUser.phoneNumber
                 changePhoneNumber()
-                var phone : String = text_input_Phone_Number.text.toString()
+                /*var phone : String = text_input_Phone_Number.text.toString()
                 val sp : SharedPreferences = getSharedPreferences("ChangePhone", MODE_PRIVATE)
                 val ed = sp.edit()
-                ed.putString("Phone", phone)
+                ed.putString("Phone", phone)*/
                 progressDialog.dismiss()
                 Toast.makeText(this@ChangePhoneNumberActivity, "Success", Toast.LENGTH_SHORT).show()
                 //finish()
