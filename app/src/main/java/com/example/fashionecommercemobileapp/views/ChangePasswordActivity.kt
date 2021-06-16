@@ -1,6 +1,8 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,6 +11,7 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.fashionecommercemobileapp.R
+import com.example.fashionecommercemobileapp.model.Account
 import com.example.fashionecommercemobileapp.model.User
 import com.example.fashionecommercemobileapp.retrofit.repository.AccountRepository
 import com.example.fashionecommercemobileapp.retrofit.repository.UserRepository
@@ -20,6 +23,7 @@ class ChangePasswordActivity : AppCompatActivity() {
 
     private var userViewModel: UserViewModel? = null
     private var accountViewModel: AccountViewModel? = null
+    private var listAccount: List<Account>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_change_password)
@@ -35,6 +39,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         val sp = getSharedPreferences("Login",Context.MODE_PRIVATE)
         val idAccount : Int = sp.getString("Id",null)?.toInt()!!
         val password = sp.getString("Psw",null)
+        val username = sp.getString("Unm", null)
 
         button_change.setOnClickListener {
             var checkPhone : Boolean = true
@@ -56,7 +61,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                 changePassword(idAccount)
                 val ed = sp.edit()
                 ed.putString("Psw",text_input_new_password.text.toString())
-                super.onBackPressed()
+                onClickLogOut(button_change)
             }
         }
     }
@@ -85,6 +90,24 @@ class ChangePasswordActivity : AppCompatActivity() {
     fun changePassword(idAccount: Int) {
         val newPass = text_input_new_password.text.toString()
         accountViewModel?.doChangePassword(idAccount, newPass)
+    }
+
+    fun onClickLogOut(view: View) {
+        val sp = getSharedPreferences("Login", Context.MODE_PRIVATE)
+        val Ed = sp.edit()
+        Ed.putString("Unm", null)
+        Ed.putString("Psw", null)
+        Ed.putInt("Id", 0)
+        Ed.commit()
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        this.startActivity(intent)
+
+        if (this is Activity) {
+            (this as Activity).finish()
+        }
+
+        Runtime.getRuntime().exit(0)
     }
 
 }

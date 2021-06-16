@@ -32,7 +32,6 @@ class UserViewModel: ViewModel() {
     fun updateUserDate(idAccount: Int, name: String, gender: String, dateOfBirth: String) {
         userRepository?.doUpdateUserRequest(idAccount, name, gender, dateOfBirth)
     }
-
     fun changePhoneNumber(idAccount: Int, phoneNumber: String) {
         userRepository?.doChangePhoneNumberRequest(idAccount, phoneNumber)
     }

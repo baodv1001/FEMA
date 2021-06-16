@@ -57,6 +57,12 @@ class AddressActivity : AppCompatActivity() {
         addressRecyclerView.layoutManager = layoutManager
         addressRecyclerView.adapter = addressAdapter
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        addressViewModel!!.getAddressData(idAccount.toString())?.observe(this, Observer { setUpAddressRecyclerView(it) })
+    }
+
     fun onClickBack(view: View) {
         super.onBackPressed()
     }

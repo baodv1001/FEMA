@@ -118,7 +118,6 @@ class UserRepository {
         })
     }
 
-
     /*init {
         val retrofit = RetrofitClient()
         userApi = retrofit.getRetrofitInstance()!!.create(UserApi::class.java)

@@ -5,15 +5,19 @@ import android.app.*
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.text.InputType
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import android.view.Gravity
 import android.view.View
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -21,39 +25,40 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.fashionecommercemobileapp.R
-import com.example.fashionecommercemobileapp.Utility.UploadUtility
-import com.example.fashionecommercemobileapp.model.URIPathHelper
+import com.example.fashionecommercemobileapp.model.UploadResponse
 import com.example.fashionecommercemobileapp.model.User
+import com.example.fashionecommercemobileapp.retrofit.api.UploadApi
 import com.example.fashionecommercemobileapp.retrofit.repository.UserRepository
 import com.example.fashionecommercemobileapp.retrofit.utils.Status
+import com.example.fashionecommercemobileapp.retrofit.utils.UploadRequestBody
+import com.example.fashionecommercemobileapp.retrofit.utils.getFileName
+import com.example.fashionecommercemobileapp.retrofit.utils.snackbar
 import com.example.fashionecommercemobileapp.viewmodels.UserViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_profile.*
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 import java.util.*
-import okhttp3.RequestBody
-import okhttp3.MultipartBody
-import okhttp3.MediaType
 
-    @Suppress("DEPRECATION")
-class ProfileActivity : AppCompatActivity(){
+
+@Suppress("DEPRECATION")
+class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
     private var userViewModel: UserViewModel? = null
     private var listUser: List<User>? = null
-    private val uriPathHelper = URIPathHelper()
     val REQUEST_CODE = 100
-    lateinit var uri: Uri
-    private var imagePath: String? = null
+    private var id: Int? = null
+    private var selectedImageUri: Uri? = null
     @SuppressLint("SimpleDateFormat")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
-
-       /* ActivityCompat.requestPermissions(
-            this, arrayOf(
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ), PackageManager.PERMISSION_GRANTED
-        )*/
 
         UserRepository.Companion.setContext(this@ProfileActivity)
         userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
@@ -64,6 +69,7 @@ class ProfileActivity : AppCompatActivity(){
         val sp1 = getSharedPreferences("Login", Context.MODE_PRIVATE)
         val username = sp1.getString("Unm", null)
         val idAccount = sp1.getString("Id", null)
+        id = idAccount?.toInt()
         userViewModel?.getUserData(idAccount.toString())?.observe(this, Observer {
             it?.let { resource ->
                 when (resource.status) {
@@ -76,7 +82,7 @@ class ProfileActivity : AppCompatActivity(){
                         text_gender.text = listUser!![0].gender
                         text_birthday.text = listUser!![0].dateOfBirth?.toLocaleString()
                         pickDate = listUser!![0].dateOfBirth?.toString()
-                        text_user_email.text = listUser!![0].email
+                        //text_user_email.text = listUser!![0].email
                         text_phone_number.text = listUser!![0].phoneNumber
 
                     }
@@ -101,14 +107,18 @@ class ProfileActivity : AppCompatActivity(){
                 "Nữ",
                 "Khác"
             )
-            val builder = AlertDialog.Builder(this)
+            val builder = AlertDialog.Builder(this, R.style.myDialogStyle)
+
             builder.setTitle(R.string.dialog_title)
                 .setItems(items,
                     DialogInterface.OnClickListener{ dialog, which ->
                         text_gender.text = items[which]
                     })
-            builder.create()
-            builder.show()
+
+
+            val dialog = builder.create()
+            dialog.show()
+            dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         }
         //change birthday
         birthday_layout.setOnClickListener{
@@ -139,14 +149,14 @@ class ProfileActivity : AppCompatActivity(){
                                             text_name_bottom.text.toString(),
                                             text_gender.text.toString(),
                                             pickDate!!)
-            UploadUtility(this).uploadFile(imagePath.toString())
+            uploadImage(idAccount.toInt())
             //Toast.makeText(this, "Saved Successfully", Toast.LENGTH_SHORT).show()
             super.onBackPressed()
         }
         //change Phone Number
         phone_number_layout.setOnClickListener {
             val intent = Intent(this, ChangePhoneNumberActivity::class.java).apply {  }
-            startActivity(intent)
+            (this as Activity).startActivityForResult(intent, 0)
         }
         //change Password
         change_password_layout.setOnClickListener {
@@ -172,23 +182,114 @@ class ProfileActivity : AppCompatActivity(){
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
             imageView_user.setImageURI(data?.data) //handle chosen image
-            val filePath = data?.data
-            imagePath = uriPathHelper.getImagePath(this, filePath!!)
-            //UploadUtility(this).uploadFile(filePath)
+            selectedImageUri = data?.data
         }
+        userViewModel?.getUserData(id.toString())?.observe(this, Observer {
+            it?.let { resource ->
+                when (resource.status) {
+                    Status.SUCCESS -> {
+                        listUser = it?.data
+                        //text_username.text = username
+                        //Glide.with(imageView_user).load(listUser!![0].imageURL).into(imageView_user)
+                        text_name.text = listUser!![0].name
+                        text_name_bottom.text = listUser!![0].name
+                        text_gender.text = listUser!![0].gender
+                        text_birthday.text = listUser!![0].dateOfBirth?.toLocaleString()
+                        //pickDate = listUser!![0].dateOfBirth?.toString()
+                        //text_user_email.text = listUser!![0].email
+                        text_phone_number.text = listUser!![0].phoneNumber
+
+                    }
+                    Status.ERROR -> {
+                        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                    }
+                    Status.LOADING -> {
+
+                    }
+                }
+            }
+        })
+    }
+
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
+    private fun uploadImage(idAccount: Int) {
+        if (selectedImageUri == null) {
+            layout_root.snackbar("Select an Image First")
+            return
+        }
+
+        val parcelFileDescriptor =
+            contentResolver.openFileDescriptor(selectedImageUri!!, "r", null) ?: return
+
+        val inputStream = FileInputStream(parcelFileDescriptor.fileDescriptor)
+        val file = File(cacheDir, contentResolver.getFileName(selectedImageUri!!))
+        val outputStream = FileOutputStream(file)
+        inputStream.copyTo(outputStream)
+
+        progress_bar.progress = 0
+        val body = UploadRequestBody(file, "image", this)
+        UploadApi().upLoadImage(
+            MultipartBody.Part.createFormData(
+                "image",
+                file.name,
+                body
+            ),
+            RequestBody.create("multipart/form-data".toMediaTypeOrNull(), "json"),
+            idAccount
+        ).enqueue(object : Callback<UploadResponse> {
+            override fun onFailure(call: Call<UploadResponse>, t: Throwable) {
+                layout_root.snackbar(t.message!!)
+                progress_bar.progress = 0
+            }
+
+            override fun onResponse(
+                call: Call<UploadResponse>,
+                response: Response<UploadResponse>
+            ) {
+                response.body()?.let {
+                    layout_root.snackbar(it.message)
+                    progress_bar.progress = 100
+                }
+            }
+        })
+
     }
 
     private fun showDialog(name: String){
         val builder: AlertDialog.Builder = android.app.AlertDialog.Builder(this)
-        builder.setTitle("New name")
 
+        val titleText = "New name"
         // Set up the input
         val input = EditText(this)
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        var lp: LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        lp.setMargins(20, 0,0,0)
+        val marginHorizontal = 48F
+        lp.leftMargin = marginHorizontal.toInt()
+        input.layoutParams = lp
+        input.gravity = Gravity.TOP or Gravity.LEFT
         input.hint = "name"
+        input.setTextColor(Color.BLACK)
         input.inputType = InputType.TYPE_CLASS_TEXT
         input.setText(name)
         builder.setView(input)
+        val foregroundColorSpan = ForegroundColorSpan(Color.BLACK)
+
+        // Initialize a new spannable string builder instance
+
+        // Initialize a new spannable string builder instance
+        val ssBuilder = SpannableStringBuilder(titleText)
+
+        // Apply the text color span
+
+        // Apply the text color span
+        ssBuilder.setSpan(
+            foregroundColorSpan,
+            0,
+            titleText.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        builder.setTitle(ssBuilder)
         // Set up the buttons
         builder.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
             // Here you get get input text from the Edittext
@@ -197,9 +298,19 @@ class ProfileActivity : AppCompatActivity(){
         })
         builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
 
-        builder.show()
+        var dialog = builder.create()
+
+        dialog.show()
+
+        dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK)
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK)
+
     }
 
+    override fun onProgressUpdate(percentage: Int) {
+        progress_bar.progress = percentage
+    }
 
     fun onClickLogOut(view: View) {
         val sp = getSharedPreferences("Login", Context.MODE_PRIVATE)

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <style name="DialogAnimation">
         <item name="android:windowEnterAnimation">@anim/slide_right_to_left</item>
         <item name="android:windowExitAnimation">@anim/slide_left_to_right</item>
+    </style>
+    <style name="myDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:colorAccent" tools:ignore="NewApi">@color/primary</item>
     </style>
 </resources>
