@@ -61,7 +61,7 @@ class MoreProductsActivity : AppCompatActivity() {
 
         val sp: SharedPreferences = getSharedPreferences("Login", Context.MODE_PRIVATE)
         idAccount = sp.getString("Id", "")?.toInt()!!
-        var intent: Intent = intent
+        val intent: Intent = intent
         idProductCode = intent.getStringExtra("idProductCode").toString()
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
         productViewModel!!.init()

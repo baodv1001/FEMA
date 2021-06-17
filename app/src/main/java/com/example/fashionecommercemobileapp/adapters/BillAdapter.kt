@@ -1,32 +1,70 @@
 package com.example.fashionecommercemobileapp.adapters
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fashionecommercemobileapp.R
 import com.example.fashionecommercemobileapp.model.Bill
+import java.text.NumberFormat
+import java.util.*
 
-class BillAdapter (context: Context, private val listBill: List<Bill>) : RecyclerView.Adapter<BillAdapter.ViewHolder>() {
+class BillAdapter(context: Context, private val listBill: ArrayList<Bill>) :
+    RecyclerView.Adapter<BillAdapter.ViewHolder>() {
+    private var bill: MutableLiveData<Bill> = MutableLiveData(Bill())
+    private var isClicked: MutableLiveData<Boolean> = MutableLiveData(false)
+
+    fun getBill(): MutableLiveData<Bill> = bill
+    fun getIsClicked(): MutableLiveData<Boolean> = isClicked
+
+    fun changeData(billList: List<Bill>) {
+        this.listBill.apply {
+            clear()
+            addAll(billList)
+        }
+    }
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var orderCodeTextView: TextView = view.findViewById(R.id.order_code)
-        var orderDateTextView: TextView = view.findViewById(R.id.order_date)
-        var orderStatusTextView: TextView = view.findViewById(R.id.order_status)
-        var orderTotalPrice: TextView = view.findViewById(R.id.order_total_price)
+        var idBill: TextView = view.findViewById(R.id.textView_order_code)
+        var date: TextView = view.findViewById(R.id.textView_order_date)
+        var status: TextView = view.findViewById(R.id.textView_order_status)
+        var total: TextView = view.findViewById(R.id.textView_order_price)
+        var container: View = view.findViewById(R.id.order_item)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.order_recycler_item, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.order_item, parent, false)
         return ViewHolder(view)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.orderCodeTextView.text = listBill[position].id.toString()
-        holder.orderDateTextView.text = listBill[position].invoiceDate?.toLocaleString()
-        holder.orderStatusTextView.text = listBill[position].status
-        holder.orderTotalPrice.text = listBill[position].totalMoney.toString()
+        holder.idBill.text = listBill[position].id.toString()
+        holder.date.text = "Date: " + listBill[position].invoiceDate
+        when (listBill[position].status) {
+            0 -> holder.status.text = "Unconfirmed"
+            1 -> holder.status.text = "Shipping"
+            2 -> holder.status.text = "Done"
+            3 -> holder.status.text = "Canceled"
+        }
+        holder.total.text =
+            NumberFormat.getIntegerInstance(Locale.GERMANY).format(listBill[position].totalMoney)
+        holder.container.setOnClickListener {
+            bill.value = Bill(
+                listBill[position].id,
+                listBill[position].idAccount,
+                listBill[position].invoiceDate,
+                listBill[position].status,
+                listBill[position].idAddress,
+                listBill[position].totalMoney,
+                listBill[position].isRated
+            )
+            isClicked.value = true
+        }
     }
 
     override fun getItemCount(): Int {

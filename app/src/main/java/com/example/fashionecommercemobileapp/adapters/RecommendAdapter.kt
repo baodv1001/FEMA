@@ -60,6 +60,8 @@ class RecommendAdapter(
         }
         holder.itemView.setOnClickListener {
             val i = Intent(context, ProductDetailsActivity::class.java)
+            i.putExtra("idProduct", recommendedList[position].idProduct)
+            i.putExtra("quantity", recommendedList[position].quantity)
             i.putExtra("id", recommendedList[position].idProduct)
             i.putExtra("name", recommendedList[position].name)
             i.putExtra("price", recommendedList[position].price)

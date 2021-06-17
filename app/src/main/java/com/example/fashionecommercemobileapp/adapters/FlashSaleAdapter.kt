@@ -65,6 +65,8 @@ class FlashSaleAdapter(
         }
         holder.itemView.setOnClickListener {
             val i = Intent(context, ProductDetailsActivity::class.java)
+            i.putExtra("idProduct", flashSaleList[position].idProduct)
+            i.putExtra("quantity", flashSaleList[position].quantity)
             i.putExtra("id", flashSaleList[position].idProduct)
             i.putExtra("name", flashSaleList[position].name)
             i.putExtra("price", flashSaleList[position].price)

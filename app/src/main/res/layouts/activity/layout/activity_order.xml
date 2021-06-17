@@ -6,103 +6,78 @@
     android:layout_height="match_parent"
     tools:context=".views.OrderActivity"
     android:background="@color/white">
-    <RelativeLayout
-        android:id="@+id/header_order_title"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topLinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="@color/white"
-        app:backgroundTint="@color/white"
-        app:layout_constraintLeft_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
 
         <TextView
-            android:id="@+id/brand_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginVertical="20dp"
-            android:text="@string/brand_names"
-            android:textColor="@color/dark"
+            android:layout_marginTop="16dp"
+            android:text="BRAND NAME"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textColor="@color/dark"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/back_button"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/back_image"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginBottom="16dp"
+            android:layout_weight="1"
+            android:onClick="onClickBack"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_back"
+            tools:ignore="VectorDrawableCompat" />
+
+        <TextView
             android:layout_width="wrap_content"
-            app:backgroundTint="#FFFFFF"
-            android:text="@string/order_button"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:text="Your orders"
             android:textColor="@color/dark"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_alignParentBottom="true"
-            android:drawableLeft="@drawable/ic_outline_arrow_back_24"
-            android:gravity="start|center"
-            android:textAllCaps="false"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:drawableStart="@drawable/ic_outline_arrow_back_24"
-            android:onClick="onClickBack"/>
+            app:layout_constraintBottom_toBottomOf="@+id/back_image"
+            app:layout_constraintStart_toEndOf="@+id/back_image"
+            app:layout_constraintTop_toTopOf="@+id/back_image" />
 
         <View
+            android:id="@+id/view"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="119dp"
-            android:background="@color/light" />
-    </RelativeLayout>
+            android:layout_height="1dp"
+            android:background="@drawable/rectangle"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/order_recycler"
-        app:layout_constraintTop_toBottomOf="@+id/header_order_title"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-    <LinearLayout
-        android:id="@+id/control_layout"
         android:layout_width="match_parent"
-        android:layout_height="62dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:minHeight="90dp"
+        android:paddingLeft="16dp"
+        android:paddingTop="8dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@color/white">
-
-        <Button
-            android:id="@+id/home_button"
-            android:layout_width="110dp"
-            android:layout_height="match_parent"
-            app:backgroundTint="#FFFFFF"
-            android:drawableTop="@drawable/ic_outline_home_24"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:paddingHorizontal="0dp"
-            style="@style/Widget.MaterialComponents.Button.TextButton" />
-
-        <Button
-            android:id="@+id/whislist_button"
-            android:layout_height="match_parent"
-            android:layout_width="110dp"
-            app:backgroundTint="#FFFFFF"
-            android:drawableTop="@drawable/ic_baseline_favorite_border_24"
-            android:gravity="center"
-            android:layout_weight="1"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_toRightOf="@+id/home_button" />
-        <Button
-            android:id="@+id/cart_button"
-            android:layout_height="match_parent"
-            android:layout_width="110dp"
-            app:backgroundTint="#FFFFFF"
-            android:drawableTop="@drawable/ic_outline_shopping_cart_24"
-            android:layout_weight="1"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_toRightOf="@+id/whislist_button" />
-        <Button
-            android:id="@+id/me_button"
-            android:layout_height="match_parent"
-            android:layout_width="110dp"
-            android:layout_toRightOf="@id/cart_button"
-            app:backgroundTint="#FFFFFF"
-            android:drawableTop="@drawable/ic_baseline_person_24"
-            android:layout_weight="1"
-            style="@style/Widget.MaterialComponents.Button.TextButton"/>
-    </LinearLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topLinearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

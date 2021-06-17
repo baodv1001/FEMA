@@ -1,6 +1,8 @@
 package com.example.fashionecommercemobileapp.retrofit
 
 import com.example.fashionecommercemobileapp.retrofit.api.AccountApi
+import com.example.fashionecommercemobileapp.retrofit.api.CartApi
+import com.example.fashionecommercemobileapp.retrofit.api.ProductApi
 import com.example.fashionecommercemobileapp.retrofit.api.UserApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -11,8 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitClient {
 
     var retrofit: Retrofit? = null
-    private val baseUrl =
-        "http://laptop_niu:8080/FEMA/"
+    private val BASE_URL = ""
 
     val gson: Gson = GsonBuilder()
             .setLenient()
@@ -21,9 +22,9 @@ class RetrofitClient {
     fun getRetrofitInstance(): Retrofit? {
         if (retrofit == null) {
             retrofit = Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
         }
         return retrofit

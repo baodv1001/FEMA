@@ -72,9 +72,8 @@ dependencies {
     // Retrofit dependencies
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
-
 
     //noinspection GradleDependency
     api 'com.google.android.material:material:1.1.0-alpha06'
@@ -89,4 +88,7 @@ dependencies {
 
     //coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+
+    //StateProgressBar
+    implementation 'com.kofigyan.stateprogressbar:stateprogressbar:1.0.0'
 }
