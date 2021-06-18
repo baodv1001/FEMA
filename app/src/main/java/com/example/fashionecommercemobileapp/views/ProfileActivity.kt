@@ -64,7 +64,7 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
         userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
         userViewModel!!.init()
 
-        var pickDate: String? = null
+        var pickDate: String? = " "
 
         val sp1 = getSharedPreferences("Login", Context.MODE_PRIVATE)
         val username = sp1.getString("Unm", null)
