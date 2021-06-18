@@ -70,8 +70,7 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
 
         button_Send.setOnClickListener(){
             var phone : String = text_input_Phone_Number.text.toString()
-            var password: String = text_input_Password.text.toString()
-            if (checkTextField(password)) {
+            if (checkTextField()) {
                 userViewModel?.checkPhoneNumber(phone)?.observe(this, Observer {
                     if (it == false) {
                         if (phone[0] == '0') {
@@ -90,8 +89,7 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
 
         button_reSend.setOnClickListener(){
             var phone : String = text_input_Phone_Number.text.toString()
-            var password: String = text_input_Password.text.toString()
-            if (checkTextField(password)) {
+            if (checkTextField()) {
                 userViewModel?.checkPhoneNumber(phone)?.observe(this, Observer {
                     if (it == false) {
 
@@ -109,14 +107,13 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
         }
 
         button_choose.setOnClickListener {
-            var password: String = text_input_Password.text.toString()
             if (text_input_OTP.text.toString().isEmpty())
             {
                 Toast.makeText(this@ChangePhoneNumberActivity, "Please enter your verification code...", Toast.LENGTH_SHORT).show()
             }
             else
             {
-                if (checkTextField(password)) {
+                if (checkTextField()) {
                     verifyPhoneNumberWithCode(mVertificationId , text_input_OTP.text.toString())
                 }
             }
@@ -126,15 +123,9 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    fun checkTextField(password: String): Boolean {
-        val sp: SharedPreferences = getSharedPreferences("Login", Context.MODE_PRIVATE)
-        val pass = sp.getString("Psw", "").toString()
-        if(text_input_Phone_Number.text.toString().isEmpty() ||
-                text_input_Password.text.toString().isEmpty()) {
+    fun checkTextField(): Boolean {
+        if(text_input_Phone_Number.text.toString().isEmpty() ) {
             Toast.makeText(this, "Field must be fill...!", Toast.LENGTH_SHORT).show()
-            return false
-        } else if (password != pass) {
-            Toast.makeText(this, "Password not correct", Toast.LENGTH_SHORT).show()
             return false
         }
         return true

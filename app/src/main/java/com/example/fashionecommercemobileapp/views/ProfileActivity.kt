@@ -54,7 +54,7 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
     val REQUEST_CODE = 100
     private var id: Int? = null
     private var selectedImageUri: Uri? = null
-    @SuppressLint("SimpleDateFormat")
+    @SuppressLint("SimpleDateFormat", "SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,7 +80,9 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
                         text_name.text = listUser!![0].name
                         text_name_bottom.text = listUser!![0].name
                         text_gender.text = listUser!![0].gender
-                        text_birthday.text = listUser!![0].dateOfBirth?.toLocaleString()
+                        val birthday: Array<String> = listUser!![0].dateOfBirth?.toLocaleString()?.split(" ")!!.toTypedArray()
+                        //text_birthday.text = listUser!![0].dateOfBirth?.toLocaleString()
+                        text_birthday.text = birthday[0] + " " + birthday[1] + " " + birthday[2] + " " + birthday[3]
                         pickDate = listUser!![0].dateOfBirth?.toString()
                         //text_user_email.text = listUser!![0].email
                         text_phone_number.text = listUser!![0].phoneNumber
@@ -135,12 +137,15 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
                 text_birthday.text = dayOfMonth.toString() + " thg " + (month + 1).toString() + ", " + year.toString()
                 pickDate = year.toString() + "-" + (month + 1).toString() + "-" + dayOfMonth.toString()
             }
-            DatePickerDialog(this, dateSetListener, curYear,curMonth,curDay).show()
+            val dialog = DatePickerDialog(this, R.style.myDialogStyle,dateSetListener, curYear,curMonth,curDay)
+            dialog.show()
+            dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK)
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK)
         }
         //pick image
         imageView_user.setOnClickListener {
             openGalleryForImage()
-            //bitmap = (imageView_user.drawable as BitmapDrawable).bitmap
 
         }
         //update User
@@ -184,31 +189,33 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
             imageView_user.setImageURI(data?.data) //handle chosen image
             selectedImageUri = data?.data
         }
-        userViewModel?.getUserData(id.toString())?.observe(this, Observer {
-            it?.let { resource ->
-                when (resource.status) {
-                    Status.SUCCESS -> {
-                        listUser = it?.data
-                        //text_username.text = username
-                        //Glide.with(imageView_user).load(listUser!![0].imageURL).into(imageView_user)
-                        text_name.text = listUser!![0].name
-                        text_name_bottom.text = listUser!![0].name
-                        text_gender.text = listUser!![0].gender
-                        text_birthday.text = listUser!![0].dateOfBirth?.toLocaleString()
-                        //pickDate = listUser!![0].dateOfBirth?.toString()
-                        //text_user_email.text = listUser!![0].email
-                        text_phone_number.text = listUser!![0].phoneNumber
+        if (requestCode == 0) {
+            userViewModel?.getUserData(id.toString())?.observe(this, Observer {
+                it?.let { resource ->
+                    when (resource.status) {
+                        Status.SUCCESS -> {
+                            listUser = it?.data
+                            /*//text_username.text = username
+                            //Glide.with(imageView_user).load(listUser!![0].imageURL).into(imageView_user)
+                            text_name.text = listUser!![0].name
+                            text_name_bottom.text = listUser!![0].name
+                            text_gender.text = listUser!![0].gender
+                            text_birthday.text = listUser!![0].dateOfBirth?.toLocaleString()
+                            //pickDate = listUser!![0].dateOfBirth?.toString()
+                            //text_user_email.text = listUser!![0].email*/
+                            text_phone_number.text = listUser!![0].phoneNumber
 
-                    }
-                    Status.ERROR -> {
-                        Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
-                    }
-                    Status.LOADING -> {
+                        }
+                        Status.ERROR -> {
+                            Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                        }
+                        Status.LOADING -> {
 
+                        }
                     }
                 }
-            }
-        })
+            })
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.KITKAT)
