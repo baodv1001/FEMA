@@ -6,5 +6,18 @@
     </style>
     <style name="myDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:colorAccent" tools:ignore="NewApi">@color/primary</item>
+        <item name="android:layout_marginRight" tools:ignore="NewApi">0dp</item>
+        <item name="android:layout_marginLeft" tools:ignore="NewApi">0dp</item>
+        <item name="android:layout_width" tools:ignore="NewApi" >wrap_content</item>
+        <item name="backgroundColor">@color/white</item>
+    </style>
+    <style name="myDateDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:colorAccent" tools:ignore="NewApi">@color/primary</item>
+        <item name="android:layout_marginRight" tools:ignore="NewApi">0dp</item>
+        <item name="android:layout_marginLeft" tools:ignore="NewApi">0dp</item>
+        <item name="android:layout_width" tools:ignore="NewApi" >wrap_content</item>
+        <item name="backgroundColor">@color/white</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 </resources>

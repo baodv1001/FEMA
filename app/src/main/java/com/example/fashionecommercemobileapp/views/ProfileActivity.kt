@@ -82,7 +82,8 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
                         text_gender.text = listUser!![0].gender
                         val birthday: Array<String> = listUser!![0].dateOfBirth?.toLocaleString()?.split(" ")!!.toTypedArray()
                         //text_birthday.text = listUser!![0].dateOfBirth?.toLocaleString()
-                        text_birthday.text = birthday[0] + " " + birthday[1] + " " + birthday[2] + " " + birthday[3]
+                        val month: Array<String> = birthday[2].split(",").toTypedArray()
+                        text_birthday.text = birthday[0] + "-" + month[0] + "-" + birthday[3]
                         pickDate = listUser!![0].dateOfBirth?.toString()
                         //text_user_email.text = listUser!![0].email
                         text_phone_number.text = listUser!![0].phoneNumber
@@ -105,9 +106,9 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
         gender_layout.setOnClickListener{
             //create dialog
             val items = arrayOf(
-                "Nam",
-                "Nữ",
-                "Khác"
+                "Male",
+                "Female",
+                "Others"
             )
             val builder = AlertDialog.Builder(this, R.style.myDialogStyle)
 
@@ -134,13 +135,14 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
                 calendar.set(Calendar.MONTH, month)
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                text_birthday.text = dayOfMonth.toString() + " thg " + (month + 1).toString() + ", " + year.toString()
+                text_birthday.text = dayOfMonth.toString() + "-" + (month + 1).toString() + "-" + year.toString()
                 pickDate = year.toString() + "-" + (month + 1).toString() + "-" + dayOfMonth.toString()
             }
-            val dialog = DatePickerDialog(this, R.style.myDialogStyle,dateSetListener, curYear,curMonth,curDay)
+            val dialog = DatePickerDialog(this, R.style.myDateDialogStyle,dateSetListener, curYear,curMonth,curDay)
             dialog.show()
             dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK)
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).text = "Cancel"
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK)
         }
         //pick image
