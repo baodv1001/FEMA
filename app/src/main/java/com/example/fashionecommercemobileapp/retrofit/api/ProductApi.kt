@@ -15,12 +15,20 @@ interface ProductApi {
 
     @POST("get_product_by_name.php")
     @FormUrlEncoded
-    fun getProductByName(@Field("name") name: String, @Field("idProductCode") idProductCode: String): Call<List<Product>>
+    fun getProductByName(
+        @Field("name") name: String,
+        @Field("idProductCode") idProductCode: String
+    ): Call<List<Product>>
 
     @POST("get_product_by_rating_price.php")
     @FormUrlEncoded
-    fun getProductByRating(@Field("rating") rating: String, @Field("idProductCode") idProductCode: String
-                           , @Field("minPrice") minPrice: String, @Field("maxPrice") maxPrice: String, @Field("discount") discount: String): Call<List<Product>>
+    fun getProductByRating(
+        @Field("rating") rating: String,
+        @Field("idProductCode") idProductCode: String,
+        @Field("minPrice") minPrice: String,
+        @Field("maxPrice") maxPrice: String,
+        @Field("discount") discount: String
+    ): Call<List<Product>>
 
     @GET("get_recommended.php")
     fun getRecommended(): Call<List<Product>>
@@ -28,6 +36,31 @@ interface ProductApi {
     @GET("get_flash_sale.php")
     fun getFlashSale(): Call<List<Product>>
 
+    @POST("get_product_by_id.php")
+    @FormUrlEncoded
+    suspend fun getProductById(@Field("idProductList") idProductList: String): List<Product>
+
     @GET("get_all_flash_sale.php")
     fun getAllFlashSale(): Call<List<Product>>
+
+    @POST("update_product.php")
+    @FormUrlEncoded
+    fun updateProduct(
+        @Field("idProduct") idProduct: String,
+        @Field("quantity") quantity: Int
+    ): Call<Boolean>
+
+    @POST("update_product_list.php")
+    @FormUrlEncoded
+    fun updateProducts(
+        @Field("idProductList") idProductList: String,
+        @Field("quantity") quantity: String
+    ): Call<Boolean>
+
+    @POST("update_product_rating.php")
+    @FormUrlEncoded
+    fun updateProductRating(
+        @Field("idProductList") idProductList: String,
+        @Field("rating") rating: String
+    ): Call<Boolean>
 }

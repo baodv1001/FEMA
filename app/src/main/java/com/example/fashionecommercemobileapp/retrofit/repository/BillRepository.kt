@@ -12,11 +12,12 @@ import retrofit2.Response
 
 class BillRepository {
     private var listBill: MutableLiveData<List<Bill>>? = MutableLiveData<List<Bill>>()
-    private var billApi : BillApi? = null
+    private var billApi: BillApi? = null
 
     fun setBillData(billData: List<Bill>) {
         listBill?.value = billData
     }
+
     fun getBillData(): MutableLiveData<List<Bill>>? {
         return listBill
     }
@@ -36,8 +37,16 @@ class BillRepository {
         }
     }
 
-    fun doBillRequest(idAccount: String) {
-        val callBill: Call<List<Bill>> = billApi!!.getBillData(idAccount)
+    suspend fun createBill(bill: Bill) = billApi?.createBill(
+        bill.idAddress,
+        bill.idAccount,
+        bill.invoiceDate,
+        bill.status,
+        bill.totalMoney
+    )
+
+    fun doBillRequest(idBill: String) {
+        val callBill: Call<List<Bill>> = billApi!!.getBillData(idBill)
         callBill.enqueue(object : Callback<List<Bill>> {
             override fun onResponse(call: Call<List<Bill>>, response: Response<List<Bill>>) {
                 response.body()?.let { setBillData(it) }
@@ -49,8 +58,36 @@ class BillRepository {
         })
     }
 
+    fun updateBill(idBill: String): Boolean {
+        val callBill: Call<Boolean> = billApi!!.updateBill(idBill)
+        var res: Boolean = false
+        callBill.enqueue(object : Callback<Boolean> {
+            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                response.body()?.let { res = it }
+            }
+
+            override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                res = false
+                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
+            }
+        })
+        return res
+    }
+
+    fun updateBillRated(idBill: String) {
+        val callBill: Call<Boolean> = billApi!!.updateBillRated(idBill)
+        callBill.enqueue(object : Callback<Boolean> {
+            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+            }
+
+            override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                Toast.makeText(context, t.toString(), Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
     init {
-        var retrofit: RetrofitClient = RetrofitClient()
+        val retrofit: RetrofitClient = RetrofitClient()
         billApi = retrofit.getRetrofitInstance()!!.create(BillApi::class.java)
     }
 }

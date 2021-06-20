@@ -90,7 +90,7 @@ import retrofit2.Response
                     if (result == "true")
                     {
                         setResultofCheckPW(result)
-                        var passEncrypt = ShaPW.instance!!.doEncrypt(pass)
+                        var passEncrypt = ShaPW.instance!!.hash(pass)
                         val callUpdate = accountApi!!.updatePassword(username, passEncrypt, phoneNumber)
                         callUpdate.enqueue(object : Callback<String>{
                             override fun onResponse(call: Call<String>, response: Response<String>) {

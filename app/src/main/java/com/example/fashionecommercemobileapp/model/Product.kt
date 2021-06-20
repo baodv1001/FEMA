@@ -1,9 +1,12 @@
 package com.example.fashionecommercemobileapp.model
 
+import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
-class Product {
+@Parcelize
+class Product() : Parcelable {
     @SerializedName("idProduct")
     @Expose
     var idProduct: String? = null
@@ -44,4 +47,27 @@ class Product {
     @Expose
     var isDeleted: String? = null
 
+    constructor(
+        id: String?,
+        name: String?,
+        code: String?,
+        price: String?,
+        quantity: String?,
+        unit: String?,
+        img: String?,
+        discount: String?,
+        rate: String?,
+        isDeleted: String?
+    ) : this() {
+        this.idProduct = id
+        this.name = name
+        this.idProductCode = code
+        this.price = price
+        this.quantity = quantity
+        this.unit = unit
+        this.imageFile = img
+        this.discount = discount
+        this.rating = rate
+        this.isDeleted = isDeleted
+    }
 }

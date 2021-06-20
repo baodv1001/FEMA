@@ -1,6 +1,8 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -10,12 +12,16 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
+import androidx.core.view.size
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
+import com.bumptech.glide.Glide
+import com.example.fashionecommercemobileapp.adapters.*
 import com.example.fashionecommercemobileapp.R
 import com.example.fashionecommercemobileapp.adapters.CategoryAdapter
 import com.example.fashionecommercemobileapp.adapters.FlashSaleAdapter
@@ -25,30 +31,57 @@ import com.example.fashionecommercemobileapp.model.Category
 import com.example.fashionecommercemobileapp.model.Product
 import com.example.fashionecommercemobileapp.retrofit.repository.CategoryRepository
 import com.example.fashionecommercemobileapp.retrofit.repository.ProductRepository
+import com.example.fashionecommercemobileapp.retrofit.repository.WishListRepository
 import com.example.fashionecommercemobileapp.viewmodels.CategoryViewModel
 import com.example.fashionecommercemobileapp.viewmodels.ProductViewModel
+import com.example.fashionecommercemobileapp.viewmodels.WishListViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_more_products.*
+import kotlinx.android.synthetic.main.flash_sale_recycler_item.view.*
+import kotlinx.android.synthetic.main.product_recycler_item.view.*
+import kotlinx.android.synthetic.main.product_recycler_item.view.button_like
+import kotlinx.android.synthetic.main.recommended_recycler_item.view.*
 import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
+    var idAccount: Int = 1
     private var productViewModel: ProductViewModel? = null
     var categoryViewModel: CategoryViewModel? = null
     lateinit var viewPager: ViewPager
     lateinit var adapter: SwipeAdapter
     var currentPosition: Int = 0;
+    private var wishListViewModel: WishListViewModel? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val sp: SharedPreferences = getSharedPreferences("Login", Context.MODE_PRIVATE)
+        idAccount = sp.getString("Id", "")?.toInt()!!
         ProductRepository.Companion.setContext(this@MainActivity)
         CategoryRepository.Companion.setContext(this@MainActivity)
+        WishListRepository.Companion.setContext(this@MainActivity)
+        wishListViewModel = ViewModelProviders.of(this).get(WishListViewModel::class.java)
+        wishListViewModel!!.init()
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
         productViewModel!!.init()
         productViewModel!!.getRecommendedData()
-                ?.observe(this, Observer { setupRecommendedRecyclerView(it) })
+                ?.observe(this, Observer {
+                    val listRecommend = it
+                    wishListViewModel!!.getWishListProductData(idAccount)
+                            ?.observe(this, Observer { it ->
+                                setupRecommendedRecyclerView(listRecommend, it)
+                            })
+                })
         productViewModel!!.getFlashSaleData()
-                ?.observe(this, Observer { setupFlashSaleRecyclerView(it) })
+            ?.observe(this, Observer {
+                val listFlashSale = it
+                wishListViewModel!!.getWishListProductData(idAccount)
+                        ?.observe(this, Observer { it ->
+                            setupFlashSaleRecyclerView(listFlashSale, it)
+                        })
+            })
         categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel::class.java)
         categoryViewModel!!.init()
         categoryViewModel!!.getCategoryData()
@@ -57,16 +90,64 @@ class MainActivity : AppCompatActivity() {
         handleNavigation()
     }
 
-    private fun setupRecommendedRecyclerView(productList: List<Product>) {
-        var recommendAdapter: RecommendAdapter = RecommendAdapter(this, productList)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 1)
+            if (resultCode == RESULT_OK && data != null) {
+                val check = data.getBooleanExtra("check", true)
+                val pos = data.getIntExtra("position", 0)
+                if (pos  != flash_sale_recycler.size)
+                    if (check)
+                    {
+                        Glide.with(this).load(R.drawable.ic_heartbutton).into(flash_sale_recycler[pos].button)
+                    }
+                    else
+                    {
+                        Glide.with(this).load(R.drawable.ic_un_heart_button).into(flash_sale_recycler[pos].button)
+                    }
+                productViewModel!!.getRecommendedData()
+                        ?.observe(this, Observer {
+                            val listRecommend = it
+                            wishListViewModel!!.getWishListProductData(idAccount)
+                                    ?.observe(this, Observer { it ->
+                                        setupRecommendedRecyclerView(listRecommend, it)
+                                    })
+                        })
+        }
+        if (requestCode == 3)
+            if (resultCode == RESULT_OK && data != null) {
+                val check = data.getBooleanExtra("check", true)
+                val pos = data.getIntExtra("position", 0)
+                if (check)
+                {
+                    Glide.with(this).load(R.drawable.ic_heartbutton).into(recommend_recycler[pos].button_like)
+                }
+                else
+                {
+                    Glide.with(this).load(R.drawable.ic_un_heart_button).into(recommend_recycler[pos].button_like)
+                }
+                productViewModel!!.getFlashSaleData()
+                        ?.observe(this, Observer {
+                            val listFlashSale = it
+                            wishListViewModel!!.getWishListProductData(idAccount)
+                                    ?.observe(this, Observer { it ->
+                                        setupFlashSaleRecyclerView(listFlashSale, it)
+                                    })
+                        })
+            }
+    }
+
+    private fun setupRecommendedRecyclerView(productList: List<Product>, wishList: List<Product>) {
+        var recommendAdapter: RecommendAdapter = RecommendAdapter(this, productList, wishList)
         val layoutManager: RecyclerView.LayoutManager =
                 GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
         recommend_recycler.layoutManager = layoutManager
         recommend_recycler.adapter = recommendAdapter
     }
 
-    private fun setupFlashSaleRecyclerView(flashSaleList: List<Product>) {
-        var flashSaleAdapter: FlashSaleAdapter = FlashSaleAdapter(this, flashSaleList)
+    private fun setupFlashSaleRecyclerView(flashSaleList: List<Product>, wishList: List<Product>) {
+        var flashSaleAdapter: FlashSaleAdapter = FlashSaleAdapter(this, flashSaleList, wishList)
         val layoutManager: RecyclerView.LayoutManager =
                 LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         flash_sale_recycler.layoutManager = layoutManager

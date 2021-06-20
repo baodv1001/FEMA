@@ -2,26 +2,51 @@ package com.example.fashionecommercemobileapp.model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import java.util.*
 
-class Bill {
-    @SerializedName ("id")
+class Bill() {
+    @SerializedName("id")
     @Expose
-    var id : Int? = null
+    var id: Int? = null
 
-    @SerializedName ("idAccount")
+    @SerializedName("idAccount")
     @Expose
-    var idAccount : Int? = null
+    var idAccount: Int? = null
 
-    @SerializedName ("invoiceDate")
+    @SerializedName("invoiceDate")
     @Expose
-    var invoiceDate : Date? = null
+    var invoiceDate: String? = null
 
-    @SerializedName ("status")
+    @SerializedName("status")
     @Expose
-    var status : String? = null
+    var status: Int? = null
 
-    @SerializedName ("totalMoney")
+    @SerializedName("idAddress")
     @Expose
-    var totalMoney : Int? = null
+    var idAddress: Int? = null
+
+    @SerializedName("totalMoney")
+    @Expose
+    var totalMoney: Int? = null
+
+    @SerializedName("isRated")
+    @Expose
+    var isRated: Int? = null
+
+    constructor(
+        id: Int?,
+        idAccount: Int?,
+        invoiceDate: String?,
+        status: Int?,
+        idAddress: Int?,
+        totalMoney: Int?,
+        rated: Int?
+    ) : this() {
+        this.id = id
+        this.idAccount = idAccount
+        this.invoiceDate = invoiceDate
+        this.status = status
+        this.idAddress = idAddress
+        this.totalMoney = totalMoney
+        this.isRated = rated
+    }
 }

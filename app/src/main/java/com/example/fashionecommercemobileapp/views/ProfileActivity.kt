@@ -327,7 +327,7 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
         Ed.putString("Unm", null)
         Ed.putString("Psw", null)
         Ed.putInt("Id", 0)
-        Ed.commit()
+        Ed.apply()
         val intent = Intent(this, LoginActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         this.startActivity(intent)

@@ -2,8 +2,10 @@ package com.example.fashionecommercemobileapp.views
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.InsetDrawable
@@ -15,7 +17,6 @@ import android.view.Gravity
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
-import android.widget.Toast
 import android.widget.ToggleButton
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -24,14 +25,21 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fashionecommercemobileapp.R
+import com.bumptech.glide.Glide
 import com.example.fashionecommercemobileapp.adapters.ProductAdapter
 import com.example.fashionecommercemobileapp.model.Product
+import com.example.fashionecommercemobileapp.R
+import com.example.fashionecommercemobileapp.retrofit.repository.WishListRepository
 import com.example.fashionecommercemobileapp.viewmodels.ProductViewModel
+import com.example.fashionecommercemobileapp.viewmodels.WishListViewModel
 import kotlinx.android.synthetic.main.activity_more_products.*
+import kotlinx.android.synthetic.main.activity_product_details.*
+import kotlinx.android.synthetic.main.product_recycler_item.view.*
 
 
 class MoreProductsActivity : AppCompatActivity() {
+    var idAccount: Int = 1
+    private var wishListViewModel: WishListViewModel? = null
     var btnOne: ToggleButton? = null
     var btnTwo: ToggleButton? = null
     var btnThree: ToggleButton? = null
@@ -50,27 +58,59 @@ class MoreProductsActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_more_products)
-        var intent: Intent = intent
+
+        val sp: SharedPreferences = getSharedPreferences("Login", Context.MODE_PRIVATE)
+        idAccount = sp.getString("Id", "")?.toInt()!!
+        val intent: Intent = intent
         idProductCode = intent.getStringExtra("idProductCode").toString()
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
         productViewModel!!.init()
+        WishListRepository.Companion.setContext(this@MoreProductsActivity)
+        wishListViewModel = ViewModelProviders.of(this).get(WishListViewModel::class.java)
+        wishListViewModel!!.init()
         if (idProductCode != null) {
-
             if (idProductCode != "0") {
                 productViewModel!!.getProductData(idProductCode)
-                        ?.observe(this, Observer { setupProductRecyclerView(it) })
+                        ?.observe(this, Observer { 
+                            val listProduct = it
+                        wishListViewModel!!.getWishListProductData(idAccount)
+                                ?.observe(this, Observer { it ->
+                                    setupProductRecyclerView(listProduct, it)
+                                })
+                    })
             } else {
                 productViewModel!!.getAllFlashSaleData()
-                        ?.observe(this, Observer { setupProductRecyclerView(it) })
+                        ?.observe(this, Observer {
+                            val listProduct = it
+                            wishListViewModel!!.getWishListProductData(idAccount)
+                                    ?.observe(this, Observer { it ->
+                                        setupProductRecyclerView(listProduct, it)
+                                    })
+                        })
             }
         }
         searchProduct()
         handleSort()
     }
 
-    private fun setupProductRecyclerView(productList: List<Product>) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == 2) {
+                val check = data?.getBooleanExtra("check", true)
+                val pos = data?.getIntExtra("position", 0)
+                if (check == true)
+                    Glide.with(this).load(R.drawable.ic_heartbutton).into(all_product_recycler[pos!!].button_like)
+                else
+                    Glide.with(this).load(R.drawable.ic_un_heart_button).into(all_product_recycler[pos!!].button_like)
+            }
+        }
+    }
+
+    private fun setupProductRecyclerView(productList: List<Product>, wishList: List<Product>) {
         currentProducts = productList
-        var productAdapter: ProductAdapter = ProductAdapter(this, productList)
+        var productAdapter: ProductAdapter = ProductAdapter(this, productList, wishList)
         val layoutManager: RecyclerView.LayoutManager =
                 GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
         all_product_recycler.layoutManager = layoutManager
@@ -96,7 +136,13 @@ class MoreProductsActivity : AppCompatActivity() {
                         currentProducts = currentProducts?.sortedByDescending { x -> x.price }
                     }
                 }
-                currentProducts?.let { setupProductRecyclerView(it) }
+                currentProducts?.let {
+                    val listProduct = it
+                    wishListViewModel!!.getWishListProductData(idAccount)
+                            ?.observe(this, Observer { it ->
+                                setupProductRecyclerView(listProduct, it)
+                            })
+                }
             }
         }
     }
@@ -110,7 +156,13 @@ class MoreProductsActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence, start: Int, before: Int,
                                        count: Int) {
                 productViewModel!!.getProductDataByName(txtSearchProduct.text.toString(), idProductCode)
-                        ?.observe(this@MoreProductsActivity, Observer { setupProductRecyclerView(it) })
+                        ?.observe(this@MoreProductsActivity, Observer {
+                            val listProduct = it
+                            wishListViewModel!!.getWishListProductData(idAccount)
+                                    ?.observe(this@MoreProductsActivity, Observer { it ->
+                                        setupProductRecyclerView(listProduct, it)
+                                    })
+                        })
             }
 
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int,
@@ -206,7 +258,13 @@ class MoreProductsActivity : AppCompatActivity() {
         filterDialog?.hide()
         var res = rating.filter { it.isDigit() }
         productViewModel!!.getProductDataByRating(res, idProductCode, minPrice, maxPrice, if (idProductCode == "0") "0" else "-1")
-                ?.observe(this@MoreProductsActivity, Observer { setupProductRecyclerView(it) })
+                ?.observe(this@MoreProductsActivity, Observer {
+                    val listProduct = it
+                    wishListViewModel!!.getWishListProductData(idAccount)
+                            ?.observe(this@MoreProductsActivity, Observer { it ->
+                                setupProductRecyclerView(listProduct, it)
+                            })
+                })
     }
 
     fun onClickConfirm(view: View) {

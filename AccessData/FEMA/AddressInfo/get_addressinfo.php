@@ -10,6 +10,7 @@
     //Đọc dữ liệu từ MySQL
     while($row = mysqli_fetch_assoc($result)){
       $t = array();
+      $t["idAddress"] = $row["idAddress"];
       $t["idAccount"] = $row["idAccount"];
       $t["name"] = $row["name"];
       $t["address"] = $row["address"];

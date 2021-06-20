@@ -15,7 +15,9 @@
     $t["idAccount"] = $row["idAccount"];
     $t["invoiceDate"] = $row["invoiceDate"];
     $t["status"] = $row["status"];
+    $t["idAddress"] = $row["idAddress"];
     $t["totalMoney"] = $row["totalMoney"];
+    $t["isRated"] = $row["isRated"];
     // Mảng JSON
     array_push($response, $t);
  }

@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fashionecommercemobileapp.model.Address
 import com.example.fashionecommercemobileapp.R
 import com.example.fashionecommercemobileapp.viewmodels.AddressViewModel
 import com.example.fashionecommercemobileapp.views.EditAddressActivity
@@ -24,8 +24,8 @@ class AddressAdapter (private  val context: Context, private val listAddress: Mu
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.address_recycler_item, parent, false)
-
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.address_recycler_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -58,4 +58,15 @@ class AddressAdapter (private  val context: Context, private val listAddress: Mu
     }
 
     override fun getItemCount() = listAddress.size
+
+    fun changeData(addressList: List<Address>) {
+        this.listAddress.apply {
+            clear()
+            addAll(addressList)
+        }
+        notifyDataSetChanged()
+    }
+
+    fun getSate() = isSelected
+    fun getAddress() = address
 }

@@ -76,7 +76,7 @@
             android:layout_height="20dp"
             android:layout_weight="1"
             android:layerType="software"
-            app:srcCompat="@drawable/ic_heartbutton"
+            app:srcCompat="@drawable/ic_un_heart_button"
             tools:ignore="VectorDrawableCompat" />
 
     </LinearLayout>
