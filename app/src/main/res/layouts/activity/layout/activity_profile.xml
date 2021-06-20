@@ -346,7 +346,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/change_password_layout">
+        app:layout_constraintBottom_toBottomOf="parent">
         <Button
             android:layout_width="350dp"
             android:layout_height="50dp"

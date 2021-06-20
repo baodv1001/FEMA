@@ -7,7 +7,6 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -23,31 +22,32 @@ import kotlinx.android.synthetic.main.activity_address.*
 
 class AddressActivity : AppCompatActivity() {
     private var addressViewModel: AddressViewModel? = null
+    lateinit var addressRecyclerView : RecyclerView
     private lateinit var addressAdapter: AddressAdapter
     private var isCheckOut: Boolean = false
     private lateinit var isSelected: LiveData<Boolean>
 
     var idAccount : String = ""
-    private lateinit var addressAdapter: AddressAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_address)
 
+
         val intent: Intent = intent
         isCheckOut = intent.getBooleanExtra("isCheckOut", false)
 
-        setUpAddressRecyclerView()
+        //setUpAddressRecyclerView()
         val spf = getSharedPreferences("Login", Context.MODE_PRIVATE)
         val idAccount = spf.getString("Id", null)
 
         AddressRepository.setContext(this@AddressActivity)
         addressViewModel = ViewModelProviders.of(this).get(AddressViewModel::class.java)
         addressViewModel!!.init()
-        if (idAccount != null) {
+        /*if (idAccount != null) {
             addressViewModel!!.getAddressData(idAccount)
                 ?.observe(this, Observer { retrieveList(it as ArrayList<Address>) })
-        }
+        }*/
 
 
         addressViewModel!!.getAddressData(idAccount.toString())?.observe(this, Observer { setUpAddressRecyclerView(it) })
@@ -63,7 +63,7 @@ class AddressActivity : AppCompatActivity() {
 
     private fun setUpAddressRecyclerView(listAddress: List<Address>) {
         addressRecyclerView = findViewById(R.id.address_recycler)
-        addressAdapter = AddressAdapter(this, listAddress.toMutableList(), addressViewModel, idAccount)
+        addressAdapter = AddressAdapter(this, listAddress.toMutableList(), addressViewModel, idAccount, isCheckOut)
         val layoutManager: RecyclerView.LayoutManager = GridLayoutManager(this,1, GridLayoutManager.VERTICAL, false)
         addressRecyclerView.layoutManager = layoutManager
         addressRecyclerView.adapter = addressAdapter
@@ -71,7 +71,7 @@ class AddressActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        addressViewModel!!.getAddressData(idAccount.toString())?.observe(this, Observer { setUpAddressRecyclerView(it) })
+        addressViewModel!!.getAddressData(idAccount)?.observe(this, Observer { setUpAddressRecyclerView(it) })
     }
 
     fun onClickBack(view: View) {
@@ -86,17 +86,17 @@ class AddressActivity : AppCompatActivity() {
 
     }
 
-    private fun setUpAddressRecyclerView() {
+    /*private fun setUpAddressRecyclerView() {
         addressAdapter = AddressAdapter(this, arrayListOf(), isCheckOut)
         val layoutManager: RecyclerView.LayoutManager =
             GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         address_recycler.layoutManager = layoutManager
         address_recycler.adapter = addressAdapter
-    }
+    }*/
 
-    private fun retrieveList(listAddress: ArrayList<Address>) {
+    /*private fun retrieveList(listAddress: ArrayList<Address>) {
         addressAdapter.changeData(listAddress)
-    }
+    }*/
 
     override fun onBackPressed() {
         val intent: Intent = Intent()
