@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fashionecommercemobileapp.R
 import com.example.fashionecommercemobileapp.model.Address
 import com.example.fashionecommercemobileapp.viewmodels.AddressViewModel
+import com.example.fashionecommercemobileapp.views.AddAddressActivity
 import com.example.fashionecommercemobileapp.views.EditAddressActivity
 import kotlinx.android.synthetic.main.address_recycler_item.view.*
 
@@ -31,6 +32,8 @@ class AddressAdapter (private  val context: Context,
         var button_edit: View = view.findViewById(R.id.button_edit_address)
         var button_delete: View = view.findViewById(R.id.button_delete_address)
         var button_select: View = view.findViewById(R.id.address_item)
+        var context: Context = view.context
+        var temp = view
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -77,6 +80,7 @@ class AddressAdapter (private  val context: Context,
                     listAddress[position].phoneNumber
                 )
                 isSelected.value = true
+                /*(holder.context as AddAddressActivity).onClickBack(holder.temp)*/
             }
         }
     }

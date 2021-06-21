@@ -34,12 +34,11 @@ class AddressActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_address)
 
-
+        setUpAddressRecyclerView(arrayListOf())
         val intent: Intent = intent
         isCheckOut = intent.getBooleanExtra("isCheckOut", false)
         isCheckOutActivity(isCheckOut)
 
-        setUpAddressRecyclerView(arrayListOf())
         val spf = getSharedPreferences("Login", Context.MODE_PRIVATE)
         idAccount = spf.getString("Id", null).toString()
 
@@ -52,8 +51,8 @@ class AddressActivity : AppCompatActivity() {
         }*/
 
 
-        //addressViewModel!!.getAddressData(idAccount)?.observe(this, Observer { setUpAddressRecyclerView(it) })
-        addressViewModel!!.getAddressData(idAccount)?.observe(this, Observer { retrieveList(it as ArrayList<Address>)})
+        addressViewModel!!.getAddressData(idAccount)?.observe(this, Observer { setUpAddressRecyclerView(it) })
+        //addressViewModel!!.getAddressData(idAccount)?.observe(this, Observer { retrieveList(it as ArrayList<Address>)})
         //add address
         add_address_button.setOnClickListener {
             val intent = Intent(this, AddAddressActivity::class.java).apply { }
@@ -63,7 +62,6 @@ class AddressActivity : AppCompatActivity() {
             addressAdapter.notifyDataSetChanged()
         }
         //checkout address
-
         isSelected = addressAdapter.getSate()
         val observer = Observer<Boolean> { it ->
             if (it) {
@@ -71,6 +69,7 @@ class AddressActivity : AppCompatActivity() {
             }
         }
         isSelected.observe(this, observer)
+
     }
 
     private fun setUpAddressRecyclerView(listAddress: List<Address>) {
@@ -86,9 +85,15 @@ class AddressActivity : AppCompatActivity() {
         addressViewModel!!.getAddressData(idAccount)?.observe(this, Observer { setUpAddressRecyclerView(it) })
     }
 
-    fun onClickBack(view: View) {
+    public fun onClickBack(view: View) {
         super.onBackPressed()
-
+        /*isSelected = addressAdapter.getSate()
+        val observer = Observer<Boolean> { it ->
+            if (it) {
+                onBackPressed()
+            }
+        }
+        isSelected.observe(this, observer)*/
     }
 
     /*private fun setUpAddressRecyclerView() {
@@ -98,10 +103,10 @@ class AddressActivity : AppCompatActivity() {
         address_recycler.layoutManager = layoutManager
         address_recycler.adapter = addressAdapter
     }*/
-
+/*
     private fun retrieveList(listAddress: ArrayList<Address>) {
         addressAdapter.changeData(listAddress)
-    }
+    }*/
 
     override fun onBackPressed() {
         val intent: Intent = Intent()
@@ -115,6 +120,8 @@ class AddressActivity : AppCompatActivity() {
     }
 
     private fun isCheckOutActivity(isCheckOut: Boolean) {
-        button_back_address.visibility = View.GONE
+        if(isCheckOut) {
+            button_back_address.visibility = View.GONE
+        }
     }
 }
