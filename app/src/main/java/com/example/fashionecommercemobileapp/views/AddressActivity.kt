@@ -34,7 +34,6 @@ class AddressActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_address)
 
-        setUpAddressRecyclerView(arrayListOf())
         val intent: Intent = intent
         isCheckOut = intent.getBooleanExtra("isCheckOut", false)
         isCheckOutActivity(isCheckOut)
@@ -62,13 +61,13 @@ class AddressActivity : AppCompatActivity() {
             addressAdapter.notifyDataSetChanged()
         }
         //checkout address
-        isSelected = addressAdapter.getSate()
+        /*isSelected = addressAdapter.getSate()
         val observer = Observer<Boolean> { it ->
             if (it) {
                 onBackPressed()
             }
         }
-        isSelected.observe(this, observer)
+        isSelected.observe(this, observer)*/
 
     }
 
@@ -86,14 +85,15 @@ class AddressActivity : AppCompatActivity() {
     }
 
     public fun onClickBack(view: View) {
-        super.onBackPressed()
-        /*isSelected = addressAdapter.getSate()
+        isSelected = addressAdapter.getSate()
         val observer = Observer<Boolean> { it ->
             if (it) {
                 onBackPressed()
             }
         }
-        isSelected.observe(this, observer)*/
+        isSelected.observe(this, observer)
+
+        super.onBackPressed()
     }
 
     /*private fun setUpAddressRecyclerView() {

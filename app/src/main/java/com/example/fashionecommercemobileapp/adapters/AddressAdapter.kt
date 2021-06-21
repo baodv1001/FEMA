@@ -13,6 +13,7 @@ import com.example.fashionecommercemobileapp.R
 import com.example.fashionecommercemobileapp.model.Address
 import com.example.fashionecommercemobileapp.viewmodels.AddressViewModel
 import com.example.fashionecommercemobileapp.views.AddAddressActivity
+import com.example.fashionecommercemobileapp.views.AddressActivity
 import com.example.fashionecommercemobileapp.views.EditAddressActivity
 import kotlinx.android.synthetic.main.address_recycler_item.view.*
 
@@ -71,7 +72,7 @@ class AddressAdapter (private  val context: Context,
         if (isCheckOut) {
             holder.button_edit.visibility = View.GONE
             holder.button_delete.visibility = View.GONE
-            holder.button_select.setOnClickListener {
+            holder.button_select.setOnClickListener{
                 address.value = Address(
                     listAddress[position].idAddress,
                     listAddress[position].idAccount,
@@ -80,7 +81,7 @@ class AddressAdapter (private  val context: Context,
                     listAddress[position].phoneNumber
                 )
                 isSelected.value = true
-                /*(holder.context as AddAddressActivity).onClickBack(holder.temp)*/
+                (holder.context as AddressActivity).onClickBack(holder.temp)
             }
         }
     }
