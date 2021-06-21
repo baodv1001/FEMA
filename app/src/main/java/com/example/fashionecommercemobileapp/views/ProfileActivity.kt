@@ -44,10 +44,11 @@ import retrofit2.Response
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.text.SimpleDateFormat
 import java.util.*
 
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
     private var userViewModel: UserViewModel? = null
     private var listUser: List<User>? = null
@@ -80,10 +81,13 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
                         text_name.text = listUser!![0].name
                         text_name_bottom.text = listUser!![0].name
                         text_gender.text = listUser!![0].gender
-                        val birthday: Array<String> = listUser!![0].dateOfBirth?.toLocaleString()?.split(" ")!!.toTypedArray()
+                        /*val birthday: Array<String> = listUser!![0].dateOfBirth?.toLocaleString()?.split(" ")!!.toTypedArray()
                         //text_birthday.text = listUser!![0].dateOfBirth?.toLocaleString()
                         val month: Array<String> = birthday[2].split(",").toTypedArray()
-                        text_birthday.text = birthday[0] + "-" + month[0] + "-" + birthday[3]
+                        text_birthday.text = birthday[0] + "-" + month[0] + "-" + birthday[3]*/
+                        val format = SimpleDateFormat("dd-MM-yyy")
+
+                        text_birthday.text = format.format(listUser!![0].dateOfBirth)
                         pickDate = listUser!![0].dateOfBirth?.toString()
                         //text_user_email.text = listUser!![0].email
                         text_phone_number.text = listUser!![0].phoneNumber

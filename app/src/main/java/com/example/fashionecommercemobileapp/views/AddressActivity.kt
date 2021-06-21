@@ -39,7 +39,7 @@ class AddressActivity : AppCompatActivity() {
 
         //setUpAddressRecyclerView()
         val spf = getSharedPreferences("Login", Context.MODE_PRIVATE)
-        val idAccount = spf.getString("Id", null)
+        idAccount = spf.getString("Id", null).toString()
 
         AddressRepository.setContext(this@AddressActivity)
         addressViewModel = ViewModelProviders.of(this).get(AddressViewModel::class.java)
@@ -50,7 +50,7 @@ class AddressActivity : AppCompatActivity() {
         }*/
 
 
-        addressViewModel!!.getAddressData(idAccount.toString())?.observe(this, Observer { setUpAddressRecyclerView(it) })
+        addressViewModel!!.getAddressData(idAccount)?.observe(this, Observer { setUpAddressRecyclerView(it) })
         //add address
         add_address_button.setOnClickListener {
             val intent = Intent(this, AddAddressActivity::class.java).apply { }
