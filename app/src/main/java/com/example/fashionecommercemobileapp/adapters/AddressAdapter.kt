@@ -29,6 +29,7 @@ class AddressAdapter (private  val context: Context,
         var receiverAddressTextView : TextView = view.findViewById(R.id.textView_address)
         var receiverPhoneNumberTextView : TextView = view.findViewById(R.id.textView_phoneNumber)
         var button_edit: View = view.findViewById(R.id.button_edit_address)
+        var button_delete: View = view.findViewById(R.id.button_delete_address)
         var button_select: View = view.findViewById(R.id.address_item)
     }
 
@@ -43,7 +44,7 @@ class AddressAdapter (private  val context: Context,
         holder.receiverAddressTextView.text = listAddress[position].address
         holder.receiverPhoneNumberTextView.text = listAddress[position].phoneNumber
 
-        holder.itemView.button_delete.setOnClickListener ( View.OnClickListener {
+        holder.itemView.button_delete_address.setOnClickListener ( View.OnClickListener {
         addressViewModel!!.delAddressInfo(idAccount.toInt(),
                                         holder.receiverNameTextView.text.toString(),
                                         holder.receiverAddressTextView.text.toString(),
@@ -66,6 +67,7 @@ class AddressAdapter (private  val context: Context,
         })
         if (isCheckOut) {
             holder.button_edit.visibility = View.GONE
+            holder.button_delete.visibility = View.GONE
             holder.button_select.setOnClickListener {
                 address.value = Address(
                     listAddress[position].idAddress,
