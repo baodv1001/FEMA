@@ -267,10 +267,6 @@ class CheckOutActivity : AppCompatActivity() {
                                     cartInfo.idSize!!,
                                     cartInfo.idColor!!
                                 )
-                                productViewModel.updateProduct(
-                                    billInfo.idProduct.toString(),
-                                    billInfo.quantity!!
-                                )
                             }
                         }
                         Status.ERROR -> {

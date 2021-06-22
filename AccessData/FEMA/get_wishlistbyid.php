@@ -16,7 +16,7 @@
 	if ($total_records >= 1) {
     		while ($row = mysqli_fetch_assoc($resouter)) {
 			$data = array();
-        		$data['idProduct']= $row['idProduct'];
+      $data['idProduct']= $row['idProduct'];
 			$data['idProductCode']= $row['idProductCode'];
 			$data['name']= $row['name'];
 			$data['price']= $row['price'];
@@ -25,7 +25,8 @@
 			$data['rating']= $row['rating'];
 			$data['imageFile']= $row['imageFile'];
 			$data['discount']= $row['discount'];
-			$data['isDeleted']= $row['isDeleted'];
+      $data["description"] = $row["description"];
+      $data['isDeleted']= $row['isDeleted'];
 			
 			array_push($temparray, $data);
    		} 

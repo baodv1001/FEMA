@@ -16,6 +16,9 @@ class AccountActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account)
+
+        val username: String? = intent.getStringExtra("username")
+
         val sp1 = getSharedPreferences("Login", Context.MODE_PRIVATE)
         val idAccount = sp1.getString("Id", null)
         /*Start ProfileActivity*/

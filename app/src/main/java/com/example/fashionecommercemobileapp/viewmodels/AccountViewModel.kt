@@ -53,4 +53,7 @@ class AccountViewModel() : ViewModel() {
             emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!" ))
         }
     }
+    fun doChangePassword(idAccount: Int, password: String) {
+        accountRepository!!.doChangePassWordRequest(idAccount, password)
+    }
 }

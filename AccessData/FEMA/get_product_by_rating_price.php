@@ -32,6 +32,7 @@
     $data["imageFile"] = $row["imageFile"];
     $data["discount"] = $row["discount"];
     $data["rating"] = $row["rating"];
+    $data["description"] = $row["description"];
     $data["isDeleted"] = $row["isDeleted"];
     // Mảng JSON
     array_push($response, $data);

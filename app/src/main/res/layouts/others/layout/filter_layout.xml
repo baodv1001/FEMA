@@ -45,7 +45,7 @@
             android:background="@color/white"
             android:onClick="onClickConfirm"
             android:paddingRight="16dp"
-            app:srcCompat="@drawable/ic_baseline_check_24"
+            app:srcCompat="@drawable/ic_baseline_check_24_others"
             tools:ignore="VectorDrawableCompat" />
     </LinearLayout>
 

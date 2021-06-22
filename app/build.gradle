@@ -41,7 +41,7 @@ android {
                         'src\\main\\res\\layouts\\activity',
                         'src\\main\\res\\layouts\\category',
                         'src\\main\\res\\address',
-                        'src\\main\\res\\layouts\\address', 
+                        'src\\main\\res\\layouts\\address',
                         'src\\main\\res\\layouts\\order',
                         'src\\main\\res\\layouts\\swipe',
                         'src\\main\\res\\layours\\wishlist',
@@ -74,6 +74,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.7.2'
 
     //noinspection GradleDependency
     api 'com.google.android.material:material:1.1.0-alpha06'

@@ -70,6 +70,7 @@ class RecommendAdapter(
             i.putExtra("image", recommendedList[position].imageFile)
             i.putExtra("position", position)
             i.putExtra("isLiked", isLiked)
+            i.putExtra("details", recommendedList[position].description)
             //context.startActivity(i)
             (context as Activity).startActivityForResult(i, requestCode)
         }

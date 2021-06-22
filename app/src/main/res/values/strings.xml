@@ -33,4 +33,9 @@
     <string name="address">Address</string>
     <string name="add_address">Add Address</string>
     <string name="idAccount"></string>
+    <string name="new_address">New address</string>
+    <string name="dialog_title">Gender</string>
+    <string name="input_receiver_name">Receiver name</string>
+    <string name="choose">Choose</string>
+    <string name="updateName">Update Name</string>
 </resources>

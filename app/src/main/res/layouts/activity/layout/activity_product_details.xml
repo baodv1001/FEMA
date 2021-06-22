@@ -96,7 +96,7 @@
             <ImageView
                 android:id="@+id/detail_image"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="200dp"
                 android:adjustViewBounds="true"
                 android:src="@drawable/recommend"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -441,8 +441,6 @@
                 android:background="@drawable/search_bg"
                 android:lineSpacingExtra="2dp"
                 android:padding="4dp"
-                android:text="The Nike Air Max 270 React ENG combines a full-length React foam midsole with a 270 Max Air unit for unrivaled comfort and a striking visual experience.
-The Nike Air Max 270 React ENG combines a full-length React foam midsole with a 270 Max Air unit for unrivaled comfort and a striking visual experience."
                 android:textColor="@color/gray"
                 android:textSize="12sp"
                 android:textStyle="normal"

@@ -133,6 +133,22 @@ import retrofit2.Response
         })
     }
 
+     fun doChangePassWordRequest(idAccount: Int, newPass: String) {
+         var newPassEncrypt = ShaPW.instance!!.hash(newPass)
+         val call = accountApi!!.changePassword(idAccount, newPassEncrypt)
+         call.enqueue(object : Callback<String> {
+             override fun onResponse(call: Call<String>, response: Response<String>) {
+                 response.body()?.let {
+                     Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                 }
+             }
+
+             override fun onFailure(call: Call<String>, t: Throwable) {
+                 Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+             }
+         })
+     }
+
     suspend fun doLogin(username: String, password: String) = apiAccount.getAccount(username, password)
 
     init {

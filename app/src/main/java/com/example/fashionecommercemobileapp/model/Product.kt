@@ -43,6 +43,10 @@ class Product() : Parcelable {
     @Expose
     var rating: String? = null
 
+    @SerializedName("description")
+    @Expose
+    var description: String? = null
+
     @SerializedName("isDeleted")
     @Expose
     var isDeleted: String? = null
@@ -57,6 +61,7 @@ class Product() : Parcelable {
         img: String?,
         discount: String?,
         rate: String?,
+        description: String?,
         isDeleted: String?
     ) : this() {
         this.idProduct = id
@@ -68,6 +73,7 @@ class Product() : Parcelable {
         this.imageFile = img
         this.discount = discount
         this.rating = rate
+        this.description = description
         this.isDeleted = isDeleted
     }
 }

@@ -1,5 +1,6 @@
 package com.example.fashionecommercemobileapp.viewmodels
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
@@ -7,6 +8,7 @@ import com.example.fashionecommercemobileapp.retrofit.repository.UserRepository
 import com.example.fashionecommercemobileapp.model.User
 import com.example.fashionecommercemobileapp.retrofit.utils.Resource
 import kotlinx.coroutines.Dispatchers
+import java.util.*
 
 class UserViewModel: ViewModel() {
     private var userData: MutableLiveData<List<User>>? = null
@@ -25,5 +27,21 @@ class UserViewModel: ViewModel() {
         catch (exception: Exception) {
             emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
         }
+    }
+
+    fun updateUserDate(idAccount: Int, name: String, gender: String, dateOfBirth: String) {
+        userRepository?.doUpdateUserRequest(idAccount, name, gender, dateOfBirth)
+    }
+    fun changePhoneNumber(idAccount: Int, phoneNumber: String) {
+        userRepository?.doChangePhoneNumberRequest(idAccount, phoneNumber)
+    }
+
+    fun checkPhoneNumber(phoneNumber: String): LiveData<Boolean>? {
+        userRepository?.doCheckPhoneNumberRequest(phoneNumber)
+        return userRepository?.getCheckPhoneNumber()
+    }
+    fun checkEmail(email: String): LiveData<Boolean>? {
+        userRepository?.doCheckEmailRequest(email)
+        return userRepository?.getCheckEmail()
     }
 }
