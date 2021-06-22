@@ -9,7 +9,8 @@
         $phoneNumber = $_REQUEST['phoneNumber'];
 
         $result = mysqli_query($db->connect(),
-        "DELETE FROM addressinfo WHERE idAccount = $idAccount
+        "UPDATE `addressinfo` SET `isDeleted` = '1'
+         WHERE idAccount = $idAccount
                                 AND name = '$name'
                                 AND address = '$address'
                                 AND phoneNumber = '$phoneNumber';");
