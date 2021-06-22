@@ -22,6 +22,7 @@
         $data["imageFile"] = $row["imageFile"];
         $data["discount"] = $row["discount"];
         $data["rating"] = $row["rating"];
+        $data["description"] = $row["description"];
         $data["isDeleted"] = $row["isDeleted"];
 
         array_push($response, $data);
