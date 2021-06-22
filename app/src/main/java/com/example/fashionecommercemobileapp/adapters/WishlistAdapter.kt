@@ -59,6 +59,7 @@ class WishlistAdapter(private val context: Context, private val wishList: Mutabl
             i.putExtra("image", newWishList[position].imageFile)
             i.putExtra("position", position)
             i.putExtra("isLiked", true)
+            i.putExtra("details", newWishList[position].description)
             //context.startActivity(i)
             (context as Activity).startActivityForResult(i,productDetailsCodeRequest)
         })

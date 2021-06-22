@@ -23,9 +23,11 @@ import com.example.fashionecommercemobileapp.retrofit.repository.WishListReposit
 import com.example.fashionecommercemobileapp.viewmodels.WishListViewModel
 import com.example.fashionecommercemobileapp.model.Color
 import com.example.fashionecommercemobileapp.model.Size
+import com.example.fashionecommercemobileapp.retrofit.repository.ProductRepository
 import com.example.fashionecommercemobileapp.retrofit.utils.Status
 import com.example.fashionecommercemobileapp.viewmodels.CartInfoViewModel
 import com.example.fashionecommercemobileapp.viewmodels.ProductInfoViewModel
+import com.example.fashionecommercemobileapp.viewmodels.ProductViewModel
 import kotlinx.android.synthetic.main.activity_product_details.*
 import kotlinx.android.synthetic.main.activity_product_details.view.*
 
@@ -39,6 +41,7 @@ class ProductDetailsActivity : AppCompatActivity() {
     var id: String? = null
     var position: Int = 0
     var productInfoViewModel: ProductInfoViewModel? = null
+    private lateinit var productViewModel: ProductViewModel
     var sizeMap: MutableMap<String, String> = mutableMapOf<String, String>()
     var colorMap: MutableMap<String, String> = mutableMapOf<String, String>()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,10 +62,15 @@ class ProductDetailsActivity : AppCompatActivity() {
         position = intent.getIntExtra("position",0)
         isLiked = intent.getBooleanExtra("isLiked", true)
 
+        ProductRepository.Companion.setContext(this@ProductDetailsActivity)
+        productViewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
+        productViewModel.init()
+
         WishListRepository.Companion.setContext(this@ProductDetailsActivity)
         wishListViewModel = ViewModelProviders.of(this).get(WishListViewModel::class.java)
         wishListViewModel!!.init()
 
+        desc_txt.text = intent.getStringExtra("details")
         if (isLiked)
             Glide.with(this).load(R.drawable.ic_heartbutton).into(button_like)
         else
@@ -209,6 +217,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                             if (it.data?.idCart != 0) {
                                 if (quantity > it.data?.quantity!!) {
                                     val updatedQuantity: Int = it.data.quantity!! + 1
+                                    quantity -= 1
                                     cartInfoViewModel.updateCartInfo(
                                         idAccount,
                                         idProduct,
@@ -216,12 +225,15 @@ class ProductDetailsActivity : AppCompatActivity() {
                                         idColor,
                                         updatedQuantity
                                     )
+                                    productViewModel.updateProduct(
+                                        idProduct.toString(),
+                                        1
+                                    )
                                     Toast.makeText(
                                         this,
                                         "Add to cart successfully",
                                         Toast.LENGTH_SHORT
-                                    )
-                                        .show()
+                                    ).show()
                                 } else {
                                     Toast.makeText(this, "Out of stock!", Toast.LENGTH_SHORT).show()
                                 }

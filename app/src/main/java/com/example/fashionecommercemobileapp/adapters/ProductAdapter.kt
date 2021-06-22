@@ -74,6 +74,7 @@ class ProductAdapter(
             i.putExtra("image", allProductsList[position].imageFile)
             i.putExtra("position", position)
             i.putExtra("isLiked", isLiked)
+            i.putExtra("details", allProductsList[position].description)
             //context.startActivity(i)
             (context as Activity).startActivityForResult(i, requestCode)
         }

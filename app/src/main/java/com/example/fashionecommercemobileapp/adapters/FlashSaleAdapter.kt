@@ -75,6 +75,7 @@ class FlashSaleAdapter(
             i.putExtra("image", flashSaleList[position].imageFile)
             i.putExtra("position", position)
             i.putExtra("isLiked", isLiked)
+            i.putExtra("details", flashSaleList[position].description)
             //context.startActivity(i)
             (context as Activity).startActivityForResult(i, requestCode)
         }

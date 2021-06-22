@@ -126,6 +126,7 @@ class CartAdapter(
                 listProduct[position].imageFile,
                 listProduct[position].discount,
                 listProduct[position].rating,
+                listProduct[position].description,
                 listProduct[position].isDeleted
             )
             isSelected.value = true
