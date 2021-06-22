@@ -6,7 +6,7 @@
     $response = array();
     $idAccount = $_REQUEST['idAccount'];
     // Câu lệnh Select dùng để xem dữ liệu
-    $result = mysqli_query($db->connect(),"SELECT * FROM addressinfo WHERE idAccount = '$idAccount';");
+    $result = mysqli_query($db->connect(),"SELECT * FROM addressinfo WHERE idAccount = '$idAccount' AND isDeleted = '0';");
     //Đọc dữ liệu từ MySQL
     while($row = mysqli_fetch_assoc($result)){
       $t = array();
@@ -15,7 +15,6 @@
       $t["name"] = $row["name"];
       $t["address"] = $row["address"];
       $t["phoneNumber"] = $row["phoneNumber"];
-      $t["idAddress"] = $row["idAddress"];
       // Mảng JSON
       array_push($response, $t);
     }
