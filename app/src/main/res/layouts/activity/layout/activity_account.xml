@@ -100,6 +100,23 @@
         </TableRow>
         <TableRow
             android:layout_width="match_parent"
+            android:layout_height="63dp">
+
+            <Button
+                android:id="@+id/buttonLanguage"
+                android:layout_weight="1"
+                app:backgroundTint="#FFFFFF"
+                android:text="@string/changeLang"
+                android:textColor="@color/dark"
+                android:textSize="18sp"
+                android:drawableLeft="@drawable/ic_outline_location_on_24"
+                android:gravity="start|center"
+                android:textAllCaps="false"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:drawableStart="@drawable/ic_outline_location_on_24" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
             android:layout_height="63dp"/>
     </TableLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView

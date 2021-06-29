@@ -34,7 +34,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Welcome to "
+            android:text="@string/welcome_to"
             android:textAlignment="center"
             android:textColor="@color/primary"
             android:textSize="24sp"
@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
-            android:hint="Username"
+            android:hint="@string/username"
             app:startIconDrawable="@drawable/ic_account_circle"
             app:startIconTint="@color/gray"
             app:boxStrokeColor="@color/black"
@@ -87,7 +87,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="@string/password"
             app:passwordToggleEnabled="true"
             app:startIconDrawable="@drawable/ic_lock"
             app:startIconTint="@color/gray"
@@ -115,7 +115,7 @@
             android:elevation="0dp"
             android:gravity="right"
             android:minHeight="38dip"
-            android:text="Forget password?"
+            android:text="@string/forget_pass"
             android:onClick="onClickForgotPassword"
             android:textAllCaps="false"
             android:textColor="@color/dark"
@@ -130,7 +130,7 @@
             android:layout_marginBottom="16dp"
             android:height="55dp"
             android:backgroundTint="@color/primary"
-            android:text="Login"
+            android:text="@string/login"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -143,12 +143,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:minHeight="38dip"
-            android:text="Already have an account? Register now"
+            android:onClick="onClickSignUp"
+            android:text="@string/have_account"
             android:textAllCaps="false"
             android:textColor="@color/primary"
-            android:textStyle="bold"
-            android:onClick="onClickSignUp"
-            />
+            android:textStyle="bold" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

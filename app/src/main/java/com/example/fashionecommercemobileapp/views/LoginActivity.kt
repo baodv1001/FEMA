@@ -1,7 +1,10 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -14,16 +17,17 @@ import com.example.fashionecommercemobileapp.retrofit.repository.AccountReposito
 import com.example.fashionecommercemobileapp.retrofit.utils.Status
 import com.example.fashionecommercemobileapp.viewmodels.AccountViewModel
 import kotlinx.android.synthetic.main.activity_login.*
+import java.util.*
 
 
 class LoginActivity : AppCompatActivity() {
     private var accountViewModel: AccountViewModel? = null
     private var listAccount: List<Account>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
-
-
         super.onCreate(savedInstanceState)
+        loadLocate()
         setContentView(R.layout.activity_login)
+
 
         AccountRepository.Companion.setContext(this@LoginActivity)
         accountViewModel = ViewModelProviders.of(this).get(AccountViewModel::class.java)
@@ -62,6 +66,28 @@ class LoginActivity : AppCompatActivity() {
                 }
             })
         }
+    }
+
+    private fun setLocate(Lang: String) {
+
+        val locale = Locale(Lang)
+
+        Locale.setDefault(locale)
+
+        val config = resources.configuration
+
+        config.locale = locale
+        resources.updateConfiguration(config, resources.displayMetrics)
+
+        val editor = getSharedPreferences("Settings", Context.MODE_PRIVATE).edit()
+        editor.putString("My_Lang", Lang)
+        editor.apply()
+    }
+
+    private fun loadLocate() {
+        val sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        val language = sharedPreferences.getString("My_Lang", "")
+        language?.let { setLocate(it) }
     }
 
     fun onClickSignUp(view: View) {

@@ -22,7 +22,7 @@
             android:layout_weight="8"
             android:background="@color/white"
             android:padding="8dp"
-            android:text="Filter"
+            android:text="@string/filter"
             android:textColor="@color/black"
             android:textSize="20dp"></TextView>
 
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
 
             android:padding="8dp"
-            android:text="Rating"
+            android:text="@string/rating"
             android:textColor="@color/black"
             android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -188,7 +188,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:text="Price"
+            android:text="@string/price"
             android:textColor="@color/black"
             android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
