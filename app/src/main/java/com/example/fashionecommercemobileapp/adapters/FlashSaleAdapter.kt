@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,10 +39,11 @@ class FlashSaleAdapter(
         holder.flashSaleSalePrice.text =
                 ((1 - flashSaleList[position].discount!!.toFloat()) * flashSaleList[position].price!!.toFloat()).toString()
         holder.flashSalePrice.text = flashSaleList[position].price
+        holder.flashSalePrice.paintFlags = holder.flashSalePrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         Glide.with(context).load(flashSaleList[position].imageFile).into(holder.flashSaleImage)
         if (position == flashSaleList.size - 1) {
             val params: ConstraintLayout.LayoutParams = ConstraintLayout.LayoutParams(
-                (120 * Resources.getSystem().displayMetrics.density).toInt(),
+                (140 * Resources.getSystem().displayMetrics.density).toInt(),
                 ConstraintLayout.LayoutParams.WRAP_CONTENT
             )
             params.setMargins(0, 0, 0, 0)

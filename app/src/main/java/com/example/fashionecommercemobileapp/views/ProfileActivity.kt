@@ -276,7 +276,7 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
         val input = EditText(this)
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         var lp: LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-        lp.setMargins(20, 0,0,0)
+        lp.setMargins(40, 0,0,0)
         val marginHorizontal = 48F
         lp.leftMargin = marginHorizontal.toInt()
         input.layoutParams = lp

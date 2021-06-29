@@ -21,8 +21,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.NoActionBar"
         android:usesCleartextTraffic="true"
-        android:requestLegacyExternalStorage="true"
-        tools:ignore="MissingClass">
+        android:requestLegacyExternalStorage="true">
         <activity android:name=".views.ChangePasswordActivity" />
         <activity android:name=".views.ChangePhoneNumberActivity" />
         <activity android:name=".views.EditAddressActivity" />

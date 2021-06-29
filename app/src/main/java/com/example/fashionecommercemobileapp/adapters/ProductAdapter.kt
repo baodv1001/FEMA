@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
+import android.graphics.Paint
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
@@ -41,6 +42,7 @@ class ProductAdapter(
         holder.productSalePrice.text =
                 ((1 - allProductsList[position].discount!!.toFloat()) * allProductsList[position].price!!.toFloat()).toString()
         holder.productPrice.text = allProductsList[position].price
+        holder.productPrice.paintFlags = holder.productPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         Glide.with(context).load(allProductsList[position].imageFile).into(holder.productImage)
         holder.productRating.rating = allProductsList[position].rating!!.toFloat();
         holder.item.layoutParams.width =

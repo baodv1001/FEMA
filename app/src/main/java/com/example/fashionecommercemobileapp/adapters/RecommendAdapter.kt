@@ -3,6 +3,7 @@ package com.example.fashionecommercemobileapp.adapters
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Paint
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.example.fashionecommercemobileapp.model.Product
 import com.example.fashionecommercemobileapp.R
 import com.example.fashionecommercemobileapp.views.ProductDetailsActivity
+import kotlinx.android.synthetic.main.activity_product_details.*
 import kotlinx.android.synthetic.main.flash_sale_recycler_item.view.*
 import kotlinx.android.synthetic.main.recommended_recycler_item.view.*
 
@@ -40,6 +42,7 @@ class RecommendAdapter(
                 ((1 - recommendedList[position].discount!!.toFloat()) * recommendedList[position].price!!.toFloat()).toString()
         holder.recommendedRating.rating = recommendedList[position].rating?.toFloat()!!
         holder.recommendPrice.text = recommendedList[position].price
+        holder.recommendPrice.paintFlags = holder.recommendPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         Glide.with(context).load(recommendedList[position].imageFile).into(holder.recommendImage)
         holder.item.layoutParams.width = (getScreenWidth(context) - 128) / 2;
 

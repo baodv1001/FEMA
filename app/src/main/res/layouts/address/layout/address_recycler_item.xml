@@ -1,66 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/address_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
     android:background="@drawable/corner_radius"
     android:minHeight="100dp"
-    android:layout_marginBottom="8dp"
     android:padding="10dp">
 
     <TextView
         android:id="@+id/textView_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:text="Name"
-        android:textColor="@color/dark"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
         android:textAllCaps="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"/><!--
-    <Button
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/button_delete"
-        android:id="@+id/button_edit"
-        android:layout_height="wrap_content"
-        android:layout_width="50dp"
-        app:backgroundTint="#FFFFFF"
         android:textColor="@color/dark"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:drawableLeft="@drawable/ic_baseline_edit_24"
-        android:gravity="center"
-        style="@style/Widget.MaterialComponents.Button.TextButton"/>-->
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
-        app:layout_constraintTop_toBottomOf="@+id/button_edit_address"
-        app:layout_constraintRight_toRightOf="parent"
         android:id="@+id/button_delete_address"
-        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="30dp"
-        app:backgroundTint="#FFFFFF"
-        android:textColor="@color/dark"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:layout_height="wrap_content"
         android:drawableLeft="@drawable/ic_baseline_delete_outline_24"
         android:gravity="center"
-        style="@style/Widget.MaterialComponents.Button.TextButton"/>
+        android:textColor="@color/dark"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:backgroundTint="#FFFFFF"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_edit_address" />
+
     <TextView
         android:id="@+id/textView_address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:ellipsize="end"
         android:maxLines="2"
         android:text="Address"
         android:textColor="@color/gray"
         android:textSize="18sp"
-        app:layout_constraintEnd_toStartOf="@+id/button_edit_address"
+        app:layout_constraintEnd_toStartOf="@+id/button_delete_address"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView_name"
         app:layout_constraintTop_toBottomOf="@id/textView_name" />
@@ -69,9 +58,12 @@
         android:id="@+id/textView_phoneNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="8dp"
         android:text="0123456789"
         android:textColor="@color/gray"
         android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView_address"
         app:layout_constraintTop_toBottomOf="@id/textView_address" />
@@ -79,7 +71,7 @@
     <ImageView
         android:id="@+id/button_edit_address"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:onClick="onClickEditAddress"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

@@ -17,7 +17,7 @@ class RetrofitClient {
 
     var retrofit: Retrofit? = null
     private val baseUrl =
-        "http://laptop-0qnm76ck/fashionecommerceapp/"
+        "http://192.168.1.8:8080/FEMA/"
 
     val gson: Gson = GsonBuilder()
             .setLenient()
