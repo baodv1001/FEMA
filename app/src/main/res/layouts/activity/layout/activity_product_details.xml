@@ -10,16 +10,21 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -30,51 +35,47 @@
                 android:id="@+id/back_image"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginLeft="16dp"
                 android:layout_weight="1"
                 android:onClick="onClickBack"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_back"
                 tools:ignore="VectorDrawableCompat" />
-
-            <TextView
-                android:id="@+id/product_name"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_margin="16dp"
-                android:layout_weight="8"
-                android:background="@drawable/search_bg"
-                android:drawableRight="@drawable/ic_search_black_24dp"
-                android:drawablePadding="16dp"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:paddingLeft="16dp"
-                android:singleLine="true"
-                android:text="Name Product"
-                android:textColorHint="@color/gray" />
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"
                 app:srcCompat="@drawable/ic_more"
                 tools:ignore="VectorDrawableCompat" />
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:gravity="center"
             android:text="Brand Name"
             android:textColor="@color/dark"
             android:textSize="24sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/rectangle"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -96,7 +97,7 @@
             <ImageView
                 android:id="@+id/detail_image"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:src="@drawable/recommend"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -105,13 +106,16 @@
 
             <TextView
                 android:id="@+id/detail_name"
-                android:layout_width="336dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:text="Man Shirt"
                 android:textColor="@color/dark"
                 android:textSize="20sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/button_like"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/detail_image" />
 
@@ -131,12 +135,12 @@
                 android:id="@+id/detail_sale_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:gravity="center_horizontal"
                 android:text="100000"
                 android:textAlignment="textStart"
                 android:textColor="@color/primary"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/detail_name"
                 app:layout_constraintStart_toStartOf="@+id/detail_name"
@@ -147,11 +151,11 @@
                 android:id="@+id/detail_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:text="200000"
                 android:textAlignment="textStart"
                 android:textColor="@color/gray"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/detail_sale_price"
@@ -176,7 +180,7 @@
                 android:layout_marginTop="16dp"
                 android:text="Select Size"
                 android:textColor="@color/dark"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/detail_price" />
@@ -204,66 +208,10 @@
                         android:button="@android:color/transparent"
                         android:checked="true"
                         android:gravity="center"
-                        android:text="8"
                         android:textColor="@color/dark"
-                        android:textSize="14dp"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <RadioButton
-                        android:id="@+id/radio_size_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:background="@drawable/radio_flat_selector"
-                        android:button="@android:color/transparent"
-                        android:checked="false"
-                        android:gravity="center"
-                        android:text="7"
-                        android:textColor="@color/dark"
-                        android:textSize="14dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radio_size_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:background="@drawable/radio_flat_selector"
-                        android:button="@android:color/transparent"
-                        android:checked="false"
-                        android:gravity="center"
-                        android:text="9"
-                        android:textColor="@color/dark"
-                        android:textSize="14dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radio_size_4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:background="@drawable/radio_flat_selector"
-                        android:button="@android:color/transparent"
-                        android:checked="false"
-                        android:gravity="center"
-                        android:text="10"
-                        android:textColor="@color/dark"
-                        android:textSize="14dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radio_size_7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:background="@drawable/radio_flat_selector"
-                        android:button="@android:color/transparent"
-                        android:checked="false"
-                        android:gravity="center"
-                        android:text="13"
-                        android:textColor="@color/dark"
-                        android:textSize="14dp"
-                        android:textStyle="bold" />
                 </RadioGroup>
             </HorizontalScrollView>
 
@@ -274,7 +222,7 @@
                 android:layout_marginTop="16dp"
                 android:text="Select Color"
                 android:textColor="@color/dark"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scroll_radio_group_size" />
@@ -302,95 +250,12 @@
                         android:button="@android:color/transparent"
                         android:checked="true"
                         android:gravity="center"
-                        android:text="8"
                         android:textColor="@color/dark"
-                        android:textSize="14dp"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <RadioButton
-                        android:id="@+id/radio_color_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:background="@drawable/radio_flat_selector"
-                        android:button="@android:color/transparent"
-                        android:checked="false"
-                        android:gravity="center"
-                        android:text="7"
-                        android:textColor="@color/dark"
-                        android:textSize="14dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radio_color_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:background="@drawable/radio_flat_selector"
-                        android:button="@android:color/transparent"
-                        android:checked="false"
-                        android:gravity="center"
-                        android:text="9"
-                        android:textColor="@color/dark"
-                        android:textSize="14dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radio_color_4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:background="@drawable/radio_flat_selector"
-                        android:button="@android:color/transparent"
-                        android:checked="false"
-                        android:gravity="center"
-                        android:text="10"
-                        android:textColor="@color/dark"
-                        android:textSize="14dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radio_color_5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:background="@drawable/radio_flat_selector"
-                        android:button="@android:color/transparent"
-                        android:checked="false"
-                        android:gravity="center"
-                        android:text="11"
-                        android:textColor="@color/dark"
-                        android:textSize="14dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radio_color_6"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:background="@drawable/radio_flat_selector"
-                        android:button="@android:color/transparent"
-                        android:checked="false"
-                        android:gravity="center"
-                        android:text="12"
-                        android:textColor="@color/dark"
-                        android:textSize="14dp"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/radio_color_7"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:background="@drawable/radio_flat_selector"
-                        android:button="@android:color/transparent"
-                        android:checked="false"
-                        android:gravity="center"
-                        android:text="13"
-                        android:textColor="@color/dark"
-                        android:textSize="14dp"
-                        android:textStyle="bold" />
                 </RadioGroup>
+
             </HorizontalScrollView>
 
             <TextView
@@ -400,38 +265,10 @@
                 android:layout_marginTop="16dp"
                 android:text="Descriptions"
                 android:textColor="@color/dark"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scroll_radio_group_color" />
-
-            <TextView
-                android:id="@+id/style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Style:"
-                android:textColor="@color/dark"
-                android:textSize="12sp"
-                android:textStyle="normal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/description" />
-
-            <TextView
-                android:id="@+id/style_product"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="16dp"
-                android:gravity="end"
-                android:text="CD0113-400"
-                android:textAlignment="textEnd"
-                android:textColor="@color/gray"
-                android:textSize="12sp"
-                android:textStyle="normal"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/description" />
 
             <TextView
                 android:id="@+id/desc_txt"
@@ -439,19 +276,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/search_bg"
-                android:lineSpacingExtra="2dp"
-                android:padding="4dp"
+                android:lineSpacingExtra="4dp"
+                android:padding="12dp"
                 android:textColor="@color/gray"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:textStyle="normal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/style" />
+                app:layout_constraintTop_toBottomOf="@+id/description"/>
 
             <View
                 android:id="@+id/footer_view"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="70dp"
                 android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -475,7 +312,7 @@
         android:text="Add to Cart"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

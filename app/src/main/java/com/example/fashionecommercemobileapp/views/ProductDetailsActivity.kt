@@ -235,7 +235,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 } else {
-                                    Toast.makeText(this, "Out of stock!", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this, "This product is out of stock!", Toast.LENGTH_SHORT).show()
                                 }
                             } else {
                                 cartInfoViewModel.postCartInfo(

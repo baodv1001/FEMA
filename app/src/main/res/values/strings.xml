@@ -1,4 +1,4 @@
-<resources>
+ <resources>
     <string name="app_name">FashionEcommerceMobileApp</string>
     <string name="brand_names">BRAND NAME</string>
     <string name="account">Account</string>
@@ -31,11 +31,12 @@
     <string name="receiver">Receiver</string>
     <string name="receiver_phone_number">Receiver Phone Number</string>
     <string name="address">Address</string>
-    <string name="add_address">Add Address</string>
-    <string name="idAccount"></string>
+    <string name="add_address">Add new address</string>
     <string name="new_address">New address</string>
     <string name="dialog_title">Gender</string>
     <string name="input_receiver_name">Receiver name</string>
     <string name="choose">Choose</string>
     <string name="updateName">Update Name</string>
+    <string name="confirm_change">Confirm change</string>
+    <string name="brand_name">BRAND NAME</string>
 </resources>

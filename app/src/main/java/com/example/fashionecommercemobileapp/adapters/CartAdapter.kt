@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -142,6 +143,10 @@ class CartAdapter(
         }
 
         holder.itemView.button_increase_cart.setOnClickListener {
+            if(listProduct[position].quantity?.toInt() ?: 0 == listCart[position].quantity) {
+                Toast.makeText(context, "This product is out of stock!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             idProduct.value = listCart[position].idProduct
             listCart[position].quantity = listCart[position].quantity?.plus(1)
             quantity.value = listCart[position].quantity
@@ -152,6 +157,9 @@ class CartAdapter(
         }
 
         holder.itemView.button_decrease_cart.setOnClickListener {
+            if(listCart[position].quantity == 1) {
+                return@setOnClickListener
+            }
             idProduct.value = listCart[position].idProduct
             listCart[position].quantity = listCart[position].quantity?.minus(1)
             quantity.value = listCart[position].quantity

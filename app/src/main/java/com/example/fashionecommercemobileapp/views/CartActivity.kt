@@ -70,6 +70,9 @@ class CartActivity : AppCompatActivity() {
                 if (idSize != null && idColor != null) {
                     cartInfoViewModel.deleteCartInfo(idAccount, idDeletedProduct, idSize, idColor)
                 }
+                productList.removeAll { it.idProduct == idDeletedProduct.toString() }
+                cartInfoList.removeAll { it.idProduct == idDeletedProduct && it.idSize == idSize && it.idColor == idColor }
+                loadData(cartInfoList, productList)
             }
         }
         idDeleteProduct.observe(this, observer)
@@ -162,7 +165,6 @@ class CartActivity : AppCompatActivity() {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                     }
                     Status.LOADING -> {
-                        Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -247,7 +249,6 @@ class CartActivity : AppCompatActivity() {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                     }
                     Status.LOADING -> {
-                        Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

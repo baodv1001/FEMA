@@ -36,7 +36,6 @@ class AddressActivity : AppCompatActivity() {
 
         val intent: Intent = intent
         isCheckOut = intent.getBooleanExtra("isCheckOut", false)
-        isCheckOutActivity(isCheckOut)
 
         val spf = getSharedPreferences("Login", Context.MODE_PRIVATE)
         idAccount = spf.getString("Id", null).toString()
@@ -119,9 +118,4 @@ class AddressActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun isCheckOutActivity(isCheckOut: Boolean) {
-        if(isCheckOut) {
-            button_back_address.visibility = View.GONE
-        }
-    }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -52,7 +53,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/bottomLinearLayout"
+        app:layout_constraintBottom_toTopOf="@+id/bnvMain_cart"
         app:layout_constraintTop_toBottomOf="@id/topLinearLayout">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -111,8 +112,9 @@
                     android:layout_width="90dp"
                     android:layout_height="0dp"
                     android:background="@drawable/button_corner_right"
-                    android:text="Apply"
                     android:onClick="onClickApplyCode"
+                    android:text="Apply"
+                    android:textStyle="bold"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -255,8 +257,10 @@
                 android:background="@drawable/button_corner_primary"
                 android:backgroundTint="@color/primary"
                 android:gravity="center"
-                android:text="CHECK OUT"
                 android:onClick="onClickCheckOut"
+                android:text="Check out"
+                android:textAllCaps="false"
+                android:textStyle="bold"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="18sp"
@@ -268,49 +272,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <RelativeLayout
-        android:id="@+id/bottomLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:paddingLeft="30dp"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnMeCart"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@id/btnCartCart"
-            android:background="@color/white"
-            android:text="Me"
-            tools:ignore="MissingConstraints" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnHomeCart"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:text="Home"
-            tools:ignore="MissingConstraints" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnCartCart"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@id/btnWishListCart"
-            android:background="@color/white"
-            android:text="Cart"
-            tools:ignore="MissingConstraints" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnWishListCart"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toRightOf="@id/btnHomeCart"
-            android:background="@color/white"
-            android:text="WishList"
-            tools:ignore="MissingConstraints" />
-    </RelativeLayout>
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnvMain_cart"
         android:layout_width="match_parent"

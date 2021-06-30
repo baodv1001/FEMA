@@ -182,10 +182,9 @@
                     android:layout_marginTop="8dp"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:text="Số 5 Đinh Tiên Hoàng, P. Đa Kao, Quận 1 "
                     android:textColor="@color/gray"
                     android:textSize="18sp"
-                    app:layout_constraintEnd_toStartOf="@+id/button_select_address"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/textView_name_orderDetails"
                     app:layout_constraintTop_toBottomOf="@id/textView_name_orderDetails" />
@@ -195,7 +194,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="8dp"
-                    android:text="0123456789"
                     android:textColor="@color/gray"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -379,7 +377,6 @@
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
 
             <RatingBar
                 android:id="@+id/ratingBar_order"
