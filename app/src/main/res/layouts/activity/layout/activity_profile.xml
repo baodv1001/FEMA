@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".views.ProfileActivity"
-    android:id="@+id/layout_root">
+    tools:context=".views.ProfileActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/header_profile_title"
@@ -238,8 +237,8 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:gravity="center"
-            android:textSize="14sp"
             android:textColor="@color/gray"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView8"
             app:layout_constraintTop_toTopOf="parent" />
@@ -302,8 +301,8 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:gravity="center"
-            android:textSize="14sp"
             android:textColor="@color/gray"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView10"
             app:layout_constraintTop_toTopOf="parent" />
@@ -366,8 +365,8 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:gravity="center"
-            android:textSize="14sp"
             android:textColor="@color/gray"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView11"
             app:layout_constraintTop_toTopOf="parent" />
@@ -441,10 +440,12 @@
         <Button
             android:id="@+id/button_logout"
             style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="350dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"   
             android:backgroundTint="@color/primary"
             android:gravity="center"
             android:onClick="onClickLogOut"
@@ -453,6 +454,7 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
+
         <ProgressBar
             android:id="@+id/progress_bar"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
@@ -462,6 +464,4 @@
             android:max="100"
             tools:progress="40" />
     </RelativeLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
