@@ -191,7 +191,8 @@ class CheckOutActivity : AppCompatActivity() {
         }
         textView_sub_checkOut.text =
             NumberFormat.getIntegerInstance(Locale.GERMANY).format(subTotal)
-        val total: Float = subTotal - textView_discount_checkOut.text.toString().replace(".", "").toFloat()
+        val total: Float =
+            subTotal - textView_discount_checkOut.text.toString().replace(".", "").toFloat()
         textView_total_checkOut.text = NumberFormat.getIntegerInstance(Locale.GERMANY).format(total)
     }
 
@@ -200,6 +201,11 @@ class CheckOutActivity : AppCompatActivity() {
     }
 
     fun onClickConfirm(view: View) {
+        if (textView_idAddress_checkOut.text.toString().isEmpty()) {
+            Toast.makeText(this, "Please add your address before check out!", Toast.LENGTH_SHORT)
+                .show()
+            return
+        }
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
         val date = simpleDateFormat.format(Date())
         val idAddress: Int = textView_idAddress_checkOut.text.toString().toInt()
@@ -240,7 +246,9 @@ class CheckOutActivity : AppCompatActivity() {
         var isSuccess: Boolean = true
         var i = 0
         cartInfoList.forEach { cartInfo ->
-            val price = ((productList[i].price?.toFloat() ?: 0F) * (1 - (productList[i].discount?.toFloat() ?: 0F))).toInt()
+            val price =
+                ((productList[i].price?.toFloat() ?: 0F) * (1 - (productList[i].discount?.toFloat()
+                    ?: 0F))).toInt()
             i++
             val billInfo: BillInfo =
                 BillInfo(
@@ -312,8 +320,6 @@ class CheckOutActivity : AppCompatActivity() {
                     it[0].address,
                     it[0].phoneNumber
                 )
-            } else {
-                Toast.makeText(this, "Please add your address!", Toast.LENGTH_SHORT).show()
             }
         })
     }

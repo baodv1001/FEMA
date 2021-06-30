@@ -157,6 +157,9 @@ class CartAdapter(
         }
 
         holder.itemView.button_decrease_cart.setOnClickListener {
+            if(listCart[position].quantity == 1) {
+                return@setOnClickListener
+            }
             idProduct.value = listCart[position].idProduct
             listCart[position].quantity = listCart[position].quantity?.minus(1)
             quantity.value = listCart[position].quantity

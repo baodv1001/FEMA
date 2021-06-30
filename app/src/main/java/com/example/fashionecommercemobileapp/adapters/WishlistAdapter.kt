@@ -16,12 +16,11 @@ import com.example.fashionecommercemobileapp.viewmodels.WishListViewModel
 import com.example.fashionecommercemobileapp.views.ProductDetailsActivity
 import kotlinx.android.synthetic.main.wishlist_item.view.*
 
-class WishlistAdapter(private val context: Context, private val wishList: MutableList<Product>, private var wishListViewModel: WishListViewModel?, private var id: String) : RecyclerView.Adapter<WishlistAdapter.ViewHolder>() {
+class  WishlistAdapter(private val context: Context, private val wishList: MutableList<Product>, private var wishListViewModel: WishListViewModel?, private var id: String) : RecyclerView.Adapter<WishlistAdapter.ViewHolder>() {
     private var productDetailsCodeRequest: Int = 0
     private  var newWishList = wishList
     class ViewHolder(view: View):RecyclerView.ViewHolder(view){
         var nameItem : TextView = view.findViewById(R.id.nameWishItem)
-        var infoItem : TextView = view.findViewById(R.id.infoWishlistItem)
         var costItem : TextView = view.findViewById(R.id.costWishItem)
         var imageItem: ImageView = view.findViewById(R.id.imageProduct)
         var idItem : TextView = view.findViewById(R.id.idProduct)
@@ -35,7 +34,6 @@ class WishlistAdapter(private val context: Context, private val wishList: Mutabl
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.nameItem.text = newWishList[position].name
-        holder.infoItem.text = newWishList[position].quantity
         holder.costItem.text = newWishList[position].price
         holder.idItem.text = newWishList[position].idProduct
 
@@ -51,7 +49,9 @@ class WishlistAdapter(private val context: Context, private val wishList: Mutabl
 
         holder.itemView.setOnClickListener(View.OnClickListener{
             val i = Intent(context, ProductDetailsActivity::class.java)
+            i.putExtra("idProduct", newWishList[position].idProduct)
             i.putExtra("id", newWishList[position].idProduct)
+            i.putExtra("quantity", newWishList[position].quantity)
             i.putExtra("name", newWishList[position].name)
             i.putExtra("price", newWishList[position].price)
             i.putExtra("discount", newWishList[position].discount)

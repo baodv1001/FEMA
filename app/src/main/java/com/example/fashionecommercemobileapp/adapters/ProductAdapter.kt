@@ -46,7 +46,7 @@ class ProductAdapter(
         Glide.with(context).load(allProductsList[position].imageFile).into(holder.productImage)
         holder.productRating.rating = allProductsList[position].rating!!.toFloat();
         holder.item.layoutParams.width =
-            (getScreenWidth(context) - (64 * Resources.getSystem().displayMetrics.density).toInt()) / 2;
+            (getScreenWidth(context) - (44 * Resources.getSystem().displayMetrics.density).toInt()) / 2;
 
         var isLiked: Boolean = false
         if (wishList.isNotEmpty())

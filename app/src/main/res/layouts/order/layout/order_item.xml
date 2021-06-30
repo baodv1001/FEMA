@@ -5,7 +5,7 @@
     android:id="@+id/order_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
+    android:layout_marginBottom="12dp"
     android:background="@drawable/corner_radius"
     android:padding="16dp">
 
