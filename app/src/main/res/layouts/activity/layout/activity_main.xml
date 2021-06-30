@@ -8,7 +8,11 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -43,13 +47,18 @@
                         android:layout_margin="16dp"
                         android:layout_weight="8"
                         android:background="@drawable/search_bg"
-                        android:drawableLeft="@drawable/ic_search_black_24dp"
-                        android:drawablePadding="16dp"
+                        android:drawablePadding="12dp"
                         android:hint="Search Product"
                         android:onClick="onClickOpenSearch"
-                        android:padding="4dp"
+                        android:paddingLeft="12dp"
+                        android:paddingTop="12dp"
+                        android:paddingBottom="12dp"
                         android:singleLine="true"
-                        android:textColorHint="@color/gray" />
+                        android:textColorHint="@color/gray"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:drawableLeftCompat="@drawable/ic_search_black_24dp"
+                        app:drawableTint="@color/primary" />
 
                     <ImageView
                         android:id="@+id/imageView"
@@ -67,25 +76,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:gravity="center"
-                    android:text="Brand Name"
+                    android:text="@string/brand_name"
                     android:textColor="@color/dark"
                     android:textSize="24sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <View
-                android:id="@+id/line"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/light"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/header" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@drawable/rectangle"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/view_pager"
@@ -124,6 +129,7 @@
                 android:text="Category"
                 android:textColor="@color/dark"
                 android:textSize="20dp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/view_pager" />
             <!--<com.google.android.material.button.MaterialButton
@@ -162,6 +168,7 @@
                 android:text="Flash Sale"
                 android:textColor="@color/dark"
                 android:textSize="20dp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/category_recycler" />
 
@@ -176,9 +183,11 @@
                 android:backgroundTint="@color/white"
                 android:onClick="onClickViewFlashSale"
                 android:padding="0dp"
-                android:text="See More"
+                android:text="See more"
+                android:textAllCaps="false"
                 android:textColor="@color/primary"
-                android:textSize="20dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/category_recycler" />
 
@@ -210,8 +219,10 @@
                 android:id="@+id/recommend_recycler"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -223,8 +234,10 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recommend_recycler"></View>
+                app:layout_constraintTop_toBottomOf="@+id/recommend_recycler" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -235,6 +248,7 @@
         app:itemIconTint="@color/selector"
         app:itemTextColor="@color/selector"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/menu_navigation"></com.google.android.material.bottomnavigation.BottomNavigationView>
+        app:menu="@menu/menu_navigation" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -24,12 +25,13 @@
             android:layout_height="200dp"
             android:layout_marginStart="100dp"
             android:layout_marginEnd="100dp"
+            android:background="@drawable/logoshop"
             android:maxWidth="400dp"
             android:maxHeight="200dp"
             android:scaleType="fitEnd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:layout_width="match_parent"
@@ -56,8 +58,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tfUsername"
@@ -66,19 +67,19 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:hint="Username"
-            app:startIconDrawable="@drawable/ic_account_circle"
-            app:startIconTint="@color/gray"
+            android:textColorHint="@color/gray"
             app:boxStrokeColor="@color/black"
-            android:textColorHint="@color/gray">
+            app:startIconDrawable="@drawable/ic_account_circle"
+            app:startIconTint="@color/gray">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text_input_Username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/dark"
+                android:inputType="textPersonName"
                 android:maxLength="50"
                 android:maxLines="1"
-                android:inputType="textVisiblePassword"/>
+                android:textColor="@color/dark" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -88,21 +89,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
+            android:textColorHint="@color/gray"
+            app:boxStrokeColor="@color/black"
             app:passwordToggleEnabled="true"
             app:startIconDrawable="@drawable/ic_lock"
-            app:startIconTint="@color/gray"
-            app:boxStrokeColor="@color/black"
-            android:textColorHint="@color/gray"
-            >
+            app:startIconTint="@color/gray">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text_input_Password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/dark"
                 android:inputType="textPassword"
                 android:maxLength="100"
-                android:maxLines="1"/>
+                android:maxLines="1"
+                android:textColor="@color/dark" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -112,7 +112,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:elevation="0dp"
             android:gravity="right"
             android:minHeight="38dip"
             android:text="Forget password?"
@@ -143,12 +142,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:minHeight="38dip"
-            android:text="Already have an account? Register now"
+            android:text="Don't have an account? Register now"
             android:textAllCaps="false"
             android:textColor="@color/primary"
             android:textStyle="bold"
-            android:onClick="onClickSignUp"
-            />
+            android:onClick="onClickSignUp"/>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

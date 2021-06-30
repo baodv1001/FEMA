@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,101 +8,110 @@
     android:background="@color/white"
     tools:context=".views.AccountActivity">
 
-    <RelativeLayout
-        android:id="@+id/header_account_title"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topLinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="@color/white"
-        app:backgroundTint="@color/white"
-        app:layout_constraintLeft_toRightOf="parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/brand_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginVertical="20dp"
-            android:text="@string/brand_names"
+            android:layout_marginTop="16dp"
+            android:text="@string/brand_name"
             android:textColor="@color/dark"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginVertical="78dp"
-            android:text="@string/account"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="Account"
             android:textColor="@color/dark"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <View
+            android:id="@+id/view"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="119dp"
-            android:background="@color/light" />
-    </RelativeLayout>
-    <TableLayout
+            android:layout_height="1dp"
+            android:background="@drawable/rectangle"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/header_account_title">
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topLinearLayout">
 
-        <TableRow
+        <Button
+            android:id="@+id/button_profile"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="match_parent"
-            android:layout_height="63dp" >
-            <Button
-                android:id="@+id/button_profile"
-                android:layout_weight="1"
-                app:backgroundTint="#FFFFFF"
-                android:text="@string/profile_button"
-                android:textColor="@color/dark"
-                android:textSize="18sp"
-                android:drawableLeft="@drawable/ic_outline_person_outline_24"
-                android:gravity="start|center"
-                android:textAllCaps="false"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:drawableStart="@drawable/ic_outline_person_outline_24" />
-        </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="63dp">
-            <Button
-                android:id="@+id/button_order"
-                android:layout_weight="1"
-                app:backgroundTint="#FFFFFF"
-                android:text="@string/order_button"
-                android:textColor="@color/dark"
-                android:textSize="18sp"
-                android:drawableLeft="@drawable/ic_outline_shopping_bag_24"
-                android:gravity="start|center"
-                android:textAllCaps="false"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:drawableStart="@drawable/ic_outline_shopping_bag_24" />
-        </TableRow>
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="63dp">
+            android:layout_height="70dp"
+            android:background="@drawable/button_corner_primary"
+            android:gravity="start|center"
+            android:text="@string/profile_button"
+            android:textAllCaps="false"
+            android:textColor="@color/dark"
+            android:textSize="18sp"
+            app:icon="@drawable/ic_outline_person_outline_24"
+            app:iconPadding="8dp"
+            app:iconTint="@color/primary" />
 
-            <Button
-                android:id="@+id/button_address"
-                android:layout_weight="1"
-                app:backgroundTint="#FFFFFF"
-                android:text="@string/address_button"
-                android:textColor="@color/dark"
-                android:textSize="18sp"
-                android:drawableLeft="@drawable/ic_outline_location_on_24"
-                android:gravity="start|center"
-                android:textAllCaps="false"
-                style="@style/Widget.MaterialComponents.Button.TextButton"
-                android:drawableStart="@drawable/ic_outline_location_on_24" />
-        </TableRow>
-        <TableRow
+        <Button
+            android:id="@+id/button_order"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="match_parent"
-            android:layout_height="63dp"/>
-    </TableLayout>
+            android:layout_height="70dp"
+            android:gravity="start|center"
+            android:text="@string/order_button"
+            android:textAllCaps="false"
+            android:textColor="@color/dark"
+            android:textSize="18sp"
+            app:backgroundTint="#FFFFFF"
+            app:icon="@drawable/ic_outline_shopping_bag_24"
+            app:iconPadding="8dp"
+            app:iconTint="@color/primary" />
+
+        <Button
+            android:id="@+id/button_address"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/corner_radius"
+            android:gravity="start|center"
+            android:text="@string/address_button"
+            android:textAllCaps="false"
+            android:textColor="@color/dark"
+            android:textSize="18sp"
+            app:backgroundTint="#FFFFFF"
+            app:icon="@drawable/ic_outline_location_on_24"
+            app:iconPadding="8dp"
+            app:iconTint="@color/primary" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnvMain"
         android:layout_width="match_parent"

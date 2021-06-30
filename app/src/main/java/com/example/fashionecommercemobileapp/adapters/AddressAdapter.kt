@@ -70,6 +70,13 @@ class AddressAdapter (private  val context: Context,
             notifyDataSetChanged()
         })
         if (isCheckOut) {
+            address.value = Address(
+                listAddress[0].idAddress,
+                listAddress[0].idAccount,
+                listAddress[0].name,
+                listAddress[0].address,
+                listAddress[0].phoneNumber
+            )
             holder.button_edit.visibility = View.GONE
             holder.button_delete.visibility = View.GONE
             holder.button_select.setOnClickListener{
