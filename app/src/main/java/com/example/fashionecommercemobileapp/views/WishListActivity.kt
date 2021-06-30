@@ -3,7 +3,11 @@ package com.example.fashionecommercemobileapp.views
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -21,6 +25,7 @@ import kotlinx.android.synthetic.main.activity_wishlist.bnvMain
 class WishListActivity : AppCompatActivity() {
     private var wishListViewModel: WishListViewModel? = null
     private var idAccount: Int = 1
+    private var doubleBackToExitPressedOnce = false
     override fun onCreate(savedInstanceState:Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wishlist)
@@ -47,13 +52,20 @@ class WishListActivity : AppCompatActivity() {
             }
         }
     }
-/*    private fun getPopularData(popularList:List<Popular>) {
-        var popularRecyclerView = findViewById<View>(R.id.wishlistRecycler) as RecyclerView
-        var popularAdapter = WishlistAdapter(this, popularList)
-        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        popularRecyclerView.setLayoutManager(layoutManager)
-        popularRecyclerView.setAdapter(popularAdapter)
-    }*/
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    override fun onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            val intent = Intent(Intent.ACTION_MAIN)
+            intent.addCategory(Intent.CATEGORY_HOME)
+            startActivity(intent)
+            return
+        }
+
+        this.doubleBackToExitPressedOnce = true
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+
+        Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
+    }
 
     private fun setupWishListProduct(productList: List<Product>) {
         var wishListAdapter: WishlistAdapter = WishlistAdapter(this, productList.toMutableList(), wishListViewModel, idAccount.toString())

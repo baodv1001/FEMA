@@ -17,11 +17,11 @@ class RetrofitClient {
 
     var retrofit: Retrofit? = null
     private val baseUrl =
-        "http://192.168.1.8:8080/FEMA/"
+        "http://ghostlove/FEMA/"
 
     val gson: Gson = GsonBuilder()
-            .setLenient()
-            .create()
+        .setLenient()
+        .create()
 
     fun getRetrofitInstance(): Retrofit? {
         if (retrofit == null) {
@@ -33,6 +33,7 @@ class RetrofitClient {
         }
         return retrofit
     }
+
     val accountApi: AccountApi = getRetrofitInstance()!!.create(AccountApi::class.java)
     val userApi: UserApi = getRetrofitInstance()!!.create(UserApi::class.java)
     val addressApi: AddressApi = getRetrofitInstance()!!.create(AddressApi::class.java)

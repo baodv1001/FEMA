@@ -3,9 +3,12 @@ package com.example.fashionecommercemobileapp.views
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -34,6 +37,7 @@ class CartActivity : AppCompatActivity() {
     private var sizeList: ArrayList<Size> = arrayListOf()
     private var colorList: ArrayList<Color> = arrayListOf()
     private var idAccount: Int = 0
+    private var doubleBackToExitPressedOnce = false
 
     private lateinit var idDeleteProduct: LiveData<Int>
     private lateinit var isUpdatedCart: LiveData<Boolean>
@@ -347,5 +351,20 @@ class CartActivity : AppCompatActivity() {
             this.finish()
             true
         })
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    override fun onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            val intent = Intent(Intent.ACTION_MAIN)
+            intent.addCategory(Intent.CATEGORY_HOME)
+            startActivity(intent)
+            return
+        }
+
+        this.doubleBackToExitPressedOnce = true
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+
+        Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
     }
 }

@@ -3,6 +3,7 @@ package com.example.fashionecommercemobileapp.views
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
@@ -21,12 +23,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
-import com.example.fashionecommercemobileapp.adapters.*
 import com.example.fashionecommercemobileapp.R
-import com.example.fashionecommercemobileapp.adapters.CategoryAdapter
-import com.example.fashionecommercemobileapp.adapters.FlashSaleAdapter
-import com.example.fashionecommercemobileapp.adapters.RecommendAdapter
-import com.example.fashionecommercemobileapp.adapters.SwipeAdapter
+import com.example.fashionecommercemobileapp.adapters.*
 import com.example.fashionecommercemobileapp.model.Category
 import com.example.fashionecommercemobileapp.model.Product
 import com.example.fashionecommercemobileapp.retrofit.repository.CategoryRepository
@@ -46,13 +44,14 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
-    var idAccount: Int = 1
+    var idAccount: Int = 0
     private var productViewModel: ProductViewModel? = null
     var categoryViewModel: CategoryViewModel? = null
     lateinit var viewPager: ViewPager
     lateinit var adapter: SwipeAdapter
     var currentPosition: Int = 0;
     private var wishListViewModel: WishListViewModel? = null
+    private var doubleBackToExitPressedOnce = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -67,25 +66,34 @@ class MainActivity : AppCompatActivity() {
         productViewModel = ViewModelProviders.of(this).get(ProductViewModel::class.java)
         productViewModel!!.init()
         productViewModel!!.getRecommendedData()
-                ?.observe(this, Observer {
-                    val listRecommend = it
+            ?.observe(this, Observer {
+                val listRecommend: List<Product> = it
+                if (idAccount == 0)
+                    setupRecommendedRecyclerView(listRecommend, emptyList())
+                else {
                     wishListViewModel!!.getWishListProductData(idAccount)
-                            ?.observe(this, Observer { it ->
-                                setupRecommendedRecyclerView(listRecommend, it)
-                            })
-                })
+                        ?.observe(this, Observer { it ->
+                            setupRecommendedRecyclerView(listRecommend, it)
+                        })
+                }
+            })
         productViewModel!!.getFlashSaleData()
             ?.observe(this, Observer {
                 val listFlashSale = it
-                wishListViewModel!!.getWishListProductData(idAccount)
+                if (idAccount == 0)
+                    setupRecommendedRecyclerView(listFlashSale, emptyList())
+                else {
+                    wishListViewModel!!.getWishListProductData(idAccount)
                         ?.observe(this, Observer { it ->
                             setupFlashSaleRecyclerView(listFlashSale, it)
                         })
+                }
+
             })
         categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel::class.java)
         categoryViewModel!!.init()
         categoryViewModel!!.getCategoryData()
-                ?.observe(this, Observer { setupCategoryRecyclerView(it) })
+            ?.observe(this, Observer { setupCategoryRecyclerView(it) })
         initSlideShow()
         handleNavigation()
     }
@@ -97,51 +105,49 @@ class MainActivity : AppCompatActivity() {
             if (resultCode == RESULT_OK && data != null) {
                 val check = data.getBooleanExtra("check", true)
                 val pos = data.getIntExtra("position", 0)
-                if (pos  != flash_sale_recycler.size)
-                    if (check)
-                    {
-                        Glide.with(this).load(R.drawable.ic_heartbutton).into(flash_sale_recycler[pos].button)
-                    }
-                    else
-                    {
-                        Glide.with(this).load(R.drawable.ic_un_heart_button).into(flash_sale_recycler[pos].button)
+                if (pos != flash_sale_recycler.size)
+                    if (check) {
+                        Glide.with(this).load(R.drawable.ic_heartbutton)
+                            .into(flash_sale_recycler[pos].button)
+                    } else {
+                        Glide.with(this).load(R.drawable.ic_un_heart_button)
+                            .into(flash_sale_recycler[pos].button)
                     }
                 productViewModel!!.getRecommendedData()
-                        ?.observe(this, Observer {
-                            val listRecommend = it
-                            wishListViewModel!!.getWishListProductData(idAccount)
-                                    ?.observe(this, Observer { it ->
-                                        setupRecommendedRecyclerView(listRecommend, it)
-                                    })
-                        })
-        }
+                    ?.observe(this, Observer {
+                        val listRecommend = it
+                        wishListViewModel!!.getWishListProductData(idAccount)
+                            ?.observe(this, Observer { it ->
+                                setupRecommendedRecyclerView(listRecommend, it)
+                            })
+                    })
+            }
         if (requestCode == 3)
             if (resultCode == RESULT_OK && data != null) {
                 val check = data.getBooleanExtra("check", true)
                 val pos = data.getIntExtra("position", 0)
-                if (check)
-                {
-                    Glide.with(this).load(R.drawable.ic_heartbutton).into(recommend_recycler[pos].button_like)
-                }
-                else
-                {
-                    Glide.with(this).load(R.drawable.ic_un_heart_button).into(recommend_recycler[pos].button_like)
+                if (check) {
+                    Glide.with(this).load(R.drawable.ic_heartbutton)
+                        .into(recommend_recycler[pos].button_like)
+                } else {
+                    Glide.with(this).load(R.drawable.ic_un_heart_button)
+                        .into(recommend_recycler[pos].button_like)
                 }
                 productViewModel!!.getFlashSaleData()
-                        ?.observe(this, Observer {
-                            val listFlashSale = it
-                            wishListViewModel!!.getWishListProductData(idAccount)
-                                    ?.observe(this, Observer { it ->
-                                        setupFlashSaleRecyclerView(listFlashSale, it)
-                                    })
-                        })
+                    ?.observe(this, Observer {
+                        val listFlashSale = it
+                        wishListViewModel!!.getWishListProductData(idAccount)
+                            ?.observe(this, Observer { it ->
+                                setupFlashSaleRecyclerView(listFlashSale, it)
+                            })
+                    })
             }
     }
 
     private fun setupRecommendedRecyclerView(productList: List<Product>, wishList: List<Product>) {
         var recommendAdapter: RecommendAdapter = RecommendAdapter(this, productList, wishList)
         val layoutManager: RecyclerView.LayoutManager =
-                GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
+            GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
         recommend_recycler.layoutManager = layoutManager
         recommend_recycler.adapter = recommendAdapter
     }
@@ -149,7 +155,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupFlashSaleRecyclerView(flashSaleList: List<Product>, wishList: List<Product>) {
         var flashSaleAdapter: FlashSaleAdapter = FlashSaleAdapter(this, flashSaleList, wishList)
         val layoutManager: RecyclerView.LayoutManager =
-                LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         flash_sale_recycler.layoutManager = layoutManager
         flash_sale_recycler.adapter = flashSaleAdapter
     }
@@ -157,7 +163,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupCategoryRecyclerView(categoryList: List<Category>) {
         var categoryAdapter: CategoryAdapter = CategoryAdapter(this, categoryList)
         val layoutManager: RecyclerView.LayoutManager =
-                LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         category_recycler.layoutManager = layoutManager
         category_recycler.adapter = categoryAdapter
     }
@@ -201,9 +207,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onPageScrolled(
-                    position: Int,
-                    positionOffset: Float,
-                    positionOffsetPixels: Int
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
             ) {
 
             }
@@ -240,21 +246,21 @@ class MainActivity : AppCompatActivity() {
             listdots?.set(i, ImageView(this))
             if (i == currentSlidePosition)
                 listdots[i].setImageDrawable(
-                        ContextCompat.getDrawable(
-                                this,
-                                R.drawable.active_dots
-                        )
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.active_dots
+                    )
                 )
             else
                 listdots[i].setImageDrawable(
-                        ContextCompat.getDrawable(
-                                this,
-                                R.drawable.inactive_dots
-                        )
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.inactive_dots
+                    )
                 )
             var layoutParam: LinearLayout.LayoutParams = LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
             )
             layoutParam.setMargins(4, 0, 4, 0)
             dotsContainer.addView(listdots[i], layoutParam)
@@ -264,17 +270,35 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleNavigation() {
         var navigationBar: BottomNavigationView = bnvMain
-
         navigationBar.selectedItemId = R.id.home_nvg
+
         navigationBar.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.wish_list -> startActivity(Intent(this@MainActivity, WishListActivity::class.java))
-                R.id.cart -> startActivity(Intent(this@MainActivity, CartActivity::class.java))
-                R.id.profile -> startActivity(Intent(this@MainActivity, AccountActivity::class.java))
+            if (idAccount == 0) {
+                val intent = Intent(this, LoginActivity::class.java).apply { }
+                startActivity(intent)
+                this.finish()
+            } else {
+                when (item.itemId) {
+                    R.id.wish_list -> startActivity(
+                        Intent(
+                            this@MainActivity,
+                            WishListActivity::class.java
+                        )
+                    )
+                    R.id.cart -> startActivity(Intent(this@MainActivity, CartActivity::class.java))
+                    R.id.profile -> startActivity(
+                        Intent(
+                            this@MainActivity,
+                            AccountActivity::class.java
+                        )
+                    )
+                }
+                this.finish()
+
             }
-            this.finish()
             true
         })
+
     }
 
     fun onClickOpenSearch(view: View) {
@@ -285,5 +309,20 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, MoreProductsActivity::class.java).apply { }
         intent.putExtra("idProductCode", "0")
         startActivity(intent)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    override fun onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            val intent = Intent(Intent.ACTION_MAIN)
+            intent.addCategory(Intent.CATEGORY_HOME)
+            startActivity(intent)
+            return
+        }
+
+        this.doubleBackToExitPressedOnce = true
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+
+        Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
     }
 }

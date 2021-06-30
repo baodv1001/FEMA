@@ -31,8 +31,8 @@ class ChangePasswordActivity : AppCompatActivity() {
         accountViewModel = ViewModelProviders.of(this).get(AccountViewModel::class.java)
         accountViewModel!!.init()
 
-        val sp = getSharedPreferences("Login",Context.MODE_PRIVATE)
-        val idAccount : Int = sp.getString("Id",null)?.toInt()!!
+        val sp = getSharedPreferences("Login", Context.MODE_PRIVATE)
+        val idAccount: Int = sp.getString("Id", null)?.toInt()!!
 
         button_change.setOnClickListener {
             if (checkTextField()) {
@@ -47,18 +47,20 @@ class ChangePasswordActivity : AppCompatActivity() {
     }
 
     fun checkTextField(): Boolean {
-        return if(
+        return if (
             text_input_new_password.text.toString().isEmpty() ||
-            text_input_re_password.text.toString().isEmpty()) {
+            text_input_re_password.text.toString().isEmpty()
+        ) {
             Toast.makeText(this, "Please filled text field", Toast.LENGTH_SHORT).show()
             false
         } else if (text_input_new_password.text.toString() != text_input_re_password.text.toString()) {
             Toast.makeText(this, "New password and retype not match", Toast.LENGTH_SHORT).show()
             false
-        } else{
+        } else {
             true
         }
     }
+
     fun changePassword(idAccount: Int) {
         val newPass = text_input_new_password.text.toString()
         accountViewModel?.doChangePassword(idAccount, newPass)
