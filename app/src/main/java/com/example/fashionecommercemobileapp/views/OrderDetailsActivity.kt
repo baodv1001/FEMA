@@ -223,7 +223,8 @@ class OrderDetailsActivity : AppCompatActivity() {
     private fun loadData(billInfoList: List<BillInfo>, productList: List<Product>) {
         var subTotal: Float = 0F
         for (i in billInfoList.indices) {
-            subTotal += (billInfoList[i].quantity?.toFloat() ?: 0F) * (billInfoList[i].price?.toFloat() ?: 0F)
+            subTotal += (billInfoList[i].quantity?.toFloat()
+                ?: 0F) * (billInfoList[i].price?.toFloat() ?: 0F)
         }
         textView_sub_orderDetails.text =
             NumberFormat.getIntegerInstance(Locale.GERMANY).format(subTotal)

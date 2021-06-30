@@ -3,6 +3,7 @@ package com.example.fashionecommercemobileapp.views
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -29,27 +30,35 @@ class SearchActivity : AppCompatActivity() {
         searchCategory()
     }
 
-    private fun searchCategory()
-    {
+    private fun searchCategory() {
         txtSearch.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int,
-                                       count: Int) {
+            override fun onTextChanged(
+                s: CharSequence, start: Int, before: Int,
+                count: Int
+            ) {
                 categoryViewModel!!.getCategoryByNameData(txtSearch.text.toString())
-                        ?.observe(this@SearchActivity, Observer { setupCategoryRecyclerView(it) })
+                    ?.observe(this@SearchActivity, Observer { setupCategoryRecyclerView(it) })
             }
 
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int,
-                                           after: Int) {
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int, count: Int,
+                after: Int
+            ) {
             }
 
             override fun afterTextChanged(s: Editable) {}
         })
     }
+
     private fun setupCategoryRecyclerView(categoryList: List<Category>) {
         var searchAdapter: SearchAdapter = SearchAdapter(this, categoryList)
         val layoutManager: RecyclerView.LayoutManager =
-                LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         search_recycler.layoutManager = layoutManager
         search_recycler.adapter = searchAdapter
+    }
+
+    fun onClickBack(view: View) {
+        super.onBackPressed()
     }
 }

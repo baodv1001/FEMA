@@ -23,12 +23,12 @@ import kotlinx.android.synthetic.main.activity_check_out.*
 
 class AddressActivity : AppCompatActivity() {
     private var addressViewModel: AddressViewModel? = null
-    lateinit var addressRecyclerView : RecyclerView
+    lateinit var addressRecyclerView: RecyclerView
     private lateinit var addressAdapter: AddressAdapter
     private var isCheckOut: Boolean = false
     private lateinit var isSelected: LiveData<Boolean>
 
-    var idAccount : String = ""
+    var idAccount: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,12 +49,13 @@ class AddressActivity : AppCompatActivity() {
         }*/
 
 
-        addressViewModel!!.getAddressData(idAccount)?.observe(this, Observer { setUpAddressRecyclerView(it) })
+        addressViewModel!!.getAddressData(idAccount)
+            ?.observe(this, Observer { setUpAddressRecyclerView(it) })
         //addressViewModel!!.getAddressData(idAccount)?.observe(this, Observer { retrieveList(it as ArrayList<Address>)})
         //add address
         add_address_button.setOnClickListener {
             val intent = Intent(this, AddAddressActivity::class.java).apply { }
-                intent.putExtra("idAccount",idAccount)
+            intent.putExtra("idAccount", idAccount)
             (this as Activity).startActivityForResult(intent, 0)
 
             addressAdapter.notifyDataSetChanged()
@@ -72,15 +73,23 @@ class AddressActivity : AppCompatActivity() {
 
     private fun setUpAddressRecyclerView(listAddress: List<Address>) {
         addressRecyclerView = findViewById(R.id.address_recycler)
-        addressAdapter = AddressAdapter(this, listAddress.toMutableList(), addressViewModel, idAccount, isCheckOut)
-        val layoutManager: RecyclerView.LayoutManager = GridLayoutManager(this,1, GridLayoutManager.VERTICAL, false)
+        addressAdapter = AddressAdapter(
+            this,
+            listAddress.toMutableList(),
+            addressViewModel,
+            idAccount,
+            isCheckOut
+        )
+        val layoutManager: RecyclerView.LayoutManager =
+            GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         addressRecyclerView.layoutManager = layoutManager
         addressRecyclerView.adapter = addressAdapter
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        addressViewModel!!.getAddressData(idAccount)?.observe(this, Observer { setUpAddressRecyclerView(it) })
+        addressViewModel!!.getAddressData(idAccount)
+            ?.observe(this, Observer { setUpAddressRecyclerView(it) })
     }
 
     public fun onClickBack(view: View) {

@@ -25,9 +25,9 @@ import java.util.concurrent.TimeUnit
 class ChangePhoneNumberActivity : AppCompatActivity() {
     private var forceResendingToken: PhoneAuthProvider.ForceResendingToken? = null
     private var mCallbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks? = null
-    private var mVertificationId : String?= null
+    private var mVertificationId: String? = null
     private lateinit var firebaseAuth: FirebaseAuth
-    private var phoneNumberSignUpSuccess : String? = null
+    private var phoneNumberSignUpSuccess: String? = null
 
     private lateinit var progressDialog: ProgressDialog
 
@@ -64,7 +64,10 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
                     Toast.makeText(this@ChangePhoneNumberActivity, "Kiểm tra số điện thoại", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onCodeSent(verificationId: String, p1: PhoneAuthProvider.ForceResendingToken) {
+            override fun onCodeSent(
+                verificationId: String,
+                p1: PhoneAuthProvider.ForceResendingToken
+            ) {
                 super.onCodeSent(verificationId, p1)
                 mVertificationId = verificationId
                 forceResendingToken = p1
@@ -76,8 +79,8 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
             }
         }
 
-        button_Send.setOnClickListener(){
-            var phone : String = text_input_Phone_Number.text.toString()
+        button_Send.setOnClickListener() {
+            var phone: String = text_input_Phone_Number.text.toString()
             if (checkTextField()) {
                 userViewModel?.checkPhoneNumber(phone)?.observe(this, Observer {
                     if (it == false) {
@@ -98,8 +101,8 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
         }
 
 
-        button_reSend.setOnClickListener(){
-            var phone : String = text_input_Phone_Number.text.toString()
+        button_reSend.setOnClickListener() {
+            var phone: String = text_input_Phone_Number.text.toString()
             if (checkTextField()) {
                 userViewModel?.checkPhoneNumber(phone)?.observe(this, Observer {
                     if (it == false) {
@@ -131,11 +134,12 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
             else
             {
                 if (checkTextField()) {
-                    verifyPhoneNumberWithCode(mVertificationId , text_input_OTP.text.toString())
+                    verifyPhoneNumberWithCode(mVertificationId, text_input_OTP.text.toString())
                 }
             }
         }
     }
+
     fun onClickBack(view: View) {
         super.onBackPressed()
     }
@@ -151,8 +155,7 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
         return true
     }
 
-    private fun sendVerificationCode(phone: String)
-    {
+    private fun sendVerificationCode(phone: String) {
         progressDialog.setMessage("Verifying Phone Number...")
         progressDialog.show()
 
@@ -164,8 +167,11 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
             .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
-    private fun reSendVerificationCode(phone:String, token : PhoneAuthProvider.ForceResendingToken?)
-    {
+
+    private fun reSendVerificationCode(
+        phone: String,
+        token: PhoneAuthProvider.ForceResendingToken?
+    ) {
         progressDialog.setMessage("Resending code...")
         progressDialog.show()
 
@@ -179,8 +185,7 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
-    private fun verifyPhoneNumberWithCode(verificationId:  String?, code :String)
-    {
+    private fun verifyPhoneNumberWithCode(verificationId: String?, code: String) {
         progressDialog.setMessage("Verifying code...")
         progressDialog.show()
 
@@ -204,9 +209,10 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
                 Toast.makeText(this@ChangePhoneNumberActivity, "Success", Toast.LENGTH_SHORT).show()
                 //finish()
             }
-            .addOnFailureListener{ e->
+            .addOnFailureListener { e ->
                 progressDialog.dismiss()
-                Toast.makeText(this@ChangePhoneNumberActivity, "${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ChangePhoneNumberActivity, "${e.message}", Toast.LENGTH_SHORT)
+                    .show()
             }
     }
 

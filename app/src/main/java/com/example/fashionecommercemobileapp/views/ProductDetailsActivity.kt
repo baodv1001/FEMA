@@ -33,7 +33,7 @@ import kotlinx.android.synthetic.main.activity_product_details.view.*
 
 
 class ProductDetailsActivity : AppCompatActivity() {
-    var idAccount: Int = 1
+    var idAccount: Int = 0
     var isLiked: Boolean = true
     var idProduct: Int = 0
     var quantity: Int = 0
@@ -63,7 +63,7 @@ class ProductDetailsActivity : AppCompatActivity() {
         var rating: String? = intent.getStringExtra("rating")
         var image: String? = intent.getStringExtra("image")
         quantity = intent.getStringExtra("quantity")?.toInt() ?: 0
-        position = intent.getIntExtra("position",0)
+        position = intent.getIntExtra("position", 0)
         isLiked = intent.getBooleanExtra("isLiked", true)
 
         ProductRepository.Companion.setContext(this@ProductDetailsActivity)
@@ -163,17 +163,19 @@ class ProductDetailsActivity : AppCompatActivity() {
     }
 
     fun onClickHeart(view: View) {
-        if (isLiked)
-        {
-            wishListViewModel!!.deleteWishProduct(idAccount, id.toString().toInt())
-            Glide.with(this).load(R.drawable.ic_un_heart_button).into(view as ImageView)
+        if (idAccount == 0) {
+            val intent = Intent(this, LoginActivity::class.java).apply { }
+            startActivity(intent)
+        } else {
+            if (isLiked) {
+                wishListViewModel!!.deleteWishProduct(idAccount, id.toString().toInt())
+                Glide.with(this).load(R.drawable.ic_un_heart_button).into(view as ImageView)
+            } else {
+                wishListViewModel!!.addNewWishItem(idAccount, id.toString().toInt())
+                Glide.with(this).load(R.drawable.ic_heartbutton).into(view as ImageView)
+            }
+            isLiked = !isLiked
         }
-        else
-        {
-            wishListViewModel!!.addNewWishItem(idAccount,id.toString().toInt())
-            Glide.with(this).load(R.drawable.ic_heartbutton).into(view as ImageView)
-        }
-        isLiked = !isLiked
     }
 
     fun onClickBack(view: View) {
@@ -196,13 +198,16 @@ class ProductDetailsActivity : AppCompatActivity() {
     }
 
     fun addToCart(view: View) {
-        val selectedSizeButton: RadioButton = findViewById(radio_group_size.checkedRadioButtonId)
-        val size: String = selectedSizeButton.text.toString()
-        val idSize: Int = sizeMap.filterValues { it == size }.keys.first().toString().toInt()
+        if (idAccount != 0) {
+            val selectedSizeButton: RadioButton =
+                findViewById(radio_group_size.checkedRadioButtonId)
+            val size: String = selectedSizeButton.text.toString()
+            val idSize: Int = sizeMap.filterValues { it == size }.keys.first().toString().toInt()
 
-        val selectedColorButton: RadioButton = findViewById(radio_group_color.checkedRadioButtonId)
-        val color: String = selectedColorButton.text.toString()
-        val idColor: Int = colorMap.filterValues { it == color }.keys.first().toString().toInt()
+            val selectedColorButton: RadioButton =
+                findViewById(radio_group_color.checkedRadioButtonId)
+            val color: String = selectedColorButton.text.toString()
+            val idColor: Int = colorMap.filterValues { it == color }.keys.first().toString().toInt()
 
         val spf = getSharedPreferences("Login", Context.MODE_PRIVATE)
         val idAccount = spf.getString("Id", "0")?.toInt() ?: 0
@@ -213,27 +218,47 @@ class ProductDetailsActivity : AppCompatActivity() {
                 Toast.makeText(this, "Hết hàng!", Toast.LENGTH_SHORT).show()
         }
 
-        val cartInfoViewModel: CartInfoViewModel =
-            ViewModelProviders.of(this).get(CartInfoViewModel::class.java)
-        cartInfoViewModel.init()
-        cartInfoViewModel.getCartInfoByProduct(idAccount, idProduct, idSize, idColor)
-            .observe(this, Observer { it ->
-                it?.let { resource ->
-                    when (resource.status) {
-                        Status.SUCCESS -> {
-                            if (it.data?.idCart != 0) {
-                                if (quantity > it.data?.quantity!!) {
-                                    val updatedQuantity: Int = it.data.quantity!! + 1
-                                    quantity -= 1
-                                    cartInfoViewModel.updateCartInfo(
+            val cartInfoViewModel: CartInfoViewModel =
+                ViewModelProviders.of(this).get(CartInfoViewModel::class.java)
+            cartInfoViewModel.init()
+            cartInfoViewModel.getCartInfoByProduct(idAccount, idProduct, idSize, idColor)
+                .observe(this, Observer { it ->
+                    it?.let { resource ->
+                        when (resource.status) {
+                            Status.SUCCESS -> {
+                                if (it.data?.idCart != 0) {
+                                    if (quantity > it.data?.quantity!!) {
+                                        val updatedQuantity: Int = it.data.quantity!! + 1
+                                        quantity -= 1
+                                        cartInfoViewModel.updateCartInfo(
+                                            idAccount,
+                                            idProduct,
+                                            idSize,
+                                            idColor,
+                                            updatedQuantity
+                                        )
+                                        productViewModel.updateProduct(
+                                            idProduct.toString(),
+                                            1
+                                        )
+                                        Toast.makeText(
+                                            this,
+                                            "Add to cart successfully",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    } else {
+                                        Toast.makeText(
+                                            this,
+                                            "This product is out of stock!",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                } else {
+                                    cartInfoViewModel.postCartInfo(
                                         idAccount,
                                         idProduct,
                                         idSize,
                                         idColor,
-                                        updatedQuantity
-                                    )
-                                    productViewModel.updateProduct(
-                                        idProduct.toString(),
                                         1
                                     )
                                     Toast.makeText(
@@ -241,35 +266,25 @@ class ProductDetailsActivity : AppCompatActivity() {
                                         "Add to cart successfully",
                                         Toast.LENGTH_SHORT
                                     ).show()
-                                } else {
-                                    if (language == "en")
-                                        Toast.makeText(this, "This product is out of stock!", Toast.LENGTH_SHORT).show()
-                                    else
-                                        Toast.makeText(this, "Sản phẩm hết hàng!", Toast.LENGTH_SHORT).show()
                                 }
-                            } else {
-                                cartInfoViewModel.postCartInfo(
-                                    idAccount,
-                                    idProduct,
-                                    idSize,
-                                    idColor,
-                                    1
-                                )
-                                if (language == "en")
-                                    Toast.makeText(this, "Add to cart successfully", Toast.LENGTH_SHORT)
-                                        .show()
-                                else
-                                    Toast.makeText(this, "Thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show()
+                            }
+                            Status.ERROR -> {
+                                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                            }
+                            Status.LOADING -> {
+                                Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
                             }
                         }
-                        Status.ERROR -> {
-                            Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
-                        }
-                        Status.LOADING -> {
-                            Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
-                        }
                     }
-                }
-            })
+                })
+        } else {
+            val intent = Intent(this, LoginActivity::class.java).apply { }
+            startActivity(intent)
+        }
+
+    }
+
+    fun onClickOpenCart(view: View) {
+        startActivity(Intent(this, CartActivity::class.java))
     }
 }

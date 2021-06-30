@@ -37,7 +37,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
         accountViewModel = ViewModelProviders.of(this).get(AccountViewModel::class.java)
         accountViewModel!!.init()
         accountViewModel!!.checkPW("", "")
-                ?.observe(this, Observer { })
+            ?.observe(this, Observer { })
 
         firebaseAuth = FirebaseAuth.getInstance()
 
@@ -55,7 +55,10 @@ class ForgetPasswordActivity : AppCompatActivity() {
                 Toast.makeText(this@ForgetPasswordActivity, p0.message, Toast.LENGTH_SHORT).show()
             }
 
-            override fun onCodeSent(verificationId: String, p1: PhoneAuthProvider.ForceResendingToken) {
+            override fun onCodeSent(
+                verificationId: String,
+                p1: PhoneAuthProvider.ForceResendingToken
+            ) {
                 super.onCodeSent(verificationId, p1)
                 mVertificationId = verificationId
                 forceResendingToken = p1
@@ -71,24 +74,27 @@ class ForgetPasswordActivity : AppCompatActivity() {
             var username: String = txtUsernameForgot.text.toString()
             var result: Boolean? = null
 
-            if (!validationPhone() || !validationUsername())
-            {
+            if (!validationPhone() || !validationUsername()) {
 
             } else {
                 accountViewModel!!.checkPW(username, phone)
-                        ?.observe(this, Observer {
-                            result = it
+                    ?.observe(this, Observer {
+                        result = it
 
-                            if (result == true) {
-                                if (phone[0] == '0') {
-                                    phone = phone.drop(1)
-                                    phone = "+84" + phone
-                                }
-                                sendVerificationCode(phone)
-                            } else {
-                                Toast.makeText(this@ForgetPasswordActivity, "Username or number phone is not available", Toast.LENGTH_SHORT).show()
+                        if (result == true) {
+                            if (phone[0] == '0') {
+                                phone = phone.drop(1)
+                                phone = "+84" + phone
                             }
-                        })
+                            sendVerificationCode(phone)
+                        } else {
+                            Toast.makeText(
+                                this@ForgetPasswordActivity,
+                                "Username or number phone is not available",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    })
             }
         }
 
@@ -109,8 +115,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
             if (!validationOtp()) {
 
             } else {
-                if (!validationPass() || !validationRePass())
-                {
+                if (!validationPass() || !validationRePass()) {
 
                 } else {
                     verifyPhoneNumberWithCode(mVertificationId, txtOTPForgot.text.toString())
@@ -118,9 +123,10 @@ class ForgetPasswordActivity : AppCompatActivity() {
             }
         }
     }
-    fun validationUsername(): Boolean{
+
+    fun validationUsername(): Boolean {
         val user: String = txtUsernameForgot.text.toString()
-        if (user.isEmpty()){
+        if (user.isEmpty()) {
             txtUsernameForgot.error = "Field cannot be empty"
             false
         } else {
@@ -129,9 +135,10 @@ class ForgetPasswordActivity : AppCompatActivity() {
         }
         return true
     }
-    fun validationPhone(): Boolean{
+
+    fun validationPhone(): Boolean {
         val phone: String = txtPhoneForgot.text.toString()
-        if (phone.isEmpty()){
+        if (phone.isEmpty()) {
             txtPhoneForgot.error = "Field cannot be empty"
             false
         } else {
@@ -140,18 +147,17 @@ class ForgetPasswordActivity : AppCompatActivity() {
         }
         return true
     }
-    fun validationPass(): Boolean{
+
+    fun validationPass(): Boolean {
         val pass: String = txtPasswordForgot.text.toString()
         val noWhite: Regex = Regex("(?=\\S+$)")
-        if (pass.isEmpty()){
+        if (pass.isEmpty()) {
             txtPasswordForgot.error = "Field cannot be empty"
             false
-        } else if (pass.length < 6)
-        {
-            txtPasswordForgot.error  = "Password must be more than 6 char"
+        } else if (pass.length < 6) {
+            txtPasswordForgot.error = "Password must be more than 6 char"
             return false
-        } else if (pass.matches(noWhite))
-        {
+        } else if (pass.matches(noWhite)) {
             txtPasswordForgot.error = "White space is not allowed"
             return false
         } else {
@@ -161,22 +167,19 @@ class ForgetPasswordActivity : AppCompatActivity() {
         return true
     }
 
-    fun validationRePass(): Boolean{
+    fun validationRePass(): Boolean {
         val rePass: String = txtRepasswordForgot.text.toString()
         val noWhite: Regex = Regex("(?=\\S+$)")
-        if (rePass.isEmpty()){
+        if (rePass.isEmpty()) {
             txtRepasswordForgot.error = "Field cannot be empty"
             return false
-        } else if (rePass.length < 6)
-        {
-            txtRepasswordForgot.error  = "Repassword must be more than 6 char"
+        } else if (rePass.length < 6) {
+            txtRepasswordForgot.error = "Repassword must be more than 6 char"
             return false
-        } else if (rePass.matches(noWhite))
-        {
+        } else if (rePass.matches(noWhite)) {
             txtRepasswordForgot.error = "White space is not allowed"
             return false
-        }else if (rePass != txtPasswordForgot.text.toString())
-        {
+        } else if (rePass != txtPasswordForgot.text.toString()) {
             txtRepasswordForgot.error = "Repassword is not match"
             return false
         } else {
@@ -185,10 +188,10 @@ class ForgetPasswordActivity : AppCompatActivity() {
         }
     }
 
-    fun validationOtp(): Boolean{
+    fun validationOtp(): Boolean {
         val otp: String = txtOTPForgot.text.toString()
 
-        if (otp.isEmpty()){
+        if (otp.isEmpty()) {
             txtOTPForgot.error = "Field cannot be empty"
             return false
         } else {
@@ -202,25 +205,28 @@ class ForgetPasswordActivity : AppCompatActivity() {
         progressDialog.show()
 
         val options = PhoneAuthOptions.newBuilder(firebaseAuth)
-                .setPhoneNumber(phone)
-                .setTimeout(60L, TimeUnit.SECONDS)
-                .setActivity(this)
-                .setCallbacks(mCallbacks)
-                .build()
+            .setPhoneNumber(phone)
+            .setTimeout(60L, TimeUnit.SECONDS)
+            .setActivity(this)
+            .setCallbacks(mCallbacks)
+            .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
-    private fun reSendVerificationCode(phone: String, token: PhoneAuthProvider.ForceResendingToken?) {
+    private fun reSendVerificationCode(
+        phone: String,
+        token: PhoneAuthProvider.ForceResendingToken?
+    ) {
         progressDialog.setMessage("Resending code...")
         progressDialog.show()
 
         val options = PhoneAuthOptions.newBuilder(firebaseAuth)
-                .setPhoneNumber(phone)
-                .setTimeout(60L, TimeUnit.SECONDS)
-                .setActivity(this)
-                .setCallbacks(mCallbacks)
-                .setForceResendingToken(token)
-                .build()
+            .setPhoneNumber(phone)
+            .setTimeout(60L, TimeUnit.SECONDS)
+            .setActivity(this)
+            .setCallbacks(mCallbacks)
+            .setForceResendingToken(token)
+            .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
@@ -237,16 +243,17 @@ class ForgetPasswordActivity : AppCompatActivity() {
         progressDialog.show()
 
         firebaseAuth.signInWithCredential(credential)
-                .addOnSuccessListener {
-                    phoneNumberSignUpSuccess = firebaseAuth.currentUser.phoneNumber
-                    changePassword()
-                    progressDialog.dismiss()
-                    //finish()
-                }
-                .addOnFailureListener { e ->
-                    progressDialog.dismiss()
-                    Toast.makeText(this@ForgetPasswordActivity, "${e.message}", Toast.LENGTH_SHORT).show()
-                }
+            .addOnSuccessListener {
+                phoneNumberSignUpSuccess = firebaseAuth.currentUser.phoneNumber
+                changePassword()
+                progressDialog.dismiss()
+                //finish()
+            }
+            .addOnFailureListener { e ->
+                progressDialog.dismiss()
+                Toast.makeText(this@ForgetPasswordActivity, "${e.message}", Toast.LENGTH_SHORT)
+                    .show()
+            }
     }
 
     private fun changePassword() {

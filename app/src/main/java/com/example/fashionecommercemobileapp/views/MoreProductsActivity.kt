@@ -71,22 +71,22 @@ class MoreProductsActivity : AppCompatActivity() {
         if (idProductCode != null) {
             if (idProductCode != "0") {
                 productViewModel!!.getProductData(idProductCode)
-                        ?.observe(this, Observer { 
-                            val listProduct = it
+                    ?.observe(this, Observer {
+                        val listProduct = it
                         wishListViewModel!!.getWishListProductData(idAccount)
-                                ?.observe(this, Observer { it ->
-                                    setupProductRecyclerView(listProduct, it)
-                                })
+                            ?.observe(this, Observer { it ->
+                                setupProductRecyclerView(listProduct, it)
+                            })
                     })
             } else {
                 productViewModel!!.getAllFlashSaleData()
-                        ?.observe(this, Observer {
-                            val listProduct = it
-                            wishListViewModel!!.getWishListProductData(idAccount)
-                                    ?.observe(this, Observer { it ->
-                                        setupProductRecyclerView(listProduct, it)
-                                    })
-                        })
+                    ?.observe(this, Observer {
+                        val listProduct = it
+                        wishListViewModel!!.getWishListProductData(idAccount)
+                            ?.observe(this, Observer { it ->
+                                setupProductRecyclerView(listProduct, it)
+                            })
+                    })
             }
         }
         searchProduct()
@@ -101,9 +101,11 @@ class MoreProductsActivity : AppCompatActivity() {
                 val check = data?.getBooleanExtra("check", true)
                 val pos = data?.getIntExtra("position", 0)
                 if (check == true)
-                    Glide.with(this).load(R.drawable.ic_heartbutton).into(all_product_recycler[pos!!].button_like)
+                    Glide.with(this).load(R.drawable.ic_heartbutton)
+                        .into(all_product_recycler[pos!!].button_like)
                 else
-                    Glide.with(this).load(R.drawable.ic_un_heart_button).into(all_product_recycler[pos!!].button_like)
+                    Glide.with(this).load(R.drawable.ic_un_heart_button)
+                        .into(all_product_recycler[pos!!].button_like)
             }
         }
     }
@@ -112,7 +114,7 @@ class MoreProductsActivity : AppCompatActivity() {
         currentProducts = productList
         var productAdapter: ProductAdapter = ProductAdapter(this, productList, wishList)
         val layoutManager: RecyclerView.LayoutManager =
-                GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
+            GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false)
         all_product_recycler.layoutManager = layoutManager
         all_product_recycler.adapter = productAdapter
     }
@@ -139,9 +141,9 @@ class MoreProductsActivity : AppCompatActivity() {
                 currentProducts?.let {
                     val listProduct = it
                     wishListViewModel!!.getWishListProductData(idAccount)
-                            ?.observe(this, Observer { it ->
-                                setupProductRecyclerView(listProduct, it)
-                            })
+                        ?.observe(this, Observer { it ->
+                            setupProductRecyclerView(listProduct, it)
+                        })
                 }
             }
         }
@@ -153,20 +155,27 @@ class MoreProductsActivity : AppCompatActivity() {
 
     private fun searchProduct() {
         txtSearchProduct.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int,
-                                       count: Int) {
-                productViewModel!!.getProductDataByName(txtSearchProduct.text.toString(), idProductCode)
-                        ?.observe(this@MoreProductsActivity, Observer {
-                            val listProduct = it
-                            wishListViewModel!!.getWishListProductData(idAccount)
-                                    ?.observe(this@MoreProductsActivity, Observer { it ->
-                                        setupProductRecyclerView(listProduct, it)
-                                    })
-                        })
+            override fun onTextChanged(
+                s: CharSequence, start: Int, before: Int,
+                count: Int
+            ) {
+                productViewModel!!.getProductDataByName(
+                    txtSearchProduct.text.toString(),
+                    idProductCode
+                )
+                    ?.observe(this@MoreProductsActivity, Observer {
+                        val listProduct = it
+                        wishListViewModel!!.getWishListProductData(idAccount)
+                            ?.observe(this@MoreProductsActivity, Observer { it ->
+                                setupProductRecyclerView(listProduct, it)
+                            })
+                    })
             }
 
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int,
-                                           after: Int) {
+            override fun beforeTextChanged(
+                s: CharSequence, start: Int, count: Int,
+                after: Int
+            ) {
             }
 
             override fun afterTextChanged(s: Editable) {}
@@ -198,12 +207,12 @@ class MoreProductsActivity : AppCompatActivity() {
             filterDialog!!.show()
         }
         filterDialog?.setOnCancelListener(
-                DialogInterface.OnCancelListener {
-                    if (!isConfirm) {  // nếu chọn filter mà ko confirm thì xóa thông tin chọn
-                        filterDialog?.dismiss()
-                        filterDialog = null
-                    }
+            DialogInterface.OnCancelListener {
+                if (!isConfirm) {  // nếu chọn filter mà ko confirm thì xóa thông tin chọn
+                    filterDialog?.dismiss()
+                    filterDialog = null
                 }
+            }
         )
 
         val width = (resources.displayMetrics.widthPixels * 0.85).toInt()
@@ -257,14 +266,20 @@ class MoreProductsActivity : AppCompatActivity() {
     private fun filterByRatingName(rating: String, minPrice: String, maxPrice: String) {
         filterDialog?.hide()
         var res = rating.filter { it.isDigit() }
-        productViewModel!!.getProductDataByRating(res, idProductCode, minPrice, maxPrice, if (idProductCode == "0") "0" else "-1")
-                ?.observe(this@MoreProductsActivity, Observer {
-                    val listProduct = it
-                    wishListViewModel!!.getWishListProductData(idAccount)
-                            ?.observe(this@MoreProductsActivity, Observer { it ->
-                                setupProductRecyclerView(listProduct, it)
-                            })
-                })
+        productViewModel!!.getProductDataByRating(
+            res,
+            idProductCode,
+            minPrice,
+            maxPrice,
+            if (idProductCode == "0") "0" else "-1"
+        )
+            ?.observe(this@MoreProductsActivity, Observer {
+                val listProduct = it
+                wishListViewModel!!.getWishListProductData(idAccount)
+                    ?.observe(this@MoreProductsActivity, Observer { it ->
+                        setupProductRecyclerView(listProduct, it)
+                    })
+            })
     }
 
     fun onClickConfirm(view: View) {

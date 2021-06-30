@@ -71,8 +71,7 @@ class AddAddressActivity : AppCompatActivity() {
         return true
     }
 
-    fun onClickBack(view: View)
-    {
+    fun onClickBack(view: View) {
         super.onBackPressed()
     }
 }

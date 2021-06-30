@@ -60,15 +60,7 @@
                         app:drawableLeftCompat="@drawable/ic_search_black_24dp"
                         app:drawableTint="@color/primary" />
 
-                    <ImageView
-                        android:id="@+id/imageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:backgroundTint="@color/white"
-                        app:srcCompat="@drawable/ic_shopping_cart"
-                        tools:ignore="VectorDrawableCompat" />
+
                 </LinearLayout>
 
                 <TextView
