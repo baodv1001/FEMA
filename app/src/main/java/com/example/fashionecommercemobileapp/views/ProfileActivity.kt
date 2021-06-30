@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
@@ -14,13 +15,14 @@ import android.text.InputType
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Toast
+import android.view.ViewGroup
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
@@ -55,6 +57,7 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
     val REQUEST_CODE = 100
     private var id: Int? = null
     private var selectedImageUri: Uri? = null
+
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,7 +88,7 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
                         //text_birthday.text = listUser!![0].dateOfBirth?.toLocaleString()
                         val month: Array<String> = birthday[2].split(",").toTypedArray()
                         text_birthday.text = birthday[0] + "-" + month[0] + "-" + birthday[3]*/
-                        val format = SimpleDateFormat("dd-MM-yyy")
+                        val format = SimpleDateFormat("dd-MM-yyyy")
 
                         text_birthday.text = format.format(listUser!![0].dateOfBirth)
                         pickDate = listUser!![0].dateOfBirth?.toString()
@@ -107,7 +110,7 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
             showDialog(text_name_bottom.text.toString())
         }
         //change gender
-        gender_layout.setOnClickListener{
+        gender_layout.setOnClickListener {
             //create dialog
             val items = arrayOf(
                 "Male",
@@ -116,35 +119,56 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
             )
             val builder = AlertDialog.Builder(this, R.style.myDialogStyle)
 
-            builder.setTitle(R.string.dialog_title)
-                .setItems(items,
-                    DialogInterface.OnClickListener{ dialog, which ->
-                        text_gender.text = items[which]
-                    })
-
+            builder.setItems(items,
+                DialogInterface.OnClickListener { dialog, which ->
+                    text_gender.text = items[which]
+                })
+            val title = TextView(this)
+            title.setTextColor(ContextCompat.getColor(this, android.R.color.black))
+            title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
+            title.typeface = Typeface.DEFAULT_BOLD
+            val params = FrameLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            params.setMargins(20, 0, 0, 0)
+            title.setPadding(40, 30, 0, 0)
+            title.layoutParams = params
+            title.text = "Gender"
+            builder.setCustomTitle(title)
 
             val dialog = builder.create()
             dialog.show()
-            dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
         }
         //change birthday
-        birthday_layout.setOnClickListener{
-            val calendar : Calendar = Calendar.getInstance()
+        birthday_layout.setOnClickListener {
+            val calendar: Calendar = Calendar.getInstance()
             val curYear = calendar.get(Calendar.YEAR)
             val curMonth = calendar.get(Calendar.MONTH)
             val curDay = calendar.get(Calendar.DAY_OF_MONTH)
 
-            val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                calendar.set(Calendar.YEAR, year)
-                calendar.set(Calendar.MONTH, month)
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            val dateSetListener =
+                DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                    calendar.set(Calendar.YEAR, year)
+                    calendar.set(Calendar.MONTH, month)
+                    calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
 
-                text_birthday.text = dayOfMonth.toString() + "-" + (month + 1).toString() + "-" + year.toString()
-                pickDate = year.toString() + "-" + (month + 1).toString() + "-" + dayOfMonth.toString()
-            }
-            val dialog = DatePickerDialog(this, R.style.myDateDialogStyle,dateSetListener, curYear,curMonth,curDay)
+                    text_birthday.text =
+                        dayOfMonth.toString() + "-" + (month + 1).toString() + "-" + year.toString()
+                    pickDate =
+                        year.toString() + "-" + (month + 1).toString() + "-" + dayOfMonth.toString()
+                }
+            val dialog = DatePickerDialog(
+                this,
+                R.style.myDateDialogStyle,
+                dateSetListener,
+                curYear,
+                curMonth,
+                curDay
+            )
             dialog.show()
-            dialog.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK)
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).text = "Cancel"
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK)
@@ -156,22 +180,24 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
         }
         //update User
         button_saved.setOnClickListener {
-            userViewModel!!.updateUserDate(idAccount!!.toInt(),
-                                            text_name_bottom.text.toString(),
-                                            text_gender.text.toString(),
-                                            pickDate!!)
+            userViewModel!!.updateUserDate(
+                idAccount!!.toInt(),
+                text_name_bottom.text.toString(),
+                text_gender.text.toString(),
+                pickDate!!
+            )
             uploadImage(idAccount.toInt())
-            //Toast.makeText(this, "Saved Successfully", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Saved Successfully", Toast.LENGTH_SHORT).show()
             super.onBackPressed()
         }
         //change Phone Number
         phone_number_layout.setOnClickListener {
-            val intent = Intent(this, ChangePhoneNumberActivity::class.java).apply {  }
+            val intent = Intent(this, ChangePhoneNumberActivity::class.java).apply { }
             (this as Activity).startActivityForResult(intent, 0)
         }
         //change Password
         change_password_layout.setOnClickListener {
-            val intent = Intent(this, ChangePasswordActivity::class.java).apply {  }
+            val intent = Intent(this, ChangePasswordActivity::class.java).apply { }
             startActivity(intent)
         }
     }
@@ -181,8 +207,7 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
     }
 
     //pick image from gallery
-    private fun openGalleryForImage()
-    {
+    private fun openGalleryForImage() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, REQUEST_CODE)
@@ -268,24 +293,41 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
 
     }
 
-    private fun showDialog(name: String){
-        val builder: AlertDialog.Builder = android.app.AlertDialog.Builder(this)
+    private fun showDialog(name: String) {
+        val builder: AlertDialog.Builder =
+            android.app.AlertDialog.Builder(this, R.style.myDialogStyle)
 
-        val titleText = "New name"
-        // Set up the input
+        val titleText = "Name"
         val input = EditText(this)
-        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        var lp: LinearLayout.LayoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-        lp.setMargins(40, 0,0,0)
-        val marginHorizontal = 48F
-        lp.leftMargin = marginHorizontal.toInt()
-        input.layoutParams = lp
+        input.setSingleLine()
+        val container = FrameLayout(this)
+        val params = FrameLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        params.leftMargin = resources.getDimensionPixelSize(R.dimen.dialog_margin)
+        params.rightMargin = resources.getDimensionPixelSize(R.dimen.dialog_margin)
+        input.layoutParams = params
+        input.hint = "Name"
         input.gravity = Gravity.TOP or Gravity.LEFT
-        input.hint = "name"
         input.setTextColor(Color.BLACK)
         input.inputType = InputType.TYPE_CLASS_TEXT
         input.setText(name)
-        builder.setView(input)
+        container.addView(input)
+        val title = TextView(this)
+        title.setTextColor(ContextCompat.getColor(this, android.R.color.black))
+        title.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20f)
+        title.typeface = Typeface.DEFAULT_BOLD
+        val params1 = FrameLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        params1.setMargins(20, 0, 0, 0)
+        title.setPadding(52, 30, 0, 0)
+        title.layoutParams = params1
+        title.text = "Name"
+        builder.setCustomTitle(title)
+        builder.setView(container)
         val foregroundColorSpan = ForegroundColorSpan(Color.BLACK)
 
         // Initialize a new spannable string builder instance
@@ -309,7 +351,9 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
             text_name_bottom.text = input.text.toString()
             text_name.text = input.text.toString()
         })
-        builder.setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
+        builder.setNegativeButton(
+            "Cancel",
+            DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
 
         var dialog = builder.create()
 

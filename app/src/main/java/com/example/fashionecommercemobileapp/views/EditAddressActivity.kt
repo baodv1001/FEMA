@@ -43,8 +43,13 @@ class EditAddressActivity : AppCompatActivity() {
             val phoneNumberAfter: String = text_input_Phone_Number.text.toString()
 
             if (checkTextField()) {
-                addressViewModel!!.updateAddressInfo(idAddress, nameAfter, addressAfter, phoneNumberAfter)
-                Toast.makeText(this,"Save successfully!", Toast.LENGTH_SHORT).show()
+                addressViewModel!!.updateAddressInfo(
+                    idAddress,
+                    nameAfter,
+                    addressAfter,
+                    phoneNumberAfter
+                )
+                Toast.makeText(this, "Save successfully!", Toast.LENGTH_SHORT).show()
                 super.onBackPressed()
             }
         }
@@ -54,8 +59,10 @@ class EditAddressActivity : AppCompatActivity() {
     private fun checkTextField(): Boolean {
         if (text_input_Receiver_Name.text.toString().isEmpty() ||
             text_input_Address.text.toString().isEmpty() ||
-            text_input_Phone_Number.text.toString().isEmpty()) {
-            Toast.makeText(this@EditAddressActivity, "Field must be fill...!", Toast.LENGTH_SHORT).show()
+            text_input_Phone_Number.text.toString().isEmpty()
+        ) {
+            Toast.makeText(this@EditAddressActivity, "Field must be fill...!", Toast.LENGTH_SHORT)
+                .show()
             return false
         }
         return true

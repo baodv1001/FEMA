@@ -24,13 +24,13 @@ import java.util.concurrent.TimeUnit
 class ChangePhoneNumberActivity : AppCompatActivity() {
     private var forceResendingToken: PhoneAuthProvider.ForceResendingToken? = null
     private var mCallbacks: PhoneAuthProvider.OnVerificationStateChangedCallbacks? = null
-    private var mVertificationId : String?= null
+    private var mVertificationId: String? = null
     private lateinit var firebaseAuth: FirebaseAuth
-    private var phoneNumberSignUpSuccess : String? = null
+    private var phoneNumberSignUpSuccess: String? = null
 
     private lateinit var progressDialog: ProgressDialog
 
-    private var userViewModel : UserViewModel? = null
+    private var userViewModel: UserViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,10 +53,17 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
 
             override fun onVerificationFailed(p0: FirebaseException) {
                 progressDialog.dismiss()
-                Toast.makeText(this@ChangePhoneNumberActivity, "Check your phone number", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@ChangePhoneNumberActivity,
+                    "Check your phone number",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
 
-            override fun onCodeSent(verificationId: String, p1: PhoneAuthProvider.ForceResendingToken) {
+            override fun onCodeSent(
+                verificationId: String,
+                p1: PhoneAuthProvider.ForceResendingToken
+            ) {
                 super.onCodeSent(verificationId, p1)
                 mVertificationId = verificationId
                 forceResendingToken = p1
@@ -68,8 +75,8 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
             }
         }
 
-        button_Send.setOnClickListener(){
-            var phone : String = text_input_Phone_Number.text.toString()
+        button_Send.setOnClickListener() {
+            var phone: String = text_input_Phone_Number.text.toString()
             if (checkTextField()) {
                 userViewModel?.checkPhoneNumber(phone)?.observe(this, Observer {
                     if (it == false) {
@@ -77,9 +84,10 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
                             phone = phone.drop(1)
                             phone = "+84" + phone
                         }
-                        sendVerificationCode(phone)}
-                    else {
-                        Toast.makeText(this, "phone number already in use",Toast.LENGTH_SHORT).show()
+                        sendVerificationCode(phone)
+                    } else {
+                        Toast.makeText(this, "phone number already in use", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 })
 
@@ -87,8 +95,8 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
         }
 
 
-        button_reSend.setOnClickListener(){
-            var phone : String = text_input_Phone_Number.text.toString()
+        button_reSend.setOnClickListener() {
+            var phone: String = text_input_Phone_Number.text.toString()
             if (checkTextField()) {
                 userViewModel?.checkPhoneNumber(phone)?.observe(this, Observer {
                     if (it == false) {
@@ -98,41 +106,42 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
                             phone = "+84" + phone
                         }
                         reSendVerificationCode(phone, forceResendingToken)
-                    }
-                    else {
-                        Toast.makeText(this, "phone number already in use",Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, "phone number already in use", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 })
             }
         }
 
         button_choose.setOnClickListener {
-            if (text_input_OTP.text.toString().isEmpty())
-            {
-                Toast.makeText(this@ChangePhoneNumberActivity, "Please enter your verification code...", Toast.LENGTH_SHORT).show()
-            }
-            else
-            {
+            if (text_input_OTP.text.toString().isEmpty()) {
+                Toast.makeText(
+                    this@ChangePhoneNumberActivity,
+                    "Please enter your verification code...",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
                 if (checkTextField()) {
-                    verifyPhoneNumberWithCode(mVertificationId , text_input_OTP.text.toString())
+                    verifyPhoneNumberWithCode(mVertificationId, text_input_OTP.text.toString())
                 }
             }
         }
     }
+
     fun onClickBack(view: View) {
         super.onBackPressed()
     }
 
     fun checkTextField(): Boolean {
-        if(text_input_Phone_Number.text.toString().isEmpty() ) {
+        if (text_input_Phone_Number.text.toString().isEmpty()) {
             Toast.makeText(this, "Field must be fill...!", Toast.LENGTH_SHORT).show()
             return false
         }
         return true
     }
 
-    private fun sendVerificationCode(phone: String)
-    {
+    private fun sendVerificationCode(phone: String) {
         progressDialog.setMessage("Verifying Phone Number...")
         progressDialog.show()
 
@@ -144,8 +153,11 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
             .build()
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
-    private fun reSendVerificationCode(phone:String, token : PhoneAuthProvider.ForceResendingToken?)
-    {
+
+    private fun reSendVerificationCode(
+        phone: String,
+        token: PhoneAuthProvider.ForceResendingToken?
+    ) {
         progressDialog.setMessage("Resending code...")
         progressDialog.show()
 
@@ -159,8 +171,7 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
-    private fun verifyPhoneNumberWithCode(verificationId:  String?, code :String)
-    {
+    private fun verifyPhoneNumberWithCode(verificationId: String?, code: String) {
         progressDialog.setMessage("Verifying code...")
         progressDialog.show()
 
@@ -184,9 +195,10 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
                 Toast.makeText(this@ChangePhoneNumberActivity, "Success", Toast.LENGTH_SHORT).show()
                 //finish()
             }
-            .addOnFailureListener{ e->
+            .addOnFailureListener { e ->
                 progressDialog.dismiss()
-                Toast.makeText(this@ChangePhoneNumberActivity, "${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ChangePhoneNumberActivity, "${e.message}", Toast.LENGTH_SHORT)
+                    .show()
             }
     }
 
