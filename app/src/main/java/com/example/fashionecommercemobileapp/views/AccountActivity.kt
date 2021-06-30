@@ -3,6 +3,8 @@ package com.example.fashionecommercemobileapp.views
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -65,7 +67,7 @@ class AccountActivity : AppCompatActivity() {
     private fun showChangeLanguagesDialog() {
         val listLang = arrayOf("English", "Vietnamese")
 
-        val mBuilder = AlertDialog.Builder(this@AccountActivity)
+        val mBuilder = AlertDialog.Builder(this@AccountActivity, R.style.myDialogStyle)
         mBuilder.setTitle(R.string.choose_lang)
         mBuilder.setSingleChoiceItems(listLang, -1) { dialog, which ->
             if (which == 0) {

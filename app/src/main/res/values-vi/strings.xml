@@ -64,9 +64,9 @@
     <string name="change">Lưu</string>
 
     //layout
-    <string name="new_phone">SỐ ĐIỆN THOẠI MỚI</string>
+    <string name="new_phone">Số điện thoại mới</string>
     <string name="get_code">OTP</string>
-    <string name="re_code">GỬI OTP</string>
+    <string name="re_code">Gửi OTP</string>
 
     //layout check out
     <string name="check_out">Thanh toán</string>
@@ -75,8 +75,8 @@
     <string name="confirm">XÁC NHẬN</string>
 
     //layout forget pass
-    <string name="forget_pass">QUÊN MẬT KHẨU</string>
-    <string name="get_ver_code">GỬI OTP</string>
+    <string name="forget_pass">Quên mật khẩu</string>
+    <string name="get_ver_code">Gửi OTP</string>
     <string name="change_pass">Đổi mật khẩu</string>
     <string name="re_pass">Nhập lại mật khẩu</string>
     <string name="ver_code">Mã xác nhận</string>
