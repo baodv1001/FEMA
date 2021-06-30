@@ -23,6 +23,7 @@ class LoginActivity : AppCompatActivity() {
     private var listAccount: List<Account>? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        loadLocate()
         setContentView(R.layout.activity_login)
 
         AccountRepository.Companion.setContext(this@LoginActivity)
@@ -72,5 +73,27 @@ class LoginActivity : AppCompatActivity() {
     fun onClickForgotPassword(view: View) {
         val intent = Intent(this, ForgetPasswordActivity::class.java).apply { }
         startActivity(intent)
+    }
+
+    private fun setLocate(Lang: String) {
+
+        val locale = Locale(Lang)
+
+        Locale.setDefault(locale)
+
+        val config = resources.configuration
+
+        config.locale = locale
+        resources.updateConfiguration(config, resources.displayMetrics)
+
+        val editor = getSharedPreferences("Settings", Context.MODE_PRIVATE).edit()
+        editor.putString("My_Lang", Lang)
+        editor.apply()
+    }
+
+    private fun loadLocate() {
+        val sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        val language = sharedPreferences.getString("My_Lang", "")
+        language?.let { setLocate(it) }
     }
 }

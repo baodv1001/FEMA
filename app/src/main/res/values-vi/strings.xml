@@ -98,7 +98,7 @@
     <string name="select_size">Kích cỡ</string>
     <string name="select_color">Màu sắc</string>
     <string name="description">Mô tả</string>
-    <string name="add_to_cart">THÊM VÀO GIẢ HÀNG</string>
+    <string name="add_to_cart">THÊM VÀO GIỎ HÀNG</string>
 
     //layout sign up
     <string name="let_start">"Bắt đầu"</string>
@@ -109,8 +109,8 @@
     //layout filter
     <string name="filter">Lọc</string>
     <string name="rating">Đánh giá</string>
-    <string name="min">Nhỏ</string>
-    <string name="max">Lớn</string>
+    <string name="min">Tối thiểu</string>
+    <string name="max">Tối đa</string>
 
     //layout input name
     <string name="enter_name">Nhập tên<font color = "#FF0000">*</font></string>
@@ -175,11 +175,15 @@
     <string name="Add_review">Đánh giá thành công!</string>
     <string name="error">Lỗi</string>
     <string name="out_of_stock">Hết hàng!</string>
-    <string name="add_to_cart_success">Thêm vào giở hàng thành công</string>
+    <string name="add_to_cart_success">Thêm vào giỏ hàng thành công</string>
     <string name="this_product_stock">Sản phẩm này hết hàng!</string>
     <string name="signup_success">Đăng ký thành công!</string>
     <string name="your_phone_taken">Đăng ký thất bại. Số điện thoại đã được sử dụng</string>
     <string name="your_username_taken">Đăng ký thất bại. Tên đăng nhập đã được dùng</string>
     <string name="cancel_order">Hủy đơn hàng</string>
     <string name="add_review">Thêm đánh giá</string>
+    <string name="upper4">Trên 4 sao</string>
+    <string name="upper3">Trên 3 sao</string>
+    <string name="upper2">Trên 2 sao</string>
+    <string name="upper1">Trên 1 sao</string>
 </resources>

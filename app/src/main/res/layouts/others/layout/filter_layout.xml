@@ -120,8 +120,8 @@
                 android:background="@drawable/search_bg"
                 android:textAllCaps="false"
                 android:textColor="@color/dark"
-                android:textOff="Upper 4"
-                android:textOn="Upper 4" />
+                android:textOff="@string/upper4"
+                android:textOn="@string/upper4" />
 
             <ToggleButton
                 android:id="@+id/btnThreeStar"
@@ -136,8 +136,8 @@
                 android:background="@drawable/search_bg"
                 android:textAllCaps="false"
                 android:textColor="@color/dark"
-                android:textOff="Upper 3"
-                android:textOn="Upper 3" />
+                android:textOff="@string/upper3"
+                android:textOn="@string/upper3" />
 
             <ToggleButton
                 android:id="@+id/btnTwoStar"
@@ -152,8 +152,8 @@
                 android:background="@drawable/search_bg"
                 android:textAllCaps="false"
                 android:textColor="@color/dark"
-                android:textOff="Upper 2"
-                android:textOn="Upper 2" />
+                android:textOff="@string/upper2"
+                android:textOn="@string/upper2" />
 
             <ToggleButton
                 android:id="@+id/btnOneStar"
@@ -168,8 +168,8 @@
                 android:background="@drawable/search_bg"
                 android:textAllCaps="false"
                 android:textColor="@color/dark"
-                android:textOff="Upper 1"
-                android:textOn="Upper 1" />
+                android:textOff="@string/upper1"
+                android:textOn="@string/upper1" />
 
         </LinearLayout>
 

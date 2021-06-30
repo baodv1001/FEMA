@@ -180,4 +180,8 @@
      <string name="your_username_taken">Sign up failed. Your Username is already taken</string>
      <string name="cancel_order">Cancel my order</string>
      <string name="add_review">Add review</string>
+     <string name="upper4">Upper 4</string>
+     <string name="upper3">Upper 3</string>
+     <string name="upper2">Upper 2</string>
+     <string name="upper1">Upper 1</string>
 </resources>
