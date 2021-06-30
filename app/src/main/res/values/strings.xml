@@ -1,42 +1,143 @@
  <resources>
-    <string name="app_name">FashionEcommerceMobileApp</string>
-    <string name="brand_names">BRAND NAME</string>
-    <string name="account">Account</string>
-    <string name="profile_button">Profile</string>
-    <string name="order_button">Order</string>
-    <string name="address_button">Address</string>
-    <string name="payment_button">Payment</string>
-    <string name="name">Name</string>
-    <string name="username">Username</string>
-    <string name="male">Male</string>
-    <string name="female">Female</string>
-    <string name="gender">Gender</string>
-    <string name="birthday">Birthday</string>
-    <string name="user_birthday">Birthday</string>
-    <string name="email">Email</string>
-    <string name="user_email">User Email</string>
-    <string name="phone_number">Phone Number</string>
-    <string name="user_phone_number">User Phone Number</string>
-    <string name="password">Password</string>
-    <string name="user_password">**********</string>
-    <string name="logout">Log Out</string>
-    <string name="order_code">Order Code</string>
-    <string name="order_date">Order Date</string>
-    <string name="order_status">Order Status</string>
-    <string name="shipping">Shipping</string>
-    <string name="items">Items</string>
-    <string name="amount">Amount</string>
-    <string name="price">Price</string>
-    <string name="total_price">Total Price</string>
-    <string name="receiver">Receiver</string>
-    <string name="receiver_phone_number">Receiver Phone Number</string>
-    <string name="address">Address</string>
-    <string name="add_address">Add new address</string>
-    <string name="new_address">New address</string>
-    <string name="dialog_title">Gender</string>
-    <string name="input_receiver_name">Receiver name</string>
-    <string name="choose">Choose</string>
-    <string name="updateName">Update Name</string>
-    <string name="confirm_change">Confirm change</string>
-    <string name="brand_name">BRAND NAME</string>
+     <string name="app_name">FashionEcommerceMobileApp</string>
+     <string name="brand_names">BRAND NAME</string>
+     <string name="account">Account</string>
+     <string name="profile_button">Profile</string>
+     <string name="order_button">Order</string>
+     <string name="address_button">Address</string>
+     <string name="payment_button">Payment</string>
+     <string name="name">Name<font color = "#FF0000">*</font></string>
+     <string name="username">Username</string>
+     <string name="male">Male</string>
+     <string name="female">Female</string>
+     <string name="gender">Gender</string>
+     <string name="birthday">Birthday</string>
+     <string name="user_birthday">Birthday</string>
+     <string name="email">Email</string>
+     <string name="user_email">User Email</string>
+     <string name="phone_number">Phone number<font color = "#FF0000">*</font></string>
+     <string name="user_phone_number">User Phone Number</string>
+     <string name="password">Password</string>
+     <string name="user_password">**********</string>
+     <string name="logout">Log Out</string>
+     <string name="order_code">Order Code</string>
+     <string name="order_date">Order Date</string>
+     <string name="order_status">Order Status</string>
+     <string name="shipping">Shipping</string>
+     <string name="items">Items</string>
+     <string name="amount">Amount</string>
+     <string name="price">Price</string>
+     <string name="total_price">Total Price</string>
+     <string name="receiver">Receiver</string>
+     <string name="receiver_phone_number">Receiver Phone Number</string>
+     <string name="address">Address<font color = "#FF0000">*</font></string>
+     <string name="add_address">Add new address</string>
+     <string name="idAccount"></string>
+     <string name="new_address">New address</string>
+     <string name="dialog_title">Gender</string>
+     <string name="input_receiver_name">Receiver name</string>
+     <string name="choose">Choose</string>
+      <string name="confirm_change">Confirm change</string>
+      <string name="brand_name">BRAND NAME</string>
+     <string name="updateName">Update Name</string>
+     <string name="save">SAVE</string>
+     <string name="change_pass_profile">Change password</string>
+
+     //layout login
+     <string name="welcome_to">Welcome to</string>
+     <string name="forget_pass_login">Forget password?</string>
+     <string name="login">Login</string>
+     <string name="have_account">Already have an account? Register now</string>
+
+     //layout cart
+     <string name="your_cart">Your cart</string>
+     <string name="apply">APPLY</string>
+     <string name="sub_total">Sub total</string>
+     <string name="discount">Discount</string>
+     <string name="checkout">CHECK OUT</string>
+     <string name="enter_coupon">Enter Coupon Code</string>
+
+     //layout change password
+     <string name="new_pass">New password<font color = "#FF0000">*</font></string>
+      <string name="new_passNor">New password</string>
+     <string name="change">Change</string>
+
+     //layout
+     <string name="new_phone">NEW PHONE NUMBER</string>
+     <string name="get_code">GET CODE</string>
+     <string name="re_code">RESEND CODE</string>
+
+     //layout check out
+     <string name="check_out">Check out</string>
+     <string name="cart">Cart</string>
+     <string name="detail">Details</string>
+     <string name="confirm">CONFIRM</string>
+
+     //layout forget pass
+     <string name="forget_pass">FORGET PASSWORD</string>
+     <string name="get_ver_code">GET VERIFICATION CODE</string>
+     <string name="change_pass">Change password</string>
+     <string name="re_pass">Password Again</string>
+     <string name="ver_code">Verification Code</string>
+
+     //layout main
+     <string name="search">Search Product</string>
+     <string name="category">Category</string>
+     <string name="flash_sale">Flash Sale</string>
+     <string name="see_more">SEE MORE</string>
+
+     //layout on board
+     <string name="name_product">Name Product</string>
+     <string name="start">Start</string>
+
+     //layout order
+     <string name="your_order">Your orders</string>
+
+     //layout product detail
+     <string name="select_size">Select Size</string>
+     <string name="select_color">Select Color</string>
+     <string name="description">Descriptions</string>
+     <string name="add_to_cart">ADD TO CART</string>
+
+     //layout sign up
+     <string name="let_start">"Let's get started"</string>
+     <string name="register">Register</string>
+
+     <string name="wish_list">Wish list</string>
+
+     //layout filter
+     <string name="filter">Filter</string>
+     <string name="rating">Rating</string>
+     <string name="min">Min</string>
+     <string name="max">Max</string>
+
+     //layout input name
+     <string name="enter_name">Enter your name<font color = "#FF0000">*</font></string>
+     <string name="OK">OK</string>
+     <string name="Cancel">Cancel</string>
+
+     <string name="date">Date:</string>
+     <string name="enter_new_phone">New phone number</string>
+     <string name="enter_newpass">New Password</string>
+     <string name="enter_repass">Retype new Password</string>
+     <string name="language">Language</string>
+
+      <string name="your_name">Your name</string>
+      <string name="your_address">Your address</string>
+      <string name="your_phone">Your phone number</string>
+      <string name="addressNor">Address</string>
+      <string name="confirm_pass">Confirm new password<font color = "#FF0000">*</font></string>
+      <string name="confirm_passNor">Confirm new password</string>
+      <string name="change_phone">Change phone number</string>
+      <string name="edit_address">Edit address</string>
+      <string name="have_acc_onboard">Already have an account? Login now</string>
+      <string name="order_detail">Order details</string>
+      <string name="nameNor">Name</string>
+      <string name="phoneNor">Phone number</string>
+      <string name="field_user">Username<font color = "#FF0000">*</font></string>
+      <string name="field_pass">Password<font color = "#FF0000">*</font></string>
+      <string name="field_repass">Password again<font color = "#FF0000">*</font></string>
+      <string name="field_otp">Verification code<font color = "#FF0000">*</font></string>
+      <string name="home">Home</string>
+      <string name="me">Me</string>
 </resources>

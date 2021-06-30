@@ -1,5 +1,6 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -18,10 +19,14 @@ import kotlinx.android.synthetic.main.activity_edit_address.text_input_Receiver_
 class EditAddressActivity : AppCompatActivity() {
     private var addressViewModel: AddressViewModel? = null
     private var idAddress: Int? = null
+    private var language: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_address)
+
+        val sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        language = sharedPreferences.getString("My_Lang", "").toString()
 
         AddressRepository.Companion.setContext(this@EditAddressActivity)
         addressViewModel = ViewModelProviders.of(this).get(AddressViewModel::class.java)
@@ -44,7 +49,10 @@ class EditAddressActivity : AppCompatActivity() {
 
             if (checkTextField()) {
                 addressViewModel!!.updateAddressInfo(idAddress, nameAfter, addressAfter, phoneNumberAfter)
-                Toast.makeText(this,"Save successfully!", Toast.LENGTH_SHORT).show()
+                if (language == "en")
+                    Toast.makeText(this,"Save successfully!", Toast.LENGTH_SHORT).show()
+                else
+                    Toast.makeText(this,"Đã lưu!", Toast.LENGTH_SHORT).show()
                 super.onBackPressed()
             }
         }
@@ -55,14 +63,20 @@ class EditAddressActivity : AppCompatActivity() {
         if (text_input_Receiver_Name.text.toString().isEmpty() ||
             text_input_Address.text.toString().isEmpty() ||
             text_input_Phone_Number.text.toString().isEmpty()) {
-            Toast.makeText(this@EditAddressActivity, "Field must be fill...!", Toast.LENGTH_SHORT).show()
+                if (language == "en")
+                    Toast.makeText(this@EditAddressActivity, "Field must be fill...!", Toast.LENGTH_SHORT).show()
+                else
+                    Toast.makeText(this,"Vui lòng điền đầy đủ..!", Toast.LENGTH_SHORT).show()
             return false
         }
         return true
     }
 
     fun onClickBack(view: View) {
-        Toast.makeText(this, "Change wil not be saved!", Toast.LENGTH_SHORT).show()
+        if (language == "en")
+            Toast.makeText(this, "Change wil not be saved!", Toast.LENGTH_SHORT).show()
+        else
+            Toast.makeText(this,"Thay đổi không được lưu!", Toast.LENGTH_SHORT).show()
         super.onBackPressed()
     }
 }

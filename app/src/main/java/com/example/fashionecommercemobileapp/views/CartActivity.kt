@@ -1,6 +1,7 @@
 package com.example.fashionecommercemobileapp.views
 
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -44,10 +45,14 @@ class CartActivity : AppCompatActivity() {
     private lateinit var cartViewModel: CartViewModel
     private lateinit var cartInfoViewModel: CartInfoViewModel
     private lateinit var productInfoViewModel: ProductInfoViewModel
+    private lateinit var language: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cart)
+
+        val sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        language = sharedPreferences.getString("My_Lang", "").toString()
 
         CartRepository.Companion.setContext(this@CartActivity)
         CartInfoRepository.Companion.setContext(this@CartActivity)
@@ -128,7 +133,10 @@ class CartActivity : AppCompatActivity() {
 
     fun onClickCheckOut(view: View) {
         if (cartInfoList.isEmpty()) {
-            Toast.makeText(this, "Your cart is empty", Toast.LENGTH_SHORT).show()
+            if (language == "en")
+                Toast.makeText(this, "Your cart is empty", Toast.LENGTH_SHORT).show()
+            else
+                Toast.makeText(this, "Giỏ hàng rỗng", Toast.LENGTH_SHORT).show()
             return
         }
         val intent = Intent(this, CheckOutActivity::class.java).apply {
@@ -147,17 +155,20 @@ class CartActivity : AppCompatActivity() {
             it?.let { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
-                        if (it.data?.idCoupon == 0)
-                            Toast.makeText(this, "Invalid code!", Toast.LENGTH_SHORT).show()
+                        if (it.data?.idCoupon == 0) {
+                            if (language == "en")
+                                Toast.makeText(this, "Invalid code!", Toast.LENGTH_SHORT).show()
+                            else
+                                Toast.makeText(this, "Mã không tồn tại!", Toast.LENGTH_SHORT).show()
+                        }
                         else {
                             textview_discount.text =
                                 NumberFormat.getIntegerInstance(Locale.GERMANY)
                                     .format(it.data?.value)
-                            Toast.makeText(
-                                this,
-                                "Your code was entered successfully!",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            if (language == "en")
+                                Toast.makeText(this, "Your code was entered successfully!",Toast.LENGTH_SHORT).show()
+                            else
+                                Toast.makeText(this, "Nhập mã thành công!",Toast.LENGTH_SHORT).show()
                             loadData(this.cartInfoList, this.productList)
                         }
                     }
@@ -186,7 +197,7 @@ class CartActivity : AppCompatActivity() {
     }
 
     private fun setUpRecyclerView() {
-        cartAdapter = CartAdapter(this, arrayListOf(), arrayListOf(), sizeList, colorList)
+        cartAdapter = CartAdapter(this, arrayListOf(), arrayListOf(), sizeList, colorList, language)
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerview_cart.layoutManager = layoutManager
         recyclerview_cart.adapter = cartAdapter

@@ -22,10 +22,14 @@ import kotlinx.android.synthetic.main.activity_change_password.*
 class ChangePasswordActivity : AppCompatActivity() {
 
     private var accountViewModel: AccountViewModel? = null
+    var language: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_change_password)
+
+        val sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        language = sharedPreferences.getString("My_Lang", "").toString()
 
         AccountRepository.Companion.setContext(this@ChangePasswordActivity)
         accountViewModel = ViewModelProviders.of(this).get(AccountViewModel::class.java)
@@ -37,7 +41,10 @@ class ChangePasswordActivity : AppCompatActivity() {
         button_change.setOnClickListener {
             if (checkTextField()) {
                 changePassword(idAccount)
-                Toast.makeText(this, "Successfully", Toast.LENGTH_SHORT).show()
+                if (language == "en")
+                    Toast.makeText(this, "Successfully", Toast.LENGTH_SHORT).show()
+                else
+                    Toast.makeText(this, "Thành công", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -50,10 +57,16 @@ class ChangePasswordActivity : AppCompatActivity() {
         return if(
             text_input_new_password.text.toString().isEmpty() ||
             text_input_re_password.text.toString().isEmpty()) {
-            Toast.makeText(this, "Please filled text field", Toast.LENGTH_SHORT).show()
+                if (language == "en")
+                    Toast.makeText(this, "Please filled text field", Toast.LENGTH_SHORT).show()
+                else
+                    Toast.makeText(this, "Vui lòng điền đầy đủ thông tin", Toast.LENGTH_SHORT).show()
             false
         } else if (text_input_new_password.text.toString() != text_input_re_password.text.toString()) {
-            Toast.makeText(this, "New password and retype not match", Toast.LENGTH_SHORT).show()
+            if (language == "en")
+                Toast.makeText(this, "New password and retype not match", Toast.LENGTH_SHORT).show()
+            else
+                Toast.makeText(this, "Mật khẩu và mật khẩu nhập lại không trùng khớp", Toast.LENGTH_SHORT).show()
             false
         } else{
             true

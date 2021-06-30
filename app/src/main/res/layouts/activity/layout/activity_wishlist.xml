@@ -34,7 +34,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginBottom="16dp"
-            android:text="Wish list"
+            android:text="@string/wish_list"
             android:textColor="@color/dark"
             android:textSize="18sp"
             android:textStyle="bold"

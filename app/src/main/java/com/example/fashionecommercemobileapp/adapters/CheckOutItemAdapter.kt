@@ -24,7 +24,8 @@ class CheckOutItemAdapter(
     private val listCartInfo: ArrayList<CartInfo>,
     private val listProduct: ArrayList<Product>,
     private val listSize: ArrayList<Size>,
-    private val listColor: ArrayList<Color>
+    private val listColor: ArrayList<Color>,
+    private val lang: String
 ) :
     RecyclerView.Adapter<CheckOutItemAdapter.ViewHolder>() {
 
@@ -82,13 +83,22 @@ class CheckOutItemAdapter(
                 colorName = color.name.toString()
             }
         }
-        holder.infoCart.text = "Size: $sizeName, Color: $colorName"
+        if (lang == "en")
+        {
+            holder.infoCart.text = "Size: $sizeName, Color: $colorName"
+            holder.quantity.text = "Quantity: " + listCartInfo[position].quantity.toString()
+        }
+        else
+        {
+            holder.infoCart.text = "Cỡ: $sizeName, Màu: $colorName"
+            holder.quantity.text = "Số lượng: " + listCartInfo[position].quantity.toString()
+        }
         holder.productCart.text = listProduct[position].name
         val discount: Float = 1 - (listProduct[position].discount?.toFloat() ?: 0F)
         val price: Float = (listProduct[position].price?.toFloat() ?: 0F)
         holder.costCart.text =
             NumberFormat.getIntegerInstance(Locale.GERMANY).format(discount * price)
-        holder.quantity.text = "Quantity: " + listCartInfo[position].quantity.toString()
+
     }
 
     override fun getItemCount(): Int {

@@ -54,12 +54,16 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
     private var listUser: List<User>? = null
     val REQUEST_CODE = 100
     private var id: Int? = null
+    var language:String = ""
     private var selectedImageUri: Uri? = null
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
+
+        val sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        language = sharedPreferences.getString("My_Lang", "").toString()
 
         UserRepository.Companion.setContext(this@ProfileActivity)
         userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
@@ -109,11 +113,19 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
         //change gender
         gender_layout.setOnClickListener{
             //create dialog
-            val items = arrayOf(
-                "Male",
-                "Female",
-                "Others"
-            )
+            var items :Array<String>
+                if (language == "en")
+                    items = arrayOf(
+                    "Male",
+                    "Female",
+                    "Others"
+                )
+            else
+                    items = arrayOf(
+                        "Nam",
+                        "Nữ",
+                        "Giới tính khác"
+                    )
             val builder = AlertDialog.Builder(this, R.style.myDialogStyle)
 
             builder.setTitle(R.string.dialog_title)
@@ -271,7 +283,10 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
     private fun showDialog(name: String){
         val builder: AlertDialog.Builder = android.app.AlertDialog.Builder(this)
 
-        val titleText = "New name"
+        var titleText = "New name"
+
+        if (language == "vi")
+            titleText = "Tên mới"
         // Set up the input
         val input = EditText(this)
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
@@ -281,7 +296,10 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
         lp.leftMargin = marginHorizontal.toInt()
         input.layoutParams = lp
         input.gravity = Gravity.TOP or Gravity.LEFT
-        input.hint = "name"
+        if (language == "en")
+            input.hint = "name"
+        else
+            input.hint = "tên"
         input.setTextColor(Color.BLACK)
         input.inputType = InputType.TYPE_CLASS_TEXT
         input.setText(name)

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FashionEcommerceMobileApp</string>
+    <string name="brand_names">THƯƠNG HIỆU</string>
+    <string name="account">Tài khoản</string>
+    <string name="profile_button">Hồ sơ</string>
+    <string name="order_button">Đặt hàng</string>
+    <string name="address_button">Địa chỉ</string>
+    <string name="payment_button">Thanh toán</string>
+    <string name="name">Tên<font color = "#FF0000">*</font></string>
+    <string name="username">Tên tài khoản</string>
+    <string name="male">Nam</string>
+    <string name="female">Nữ</string>
+    <string name="gender">Giới tính</string>
+    <string name="birthday">Ngày sinh</string>
+    <string name="user_birthday">Ngày sinh</string>
+    <string name="email">Email</string>
+    <string name="user_email">Email người dùng</string>
+    <string name="phone_number">Số điện thoại<font color = "#FF0000">*</font></string>
+    <string name="user_phone_number">Số điện thoại</string>
+    <string name="password">Mật khẩu</string>
+    <string name="user_password">**********</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="order_code">Mã đơn</string>
+    <string name="order_date">Ngày đặt hàng</string>
+    <string name="order_status">Trạng thái đơn hàng</string>
+    <string name="shipping">Vận chuyển</string>
+    <string name="items">Số hàng</string>
+    <string name="amount">Số lượng</string>
+    <string name="price">Đơn giá</string>
+    <string name="total_price">Tổng cộng</string>
+    <string name="receiver">Người nhận</string>
+    <string name="receiver_phone_number">Số điện thoại nhận hàng</string>
+    <string name="address">Địa chỉ<font color = "#FF0000">*</font></string>
+    <string name="add_address">Thêm địa chỉ</string>
+    <string name="idAccount"></string>
+    <string name="new_address">Địa chỉ mới</string>
+    <string name="dialog_title">Giới tính</string>
+    <string name="input_receiver_name">Tên người nhận</string>
+    <string name="choose">Chọn</string>
+    <string name="confirm_change">Xác nhận</string>
+    <string name="brand_name">THƯƠNG HIỆU</string>
+    <string name="updateName">Cập nhật tên</string>
+    <string name="save">Lưu</string>
+    <string name="change_pass_profile">Đổi mật khẩu</string>
+
+    //layout login
+    <string name="welcome_to">Chào mừng</string>
+    <string name="forget_pass_login">Quên mật khẩu?</string>
+    <string name="login">Đăng nhập</string>
+    <string name="have_account">Bạn đã có tài khoản? Đăng ký ngay</string>
+
+    //layout cart
+    <string name="your_cart">Giỏ hàng</string>
+    <string name="apply">Áp dụng</string>
+    <string name="sub_total">Tổng giỏ hàng</string>
+    <string name="discount">Giảm giá</string>
+    <string name="checkout">Thanh toán</string>
+    <string name="enter_coupon">Nhập mã giảm giá</string>
+
+    //layout change password
+    <string name="new_pass">Mật khẩu mới<font color = "#FF0000">*</font></string>
+    <string name="new_passNor">Mật khẩu mới</string>
+    <string name="change">Lưu</string>
+
+    //layout
+    <string name="new_phone">SỐ ĐIỆN THOẠI MỚI</string>
+    <string name="get_code">OTP</string>
+    <string name="re_code">GỬI OTP</string>
+
+    //layout check out
+    <string name="check_out">Thanh toán</string>
+    <string name="cart">Giỏ hàng</string>
+    <string name="detail">Chi tiết</string>
+    <string name="confirm">XÁC NHẬN</string>
+
+    //layout forget pass
+    <string name="forget_pass">QUÊN MẬT KHẨU</string>
+    <string name="get_ver_code">GỬI OTP</string>
+    <string name="change_pass">Đổi mật khẩu</string>
+    <string name="re_pass">Nhập lại mật khẩu</string>
+    <string name="ver_code">Mã xác nhận</string>
+
+    //layout main
+    <string name="search">Tìm sản phẩm</string>
+    <string name="category">Loại</string>
+    <string name="flash_sale">Flash Sale</string>
+    <string name="see_more">Xem thêm</string>
+
+    //layout on board
+    <string name="name_product">Tên sản phẩm</string>
+    <string name="start">Bắt đầu</string>
+
+    //layout order
+    <string name="your_order">Đơn đặt hàng</string>
+
+    //layout product detail
+    <string name="select_size">Kích cỡ</string>
+    <string name="select_color">Màu sắc</string>
+    <string name="description">Mô tả</string>
+    <string name="add_to_cart">THÊM VÀO GIẢ HÀNG</string>
+
+    //layout sign up
+    <string name="let_start">"Bắt đầu"</string>
+    <string name="register">Đăng ký</string>
+
+    <string name="wish_list">Đã thích</string>
+
+    //layout filter
+    <string name="filter">Lọc</string>
+    <string name="rating">Đánh giá</string>
+    <string name="min">Nhỏ</string>
+    <string name="max">Lớn</string>
+
+    //layout input name
+    <string name="enter_name">Nhập tên<font color = "#FF0000">*</font></string>
+    <string name="OK">Lưu</string>
+    <string name="Cancel">Hủy</string>
+
+    <string name="date">Ngày:</string>
+    <string name="enter_new_phone">Số điện thoại mới</string>
+    <string name="enter_newpass">Mật khẩu mới</string>
+    <string name="enter_repass">Nhập lại mật khẩu</string>
+    <string name="language">Ngôn ngữ</string>
+
+    <string name="your_name">Họ tên</string>
+    <string name="your_address">Địa chỉ</string>
+    <string name="your_phone">Số điện thoại</string>
+    <string name="addressNor">Địa chỉ</string>
+    <string name="confirm_pass">Xác nhận mật khẩu<font color = "#FF0000">*</font></string>
+    <string name="confirm_passNor">Xác nhận mật khẩu</string>
+    <string name="change_phone">Đổi số điện thoại</string>
+    <string name="edit_address">Sửa địa chỉ</string>
+    <string name="have_acc_onboard">Bạn đã có tài khoản? Đăng nhập ngay</string>
+    <string name="order_detail">Chi tiết đơn hàng</string>
+    <string name="nameNor">Họ tên</string>
+    <string name="phoneNor">Số điện thoại</string>
+
+    <string name="field_user">Tên đăng nhập<font color = "#FF0000">*</font></string>
+    <string name="field_pass">Mật khẩu<font color = "#FF0000">*</font></string>
+    <string name="field_repass">Nhập lại mật khẩu<font color = "#FF0000">*</font></string>
+    <string name="field_otp">Mã xác nhận<font color = "#FF0000">*</font></string>
+    <string name="home">Trang chủ</string>
+    <string name="me">Tôi</string>
+</resources>

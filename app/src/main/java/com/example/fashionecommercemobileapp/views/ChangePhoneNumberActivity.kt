@@ -1,5 +1,6 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.SharedPreferences
@@ -31,10 +32,14 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
     private lateinit var progressDialog: ProgressDialog
 
     private var userViewModel : UserViewModel? = null
+    var language: String=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_change_phone_number)
+
+        val sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        language = sharedPreferences.getString("My_Lang", "").toString()
 
         AccountRepository.Companion.setContext(this@ChangePhoneNumberActivity)
         userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
@@ -53,7 +58,10 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
 
             override fun onVerificationFailed(p0: FirebaseException) {
                 progressDialog.dismiss()
-                Toast.makeText(this@ChangePhoneNumberActivity, "Check your phone number", Toast.LENGTH_SHORT).show()
+                if (language == "en")
+                    Toast.makeText(this@ChangePhoneNumberActivity, "Check your phone number", Toast.LENGTH_SHORT).show()
+                else
+                    Toast.makeText(this@ChangePhoneNumberActivity, "Kiểm tra số điện thoại", Toast.LENGTH_SHORT).show()
             }
 
             override fun onCodeSent(verificationId: String, p1: PhoneAuthProvider.ForceResendingToken) {
@@ -79,7 +87,10 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
                         }
                         sendVerificationCode(phone)}
                     else {
-                        Toast.makeText(this, "phone number already in use",Toast.LENGTH_SHORT).show()
+                        if (language == "en")
+                            Toast.makeText(this, "phone number already in use",Toast.LENGTH_SHORT).show()
+                        else
+                            Toast.makeText(this, "Số điện thoại đã được sử dụng", Toast.LENGTH_SHORT).show()
                     }
                 })
 
@@ -100,7 +111,10 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
                         reSendVerificationCode(phone, forceResendingToken)
                     }
                     else {
-                        Toast.makeText(this, "phone number already in use",Toast.LENGTH_SHORT).show()
+                        if (language == "en")
+                            Toast.makeText(this, "phone number already in use",Toast.LENGTH_SHORT).show()
+                        else
+                            Toast.makeText(this, "Số điện thoại đã được sử dụng", Toast.LENGTH_SHORT).show()
                     }
                 })
             }
@@ -109,7 +123,10 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
         button_choose.setOnClickListener {
             if (text_input_OTP.text.toString().isEmpty())
             {
-                Toast.makeText(this@ChangePhoneNumberActivity, "Please enter your verification code...", Toast.LENGTH_SHORT).show()
+                if (language == "en")
+                    Toast.makeText(this@ChangePhoneNumberActivity, "Please enter your verification code...", Toast.LENGTH_SHORT).show()
+                else
+                    Toast.makeText(this@ChangePhoneNumberActivity, "Vui lòng nhập mã xác nhận...", Toast.LENGTH_SHORT).show()
             }
             else
             {
@@ -125,7 +142,10 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
 
     fun checkTextField(): Boolean {
         if(text_input_Phone_Number.text.toString().isEmpty() ) {
-            Toast.makeText(this, "Field must be fill...!", Toast.LENGTH_SHORT).show()
+            if (language == "en")
+                Toast.makeText(this, "Field must be fill...!", Toast.LENGTH_SHORT).show()
+            else
+                Toast.makeText(this, "Vui lòng điền đủ thông tin...!", Toast.LENGTH_SHORT).show()
             return false
         }
         return true

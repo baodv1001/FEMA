@@ -1,5 +1,6 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -28,6 +29,7 @@ class CheckOutActivity : AppCompatActivity() {
     private var sizeList: ArrayList<Size> = arrayListOf()
     private var colorList: ArrayList<Color> = arrayListOf()
     private var idAccount: Int = 0
+    private var language: String = ""
 
     private lateinit var checkOutItemAdapter: CheckOutItemAdapter
     private lateinit var productViewModel: ProductViewModel
@@ -39,6 +41,9 @@ class CheckOutActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_check_out)
+
+        val sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        language = sharedPreferences.getString("My_Lang", "").toString()
 
         CartRepository.Companion.setContext(this@CheckOutActivity)
         CartInfoRepository.Companion.setContext(this@CheckOutActivity)
@@ -76,7 +81,7 @@ class CheckOutActivity : AppCompatActivity() {
     private fun setUpRecyclerView() {
         checkOutItemAdapter = CheckOutItemAdapter(
             this, arrayListOf(), arrayListOf(),
-            sizeList, colorList
+            sizeList, colorList, language
         )
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView_checkOut.layoutManager = layoutManager
@@ -202,8 +207,12 @@ class CheckOutActivity : AppCompatActivity() {
 
     fun onClickConfirm(view: View) {
         if (textView_idAddress_checkOut.text.toString().isEmpty()) {
-            Toast.makeText(this, "Please add your address before check out!", Toast.LENGTH_SHORT)
+            if (language == "en")
+                Toast.makeText(this, "Please add your address before check out!", Toast.LENGTH_SHORT)
                 .show()
+            else
+                Toast.makeText(this, "Vui lòng thêm địa chỉ trước khi thanh toán!", Toast.LENGTH_SHORT)
+                    .show()
             return
         }
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
@@ -226,7 +235,10 @@ class CheckOutActivity : AppCompatActivity() {
                 when (resource.status) {
                     Status.SUCCESS -> {
                         it.data?.let { idBill -> createBillInfo(idBill) }
-                        Toast.makeText(this, "Check out successfully", Toast.LENGTH_SHORT).show()
+                        if (language == "en")
+                            Toast.makeText(this, "Check out successfully", Toast.LENGTH_SHORT).show()
+                        else
+                            Toast.makeText(this, "Đặt hàng thanh công", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, MainActivity::class.java).apply { }
                         startActivity(intent)
                         this.finish()
@@ -288,7 +300,10 @@ class CheckOutActivity : AppCompatActivity() {
             })
         }
         if (isSuccess) {
-            Toast.makeText(this, "Check out successfully", Toast.LENGTH_SHORT).show()
+            if (language == "en")
+                Toast.makeText(this, "Check out successfully", Toast.LENGTH_SHORT).show()
+            else
+                Toast.makeText(this, "Đặt hàng thanh công", Toast.LENGTH_SHORT).show()
         }
     }
 

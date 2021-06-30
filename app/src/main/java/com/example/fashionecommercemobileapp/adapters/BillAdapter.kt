@@ -13,7 +13,7 @@ import com.example.fashionecommercemobileapp.model.Bill
 import java.text.NumberFormat
 import java.util.*
 
-class BillAdapter(context: Context, private val listBill: ArrayList<Bill>) :
+class BillAdapter(context: Context, private val listBill: ArrayList<Bill>, val lang: String) :
     RecyclerView.Adapter<BillAdapter.ViewHolder>() {
     private var bill: MutableLiveData<Bill> = MutableLiveData(Bill())
     private var isClicked: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -44,13 +44,27 @@ class BillAdapter(context: Context, private val listBill: ArrayList<Bill>) :
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.idBill.text = listBill[position].id.toString()
-        holder.date.text = "Date: " + listBill[position].invoiceDate
-        when (listBill[position].status) {
-            0 -> holder.status.text = "Unconfirmed"
-            1 -> holder.status.text = "Shipping"
-            2 -> holder.status.text = "Done"
-            3 -> holder.status.text = "Canceled"
+
+        if (lang == "en")
+        {
+            holder.date.text = "Date: " + listBill[position].invoiceDate
+            when (listBill[position].status) {
+                0 -> holder.status.text = "Unconfirmed"
+                1 -> holder.status.text = "Shipping"
+                2 -> holder.status.text = "Done"
+                3 -> holder.status.text = "Canceled"
+            }
+        } else
+        {
+            holder.date.text = "Ngày: " + listBill[position].invoiceDate
+            when (listBill[position].status) {
+                0 -> holder.status.text = "Chờ xác nhận"
+                1 -> holder.status.text = "Đang giao"
+                2 -> holder.status.text = "Đã giao"
+                3 -> holder.status.text = "Đã hủy"
+            }
         }
+
         holder.total.text =
             NumberFormat.getIntegerInstance(Locale.GERMANY).format(listBill[position].totalMoney)
         holder.container.setOnClickListener {

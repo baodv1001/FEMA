@@ -44,9 +44,13 @@ class ProductDetailsActivity : AppCompatActivity() {
     private lateinit var productViewModel: ProductViewModel
     var sizeMap: MutableMap<String, String> = mutableMapOf<String, String>()
     var colorMap: MutableMap<String, String> = mutableMapOf<String, String>()
+    var language: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_details)
+
+        val sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        language = sharedPreferences.getString("My_Lang", "").toString()
 
         val intent: Intent = intent
         idProduct = intent.getStringExtra("idProduct")?.toInt() ?: 0
@@ -203,7 +207,10 @@ class ProductDetailsActivity : AppCompatActivity() {
         val spf = getSharedPreferences("Login", Context.MODE_PRIVATE)
         val idAccount = spf.getString("Id", "0")?.toInt() ?: 0
         if (quantity == 0) {
-            Toast.makeText(this, "Out of stock!", Toast.LENGTH_SHORT).show()
+            if (language == "en")
+                Toast.makeText(this, "Out of stock!", Toast.LENGTH_SHORT).show()
+            else
+                Toast.makeText(this, "Hết hàng!", Toast.LENGTH_SHORT).show()
         }
 
         val cartInfoViewModel: CartInfoViewModel =
@@ -235,7 +242,10 @@ class ProductDetailsActivity : AppCompatActivity() {
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 } else {
-                                    Toast.makeText(this, "This product is out of stock!", Toast.LENGTH_SHORT).show()
+                                    if (language == "en")
+                                        Toast.makeText(this, "This product is out of stock!", Toast.LENGTH_SHORT).show()
+                                    else
+                                        Toast.makeText(this, "Sản phẩm hết hàng!", Toast.LENGTH_SHORT).show()
                                 }
                             } else {
                                 cartInfoViewModel.postCartInfo(
@@ -245,8 +255,11 @@ class ProductDetailsActivity : AppCompatActivity() {
                                     idColor,
                                     1
                                 )
-                                Toast.makeText(this, "Add to cart successfully", Toast.LENGTH_SHORT)
-                                    .show()
+                                if (language == "en")
+                                    Toast.makeText(this, "Add to cart successfully", Toast.LENGTH_SHORT)
+                                        .show()
+                                else
+                                    Toast.makeText(this, "Thêm vào giỏ hàng!", Toast.LENGTH_SHORT).show()
                             }
                         }
                         Status.ERROR -> {
