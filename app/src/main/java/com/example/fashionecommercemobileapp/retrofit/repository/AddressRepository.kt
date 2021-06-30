@@ -3,6 +3,7 @@ package com.example.fashionecommercemobileapp.retrofit.repository
 import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import com.example.fashionecommercemobileapp.R
 import com.example.fashionecommercemobileapp.model.Address
 import com.example.fashionecommercemobileapp.retrofit.RetrofitClient
 import com.example.fashionecommercemobileapp.retrofit.api.AddressApi
@@ -65,7 +66,7 @@ class AddressRepository {
                 response.let {
                     val result : String = response.body().toString()
                     if (result == "Success")
-                        Toast.makeText(context,"Add Address success", Toast.LENGTH_SHORT ).show()
+                        Toast.makeText(context, R.string.add_address_succ, Toast.LENGTH_SHORT ).show()
                 }
             }
 

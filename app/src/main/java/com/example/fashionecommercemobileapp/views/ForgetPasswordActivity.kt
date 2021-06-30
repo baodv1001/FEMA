@@ -1,5 +1,6 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.app.Activity
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.View
@@ -29,9 +30,24 @@ class ForgetPasswordActivity : AppCompatActivity() {
 
     private var accountViewModel: AccountViewModel? = null
 
+    var language:String = ""
+    var loading: String = ""
+    var verify_code: String =""
+    var re_code: String= ""
+    var signup: String = ""
+    var field_empty: String = ""
+    var pass_error:String = ""
+    var repasss_error: String = ""
+    var nowhite :String = ""
+    var not_match: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forget_password)
+
+        val sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        language = sharedPreferences.getString("My_Lang", "").toString()
+        translate()
 
         AccountRepository.Companion.setContext(this@ForgetPasswordActivity)
         accountViewModel = ViewModelProviders.of(this).get(AccountViewModel::class.java)
@@ -42,7 +58,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         progressDialog = ProgressDialog(this)
-        progressDialog.setTitle("Please wait...")
+        progressDialog.setTitle(loading)
         progressDialog.setCanceledOnTouchOutside(false)
 
         mCallbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -90,7 +106,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
                         } else {
                             Toast.makeText(
                                 this@ForgetPasswordActivity,
-                                "Username or number phone is not available",
+                                R.string.user_phone_not_available,
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
@@ -124,10 +140,38 @@ class ForgetPasswordActivity : AppCompatActivity() {
         }
     }
 
+    fun translate()
+    {
+        if (language == "en")
+        {
+            loading = "Loading"
+            verify_code = "Verifying code..."
+            re_code= "Resending code..."
+            signup= "Update password..."
+            field_empty="Field cannot be empty"
+            pass_error = "Password must be more than 6 char"
+            nowhite = "White space is not allowed"
+            repasss_error= "Repassword must be more than 6 char"
+            not_match = "Repassword is not match"
+        }
+        else
+        {
+            loading = "Đang tải"
+            verify_code = "Đang xác minh số điện thoại ..."
+            re_code= "Gửi lại mã ..."
+            signup= "Cập nhật mật khẩu..."
+            field_empty = "Không được bỏ trống"
+            pass_error = "Mật khẩu phải hơn 6 ký tự"
+            nowhite = "Không được nhập khoảng trắng"
+            repasss_error = "Mật khẩu phải hơn 6 ký tự"
+            not_match = "Mật khẩu và nhập lại không khớp"
+        }
+    }
+
     fun validationUsername(): Boolean {
         val user: String = txtUsernameForgot.text.toString()
         if (user.isEmpty()) {
-            txtUsernameForgot.error = "Field cannot be empty"
+            txtUsernameForgot.error = field_empty
             false
         } else {
             txtUsernameForgot.error = null
@@ -139,7 +183,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
     fun validationPhone(): Boolean {
         val phone: String = txtPhoneForgot.text.toString()
         if (phone.isEmpty()) {
-            txtPhoneForgot.error = "Field cannot be empty"
+            txtPhoneForgot.error = field_empty
             false
         } else {
             txtPhoneForgot.error = null
@@ -152,13 +196,12 @@ class ForgetPasswordActivity : AppCompatActivity() {
         val pass: String = txtPasswordForgot.text.toString()
         val noWhite: Regex = Regex("(?=\\S+$)")
         if (pass.isEmpty()) {
-            txtPasswordForgot.error = "Field cannot be empty"
-            false
+            txtPasswordForgot.error = field_empty
         } else if (pass.length < 6) {
-            txtPasswordForgot.error = "Password must be more than 6 char"
+            txtPasswordForgot.error = pass_error
             return false
-        } else if (pass.matches(noWhite)) {
-            txtPasswordForgot.error = "White space is not allowed"
+        } else if (pass.contains(" ",false)) {
+            txtPasswordForgot.error = nowhite
             return false
         } else {
             txtPasswordForgot.error = null
@@ -171,16 +214,16 @@ class ForgetPasswordActivity : AppCompatActivity() {
         val rePass: String = txtRepasswordForgot.text.toString()
         val noWhite: Regex = Regex("(?=\\S+$)")
         if (rePass.isEmpty()) {
-            txtRepasswordForgot.error = "Field cannot be empty"
+            txtRepasswordForgot.error = field_empty
             return false
         } else if (rePass.length < 6) {
-            txtRepasswordForgot.error = "Repassword must be more than 6 char"
+            txtRepasswordForgot.error = repasss_error
             return false
-        } else if (rePass.matches(noWhite)) {
-            txtRepasswordForgot.error = "White space is not allowed"
+        } else if (rePass.contains(" ",false)) {
+            txtRepasswordForgot.error = nowhite
             return false
         } else if (rePass != txtPasswordForgot.text.toString()) {
-            txtRepasswordForgot.error = "Repassword is not match"
+            txtRepasswordForgot.error = not_match
             return false
         } else {
             txtRepasswordForgot.error = null
@@ -192,7 +235,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
         val otp: String = txtOTPForgot.text.toString()
 
         if (otp.isEmpty()) {
-            txtOTPForgot.error = "Field cannot be empty"
+            txtOTPForgot.error = field_empty
             return false
         } else {
             txtOTPForgot.error = null
@@ -201,7 +244,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
     }
 
     private fun sendVerificationCode(phone: String) {
-        progressDialog.setMessage("Verifying Phone Number...")
+        progressDialog.setMessage(verify_code)
         progressDialog.show()
 
         val options = PhoneAuthOptions.newBuilder(firebaseAuth)
@@ -217,7 +260,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
         phone: String,
         token: PhoneAuthProvider.ForceResendingToken?
     ) {
-        progressDialog.setMessage("Resending code...")
+        progressDialog.setMessage(re_code)
         progressDialog.show()
 
         val options = PhoneAuthOptions.newBuilder(firebaseAuth)
@@ -231,7 +274,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
     }
 
     private fun verifyPhoneNumberWithCode(verificationId: String?, code: String) {
-        progressDialog.setMessage("Verifying code...")
+        progressDialog.setMessage(verify_code)
         progressDialog.show()
 
         val credential = PhoneAuthProvider.getCredential(verificationId!!, code)
@@ -239,7 +282,7 @@ class ForgetPasswordActivity : AppCompatActivity() {
     }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-        progressDialog.setMessage("Signing up...")
+        progressDialog.setMessage(signup)
         progressDialog.show()
 
         firebaseAuth.signInWithCredential(credential)

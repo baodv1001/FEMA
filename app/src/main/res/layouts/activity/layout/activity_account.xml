@@ -122,7 +122,7 @@
             android:textColor="@color/dark"
             android:textSize="18sp"
             app:backgroundTint="#FFFFFF"
-            app:icon="@drawable/ic_outline_location_on_24"
+            app:icon="@drawable/ic_baseline_language_24"
             app:iconPadding="8dp"
             app:iconTint="@color/primary" />
 

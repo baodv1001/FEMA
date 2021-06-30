@@ -44,13 +44,9 @@ class ProductDetailsActivity : AppCompatActivity() {
     private lateinit var productViewModel: ProductViewModel
     var sizeMap: MutableMap<String, String> = mutableMapOf<String, String>()
     var colorMap: MutableMap<String, String> = mutableMapOf<String, String>()
-    var language: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_details)
-
-        val sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
-        language = sharedPreferences.getString("My_Lang", "").toString()
 
         val intent: Intent = intent
         idProduct = intent.getStringExtra("idProduct")?.toInt() ?: 0
@@ -105,7 +101,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                         if (listSize?.isEmpty() == false) {
                             setupSizeRadioGroup(listSize)
                         } else
-                            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show()
                     }
                     Status.ERROR -> {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
@@ -127,7 +123,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                         if (listColor?.isEmpty() == false) {
                             setupColorRadioGroup(listColor)
                         } else
-                            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show()
                     }
                     Status.ERROR -> {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
@@ -212,10 +208,7 @@ class ProductDetailsActivity : AppCompatActivity() {
         val spf = getSharedPreferences("Login", Context.MODE_PRIVATE)
         val idAccount = spf.getString("Id", "0")?.toInt() ?: 0
         if (quantity == 0) {
-            if (language == "en")
-                Toast.makeText(this, "Out of stock!", Toast.LENGTH_SHORT).show()
-            else
-                Toast.makeText(this, "Hết hàng!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.out_of_stock, Toast.LENGTH_SHORT).show()
         }
 
             val cartInfoViewModel: CartInfoViewModel =
@@ -241,17 +234,9 @@ class ProductDetailsActivity : AppCompatActivity() {
                                             idProduct.toString(),
                                             1
                                         )
-                                        Toast.makeText(
-                                            this,
-                                            "Add to cart successfully",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                        Toast.makeText(this,R.string.add_to_cart_success,Toast.LENGTH_SHORT).show()
                                     } else {
-                                        Toast.makeText(
-                                            this,
-                                            "This product is out of stock!",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                            Toast.makeText(this,R.string.this_product_stock,Toast.LENGTH_SHORT).show()
                                     }
                                 } else {
                                     cartInfoViewModel.postCartInfo(
@@ -261,18 +246,14 @@ class ProductDetailsActivity : AppCompatActivity() {
                                         idColor,
                                         1
                                     )
-                                    Toast.makeText(
-                                        this,
-                                        "Add to cart successfully",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast.makeText(this,R.string.add_to_cart_success,Toast.LENGTH_SHORT).show()
                                 }
                             }
                             Status.ERROR -> {
                                 Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                             }
                             Status.LOADING -> {
-                                Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, R.string.loading, Toast.LENGTH_SHORT).show()
                             }
                         }
                     }

@@ -207,12 +207,8 @@ class CheckOutActivity : AppCompatActivity() {
 
     fun onClickConfirm(view: View) {
         if (textView_idAddress_checkOut.text.toString().isEmpty()) {
-            if (language == "en")
-                Toast.makeText(this, "Please add your address before check out!", Toast.LENGTH_SHORT)
+            Toast.makeText(this, R.string.please_add_address, Toast.LENGTH_SHORT)
                 .show()
-            else
-                Toast.makeText(this, "Vui lòng thêm địa chỉ trước khi thanh toán!", Toast.LENGTH_SHORT)
-                    .show()
             return
         }
         val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
@@ -235,10 +231,7 @@ class CheckOutActivity : AppCompatActivity() {
                 when (resource.status) {
                     Status.SUCCESS -> {
                         it.data?.let { idBill -> createBillInfo(idBill) }
-                        if (language == "en")
-                            Toast.makeText(this, "Check out successfully", Toast.LENGTH_SHORT).show()
-                        else
-                            Toast.makeText(this, "Đặt hàng thanh công", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, R.string.Checkout_success, Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, MainActivity::class.java).apply { }
                         startActivity(intent)
                         this.finish()
@@ -247,7 +240,7 @@ class CheckOutActivity : AppCompatActivity() {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                     }
                     Status.LOADING -> {
-                        Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, R.string.loading, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -300,10 +293,7 @@ class CheckOutActivity : AppCompatActivity() {
             })
         }
         if (isSuccess) {
-            if (language == "en")
-                Toast.makeText(this, "Check out successfully", Toast.LENGTH_SHORT).show()
-            else
-                Toast.makeText(this, "Đặt hàng thanh công", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.Checkout_success, Toast.LENGTH_SHORT).show()
         }
     }
 

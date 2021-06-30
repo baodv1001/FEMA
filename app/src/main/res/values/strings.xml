@@ -140,4 +140,44 @@
       <string name="field_otp">Verification code<font color = "#FF0000">*</font></string>
       <string name="home">Home</string>
       <string name="me">Me</string>
+
+      <string name="Checkout_success">Check out successfully</string>
+      <string name="click_back">Please click BACK again to exit</string>
+      <string name="choose_lang">Choose Language</string>
+      <string name="add_address_succ">Add address successfully!</string>
+      <string name="change_not_save">Changes will not be saved!</string>
+      <string name="field_not_fill">Field must be fill...!</string>
+      <string name="cart_empty">Your cart is empty</string>
+      <string name="invalid_code">Invalid code!</string>
+      <string name="code_coupon_succ">Your code was entered successfully!</string>
+      <string name="succ">Successfully</string>
+      <string name="pass_not_match">New password and retype not match</string>
+      <string name="check_phone">Check your phone number</string>
+      <string name="already_phone">Phone number already in use</string>
+      <string name="enter_otp">Please enter your verification code...</string>
+      <string name="verify_phone">Verifying Phone Number...</string>
+      <string name="re_verify_phone">Resending code...</string>
+      <string name="loading">Loading</string>
+      <string name="please_add_address">Please add your address before check out!</string>
+      <string name="save_success">Save successfully!</string>
+      <string name="user_phone_not_available">Username or number phone is not available</string>
+      <string name="field_not_empty">Field cannot be empty</string>
+      <string name="signup">Sign up</string>
+      <string name="pass_more_6">Password must be more than 6 char</string>
+      <string name="white_space">White space is not allowed</string>
+      <string name="login_fail">Login Failed</string>
+     <string name="name_too_long">Name too long</string>
+     <string name="user_too_long">Username too long</string>
+     <string name="please_add_add">Please add address!</string>
+     <string name="cancel_success">Canceled successfully!</string>
+     <string name="Add_review">Added review successfully!</string>
+     <string name="error">Error</string>
+     <string name="out_of_stock">Out of stock!</string>
+     <string name="add_to_cart_success">Add to cart successfully</string>
+     <string name="this_product_stock">This product is out of stock!</string>
+     <string name="signup_success">Sign up success!</string>
+     <string name="your_phone_taken">Sign up failed. Your Phone is already taken</string>
+     <string name="your_username_taken">Sign up failed. Your Username is already taken</string>
+     <string name="cancel_order">Cancel my order</string>
+     <string name="add_review">Add review</string>
 </resources>

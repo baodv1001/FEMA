@@ -142,4 +142,44 @@
     <string name="field_otp">Mã xác nhận<font color = "#FF0000">*</font></string>
     <string name="home">Trang chủ</string>
     <string name="me">Tôi</string>
+
+    <string name="Checkout_success">Đặt hàng thành công</string>
+    <string name="click_back">Nhấn BACK lần nữa để thoát</string>
+    <string name="choose_lang">Chọn ngôn ngữ</string>
+    <string name="add_address_succ">Đã thêm địa chỉ</string>
+    <string name="change_not_save">Thay đổi không được lưu!</string>
+    <string name="field_not_fill">Không được bỏ trống!</string>
+    <string name="cart_empty">Giỏ hàng rỗng</string>
+    <string name="invalid_code">Mã không hợp lệ!</string>
+    <string name="code_coupon_succ">Mã của bạn đã được nhập thành công!</string>
+    <string name="succ">Thành công</string>
+    <string name="pass_not_match">Mật khẩu mới và nhập lại không khớp</string>
+    <string name="check_phone">Kiểm tra số điện thoại</string>
+    <string name="already_phone">Số điện thoại đã được sử dụng</string>
+    <string name="enter_otp">Xin vui lòng nhập mã xác minh của bạn...</string>
+    <string name="verify_phone">Đang xác minh số điện thoại ...</string>
+    <string name="re_verify_phone">Gửi lại mã ...</string>
+    <string name="loading">Đang tải</string>
+    <string name="please_add_address">Vui lòng thêm địa chỉ của bạn trước khi thanh toán!</string>
+    <string name="save_success">Lưu thành công!</string>
+    <string name="user_phone_not_available">Tên người dùng hoặc số điện thoại không khả dụng</string>
+    <string name="field_not_empty">Không được bỏ trống</string>
+    <string name="signup">Đăng ký...</string>
+    <string name="pass_more_6">Mật khẩu phải hơn 6 kí tự</string>
+    <string name="white_space">Không chấp nhận khoảng trắng</string>
+    <string name="login_fail">Đăng nhập thất bại</string>
+    <string name="name_too_long">Tên quá dài</string>
+    <string name="user_too_long">Tên đăng nhập quá dài</string>
+    <string name="please_add_add">Vui lòng thêm mật khẩu!</string>
+    <string name="cancel_success">Hủy thành công!</string>
+    <string name="Add_review">Đánh giá thành công!</string>
+    <string name="error">Lỗi</string>
+    <string name="out_of_stock">Hết hàng!</string>
+    <string name="add_to_cart_success">Thêm vào giở hàng thành công</string>
+    <string name="this_product_stock">Sản phẩm này hết hàng!</string>
+    <string name="signup_success">Đăng ký thành công!</string>
+    <string name="your_phone_taken">Đăng ký thất bại. Số điện thoại đã được sử dụng</string>
+    <string name="your_username_taken">Đăng ký thất bại. Tên đăng nhập đã được dùng</string>
+    <string name="cancel_order">Hủy đơn hàng</string>
+    <string name="add_review">Thêm đánh giá</string>
 </resources>

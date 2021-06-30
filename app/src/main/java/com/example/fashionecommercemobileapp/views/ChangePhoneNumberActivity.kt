@@ -32,7 +32,12 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
     private lateinit var progressDialog: ProgressDialog
 
     private var userViewModel : UserViewModel? = null
-    var language: String=""
+
+    var language:String = ""
+    var loading: String = ""
+    var verify_code: String =""
+    var re_code: String= ""
+    var change_phone: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +45,7 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
 
         val sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
         language = sharedPreferences.getString("My_Lang", "").toString()
+        translate()
 
         AccountRepository.Companion.setContext(this@ChangePhoneNumberActivity)
         userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
@@ -48,7 +54,7 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         progressDialog = ProgressDialog(this)
-        progressDialog.setTitle("Please wait...")
+        progressDialog.setTitle(loading)
         progressDialog.setCanceledOnTouchOutside(false)
 
         mCallbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -58,10 +64,7 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
 
             override fun onVerificationFailed(p0: FirebaseException) {
                 progressDialog.dismiss()
-                if (language == "en")
-                    Toast.makeText(this@ChangePhoneNumberActivity, "Check your phone number", Toast.LENGTH_SHORT).show()
-                else
-                    Toast.makeText(this@ChangePhoneNumberActivity, "Kiểm tra số điện thoại", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ChangePhoneNumberActivity, R.string.check_phone, Toast.LENGTH_SHORT).show()
             }
 
             override fun onCodeSent(
@@ -90,10 +93,7 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
                         }
                         sendVerificationCode(phone)}
                     else {
-                        if (language == "en")
-                            Toast.makeText(this, "phone number already in use",Toast.LENGTH_SHORT).show()
-                        else
-                            Toast.makeText(this, "Số điện thoại đã được sử dụng", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, R.string.already_phone,Toast.LENGTH_SHORT).show()
                     }
                 })
 
@@ -114,10 +114,7 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
                         reSendVerificationCode(phone, forceResendingToken)
                     }
                     else {
-                        if (language == "en")
-                            Toast.makeText(this, "phone number already in use",Toast.LENGTH_SHORT).show()
-                        else
-                            Toast.makeText(this, "Số điện thoại đã được sử dụng", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, R.string.already_phone,Toast.LENGTH_SHORT).show()
                     }
                 })
             }
@@ -126,10 +123,7 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
         button_choose.setOnClickListener {
             if (text_input_OTP.text.toString().isEmpty())
             {
-                if (language == "en")
-                    Toast.makeText(this@ChangePhoneNumberActivity, "Please enter your verification code...", Toast.LENGTH_SHORT).show()
-                else
-                    Toast.makeText(this@ChangePhoneNumberActivity, "Vui lòng nhập mã xác nhận...", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ChangePhoneNumberActivity, R.string.enter_otp, Toast.LENGTH_SHORT).show()
             }
             else
             {
@@ -140,23 +134,38 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
         }
     }
 
+    fun translate()
+    {
+        if (language == "en")
+        {
+            loading = "Loading"
+            verify_code = "Verifying code..."
+            re_code= "Resending code..."
+            change_phone= "Change Phone Number..."
+        }
+        else
+        {
+            loading = "Đang tải"
+            verify_code = "Đang xác minh số điện thoại ..."
+            re_code= "Gửi lại mã ..."
+            change_phone= "Đổi số điện thoại..."
+        }
+    }
+
     fun onClickBack(view: View) {
         super.onBackPressed()
     }
 
     fun checkTextField(): Boolean {
         if(text_input_Phone_Number.text.toString().isEmpty() ) {
-            if (language == "en")
-                Toast.makeText(this, "Field must be fill...!", Toast.LENGTH_SHORT).show()
-            else
-                Toast.makeText(this, "Vui lòng điền đủ thông tin...!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.field_not_fill, Toast.LENGTH_SHORT).show()
             return false
         }
         return true
     }
 
     private fun sendVerificationCode(phone: String) {
-        progressDialog.setMessage("Verifying Phone Number...")
+        progressDialog.setMessage(verify_code)
         progressDialog.show()
 
         val options = PhoneAuthOptions.newBuilder(firebaseAuth)
@@ -172,7 +181,7 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
         phone: String,
         token: PhoneAuthProvider.ForceResendingToken?
     ) {
-        progressDialog.setMessage("Resending code...")
+        progressDialog.setMessage(re_code)
         progressDialog.show()
 
         val options = PhoneAuthOptions.newBuilder(firebaseAuth)
@@ -186,7 +195,7 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
     }
 
     private fun verifyPhoneNumberWithCode(verificationId: String?, code: String) {
-        progressDialog.setMessage("Verifying code...")
+        progressDialog.setMessage(verify_code)
         progressDialog.show()
 
         val credential = PhoneAuthProvider.getCredential(verificationId!!, code)
@@ -194,7 +203,7 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
     }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-        progressDialog.setMessage("Change Phone Number...")
+        progressDialog.setMessage(change_phone)
         progressDialog.show()
 
         firebaseAuth.signInWithCredential(credential)
@@ -206,7 +215,7 @@ class ChangePhoneNumberActivity : AppCompatActivity() {
                 val ed = sp.edit()
                 ed.putString("Phone", phone)*/
                 progressDialog.dismiss()
-                Toast.makeText(this@ChangePhoneNumberActivity, "Success", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@ChangePhoneNumberActivity, R.string.succ, Toast.LENGTH_SHORT).show()
                 //finish()
             }
             .addOnFailureListener { e ->

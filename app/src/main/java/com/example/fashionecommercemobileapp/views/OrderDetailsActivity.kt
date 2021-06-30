@@ -253,10 +253,7 @@ class OrderDetailsActivity : AppCompatActivity() {
                     }
                 }
             } else {
-                if (language == "en")
-                    Toast.makeText(this, "Please add your address!", Toast.LENGTH_SHORT).show()
-                else
-                    Toast.makeText(this, "Vui lòng chọn địa chỉ!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.please_add_add, Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -286,10 +283,7 @@ class OrderDetailsActivity : AppCompatActivity() {
             quantityList.add(info.quantity.toString())
         }
         productViewModel.updateProducts(idProductList, quantityList)
-        if (language == "en")
-            Toast.makeText(this, "Canceled successfully!", Toast.LENGTH_SHORT).show()
-        else
-            Toast.makeText(this, "Hủy thành công!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, R.string.cancel_success, Toast.LENGTH_SHORT).show()
         super.onBackPressed()
     }
 
@@ -302,9 +296,6 @@ class OrderDetailsActivity : AppCompatActivity() {
         productViewModel.updateProductRating(idProductList, ratingBar_order.rating.toString())
         isRated = 1
         button_add_review.visibility = View.GONE
-        if (language == "en")
-            Toast.makeText(this, "Added review successfully!", Toast.LENGTH_SHORT).show()
-        else
-            Toast.makeText(this, "Thêm đánh giá thành công!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, R.string.Add_review, Toast.LENGTH_SHORT).show()
     }
 }

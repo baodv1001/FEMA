@@ -66,7 +66,7 @@ class AccountActivity : AppCompatActivity() {
         val listLang = arrayOf("English", "Vietnamese")
 
         val mBuilder = AlertDialog.Builder(this@AccountActivity)
-        mBuilder.setTitle("Choose Language")
+        mBuilder.setTitle(R.string.choose_lang)
         mBuilder.setSingleChoiceItems(listLang, -1) { dialog, which ->
             if (which == 0) {
                 setLocate("en")
@@ -97,6 +97,7 @@ class AccountActivity : AppCompatActivity() {
         val editor = getSharedPreferences("Settings", Context.MODE_PRIVATE).edit()
         editor.putString("My_Lang", Lang)
         editor.apply()
+    }
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -107,7 +108,7 @@ class AccountActivity : AppCompatActivity() {
         }
 
         this.doubleBackToExitPressedOnce = true
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, R.string.click_back, Toast.LENGTH_SHORT).show()
 
         Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
     }
