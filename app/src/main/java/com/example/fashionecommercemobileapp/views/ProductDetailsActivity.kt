@@ -208,7 +208,7 @@ class ProductDetailsActivity : AppCompatActivity() {
         val spf = getSharedPreferences("Login", Context.MODE_PRIVATE)
         val idAccount = spf.getString("Id", "0")?.toInt() ?: 0
         if (quantity == 0) {
-            Toast.makeText(this, R.string.out_of_stock, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.this_product_stock, Toast.LENGTH_SHORT).show()
         }
 
             val cartInfoViewModel: CartInfoViewModel =
