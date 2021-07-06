@@ -301,6 +301,9 @@ class MoreProductsActivity : AppCompatActivity() {
         rating = "0"
         minPrice = "0"
         maxPrice = "9999999999"
+        radio_group.clearCheck()
+        radio_group[0].setBackgroundResource(R.drawable.ic_baseline_arrow_upward_24)
+        radio_group[1].setBackgroundResource(R.drawable.ic_baseline_arrow_downward_24)
         filterByRatingName(rating, minPrice, maxPrice)
         filterDialog?.dismiss()
         filterDialog = null;

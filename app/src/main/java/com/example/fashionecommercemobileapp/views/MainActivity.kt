@@ -101,7 +101,23 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == 1)
+        productViewModel!!.getFlashSaleData()
+            ?.observe(this, Observer {
+                val listFlashSale = it
+                wishListViewModel!!.getWishListProductData(idAccount)
+                    ?.observe(this, Observer { it ->
+                        setupFlashSaleRecyclerView(listFlashSale, it)
+                    })
+            })
+        productViewModel!!.getRecommendedData()
+            ?.observe(this, Observer {
+                val listRecommend = it
+                wishListViewModel!!.getWishListProductData(idAccount)
+                    ?.observe(this, Observer { it ->
+                        setupRecommendedRecyclerView(listRecommend, it)
+                    })
+            })
+        /*if (requestCode == 1)
             if (resultCode == RESULT_OK && data != null) {
                 val check = data.getBooleanExtra("check", true)
                 val pos = data.getIntExtra("position", 0)
@@ -133,6 +149,14 @@ class MainActivity : AppCompatActivity() {
                     Glide.with(this).load(R.drawable.ic_un_heart_button)
                         .into(recommend_recycler[pos].button_like)
                 }
+                productViewModel!!.getRecommendedData()
+                    ?.observe(this, Observer {
+                        val listRecommend = it
+                        wishListViewModel!!.getWishListProductData(idAccount)
+                            ?.observe(this, Observer { it ->
+                                setupRecommendedRecyclerView(listRecommend, it)
+                            })
+                    })
                 productViewModel!!.getFlashSaleData()
                     ?.observe(this, Observer {
                         val listFlashSale = it
@@ -141,7 +165,7 @@ class MainActivity : AppCompatActivity() {
                                 setupFlashSaleRecyclerView(listFlashSale, it)
                             })
                     })
-            }
+            }*/
     }
 
     private fun setupRecommendedRecyclerView(productList: List<Product>, wishList: List<Product>) {
