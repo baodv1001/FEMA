@@ -5,6 +5,6 @@ import com.example.fashionecommercemobileapp.model.Color
 import retrofit2.http.GET
 
 interface ColorApi {
-    @GET("get_color.php")
+    @GET("Others/get_color.php")
     suspend fun getColor(): List<Color>
 }

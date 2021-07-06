@@ -212,7 +212,54 @@
                         android:textColor="@color/dark"
                         android:textSize="14sp"
                         android:textStyle="bold" />
-
+                    <RadioButton
+                        android:id="@+id/radio_size_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/radio_flat_selector"
+                        android:button="@android:color/transparent"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:textColor="@color/dark"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                    <RadioButton
+                        android:id="@+id/radio_size_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/radio_flat_selector"
+                        android:button="@android:color/transparent"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:textColor="@color/dark"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                    <RadioButton
+                        android:id="@+id/radio_size_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/radio_flat_selector"
+                        android:button="@android:color/transparent"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:textColor="@color/dark"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                    <RadioButton
+                        android:id="@+id/radio_size_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/radio_flat_selector"
+                        android:button="@android:color/transparent"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:textColor="@color/dark"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
                 </RadioGroup>
             </HorizontalScrollView>
 
@@ -254,7 +301,54 @@
                         android:textColor="@color/dark"
                         android:textSize="14sp"
                         android:textStyle="bold" />
-
+                    <RadioButton
+                        android:id="@+id/radio_color_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/radio_flat_selector"
+                        android:button="@android:color/transparent"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:textColor="@color/dark"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                    <RadioButton
+                        android:id="@+id/radio_color_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/radio_flat_selector"
+                        android:button="@android:color/transparent"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:textColor="@color/dark"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                    <RadioButton
+                        android:id="@+id/radio_color_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/radio_flat_selector"
+                        android:button="@android:color/transparent"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:textColor="@color/dark"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                    <RadioButton
+                        android:id="@+id/radio_color_5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/radio_flat_selector"
+                        android:button="@android:color/transparent"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:textColor="@color/dark"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
                 </RadioGroup>
 
             </HorizontalScrollView>

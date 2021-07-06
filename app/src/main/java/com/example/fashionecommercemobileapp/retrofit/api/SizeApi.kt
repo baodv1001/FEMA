@@ -5,6 +5,6 @@ import com.example.fashionecommercemobileapp.model.Size
 import retrofit2.http.GET
 
 interface SizeApi {
-    @GET("get_size.php")
+    @GET("Others/get_size.php")
     suspend fun getSize(): List<Size>
 }

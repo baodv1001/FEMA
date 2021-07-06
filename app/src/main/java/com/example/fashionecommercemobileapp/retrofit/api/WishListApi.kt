@@ -8,7 +8,7 @@ import retrofit2.http.POST
 
 interface WishListApi {
     @FormUrlEncoded
-    @POST("get_wishlistbyid.php")
+    @POST("Wishlist/get_wishlistbyid.php")
     fun getWishListProduct(@Field ("idAccount" ) idAccount : Int) : Call<List<Product>>
 
     @FormUrlEncoded

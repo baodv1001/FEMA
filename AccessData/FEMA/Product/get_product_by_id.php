@@ -1,5 +1,5 @@
 <?php
-  include_once './dbConnect.php';
+  include_once '../dbConnect.php';
   function getProductList(){
     $db = new dbConnect();
 

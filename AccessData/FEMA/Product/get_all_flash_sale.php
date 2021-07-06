@@ -1,12 +1,12 @@
 <?php
- include_once './dbConnect.php';
+ include_once '../dbConnect.php';
  function dispInfo(){
    $db = new dbConnect();
   // Mảng JSON
   $response = array();
   //$response["product"] = array();
   // Câu lệnh Select dùng để xem dữ liệu
-  $result = mysqli_query($db->connect(),"SELECT * FROM product ORDER by rating LIMIT 10;");
+  $result = mysqli_query($db->connect(),"SELECT * FROM product where discount > '0';");
   //Đọc dữ liệu từ MySQL
   while($row = mysqli_fetch_assoc($result)){
     $t = array();

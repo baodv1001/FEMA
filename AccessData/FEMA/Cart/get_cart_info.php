@@ -3,8 +3,7 @@
   function getCartInfo() {
     $db = new dbConnect();
     
-    // $idCart = $_REQUEST['idCart'];
-    $idCart = '1';
+    $idCart = $_REQUEST['idCart'];
     $response = array();
     $result = mysqli_query($db->connect(), 
       "SELECT * FROM cartinfo WHERE idCart = $idCart");
