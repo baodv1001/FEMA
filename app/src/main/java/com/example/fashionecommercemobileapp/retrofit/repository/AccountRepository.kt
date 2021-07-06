@@ -3,6 +3,7 @@
 import android.content.Context
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
+import com.example.fashionecommercemobileapp.R
 import com.example.fashionecommercemobileapp.model.Account
 import com.example.fashionecommercemobileapp.model.ShaPW
 import com.example.fashionecommercemobileapp.retrofit.api.AccountApi
@@ -63,11 +64,11 @@ import retrofit2.Response
                 response.body()?.let {
                     if (result == "Success")
                     {
-                        Toast.makeText(context, "Sign up success", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, R.string.signup_success, Toast.LENGTH_SHORT).show()
                     } else  if (result == "FailedPhone"){
-                        Toast.makeText(context, "Sign up failed. Your Phone is already taken", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, R.string.your_phone_taken, Toast.LENGTH_SHORT).show()
                     } else  if (result == "FailedUsername"){
-                        Toast.makeText(context, "Sign up failed. Your Username is already taken", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, R.string.your_phone_taken, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -103,7 +104,7 @@ import retrofit2.Response
                         })
                     } else
                     {
-                        Toast.makeText(context, "Username or number phone is not available", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, R.string.user_phone_not_available, Toast.LENGTH_SHORT).show()
                     }
                 }
             }

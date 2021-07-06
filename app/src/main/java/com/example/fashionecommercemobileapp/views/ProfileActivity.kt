@@ -56,6 +56,7 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
     private var listUser: List<User>? = null
     val REQUEST_CODE = 100
     private var id: Int? = null
+    var language:String = ""
     private var selectedImageUri: Uri? = null
 
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
@@ -63,6 +64,9 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
+
+        val sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        language = sharedPreferences.getString("My_Lang", "").toString()
 
         UserRepository.Companion.setContext(this@ProfileActivity)
         userViewModel = ViewModelProviders.of(this).get(UserViewModel::class.java)
@@ -112,11 +116,19 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
         //change gender
         gender_layout.setOnClickListener {
             //create dialog
-            val items = arrayOf(
-                "Male",
-                "Female",
-                "Others"
-            )
+            var items :Array<String>
+                if (language == "en")
+                    items = arrayOf(
+                    "Male",
+                    "Female",
+                    "Others"
+                )
+            else
+                    items = arrayOf(
+                        "Nam",
+                        "Nữ",
+                        "Giới tính khác"
+                    )
             val builder = AlertDialog.Builder(this, R.style.myDialogStyle)
 
             builder.setItems(items,
@@ -134,7 +146,10 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
             params.setMargins(20, 0, 0, 0)
             title.setPadding(40, 30, 0, 0)
             title.layoutParams = params
-            title.text = "Gender"
+            if (language == "en")
+                title.text = "Gender"
+            else
+                title.text = "Giới tính"
             builder.setCustomTitle(title)
 
             val dialog = builder.create()
@@ -170,7 +185,10 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
             dialog.show()
             dialog.window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
             dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK)
-            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).text = "Cancel"
+            if (language == "en")
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).text = "Cancel"
+            else
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).text = "Hủy"
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK)
         }
         //pick image
@@ -187,7 +205,7 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
                 pickDate!!
             )
             uploadImage(idAccount.toInt())
-            Toast.makeText(this, "Saved Successfully", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, R.string.save_success, Toast.LENGTH_SHORT).show()
             super.onBackPressed()
         }
         //change Phone Number
@@ -297,7 +315,13 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
         val builder: AlertDialog.Builder =
             android.app.AlertDialog.Builder(this, R.style.myDialogStyle)
 
-        val titleText = "Name"
+        var titleText = ""
+
+        if (language == "en")
+            titleText = "New name"
+        else
+            titleText = "Tên mới"
+        // Set up the input
         val input = EditText(this)
         input.setSingleLine()
         val container = FrameLayout(this)
@@ -308,8 +332,11 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
         params.leftMargin = resources.getDimensionPixelSize(R.dimen.dialog_margin)
         params.rightMargin = resources.getDimensionPixelSize(R.dimen.dialog_margin)
         input.layoutParams = params
-        input.hint = "Name"
         input.gravity = Gravity.TOP or Gravity.LEFT
+        if (language == "en")
+            input.hint = "Name"
+        else
+            input.hint = "Tên"
         input.setTextColor(Color.BLACK)
         input.inputType = InputType.TYPE_CLASS_TEXT
         input.setText(name)
@@ -325,7 +352,10 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
         params1.setMargins(20, 0, 0, 0)
         title.setPadding(52, 30, 0, 0)
         title.layoutParams = params1
-        title.text = "Name"
+        if (language == "en")
+            title.text = "Name"
+        else
+            title.text = "Tên"
         builder.setCustomTitle(title)
         builder.setView(container)
         val foregroundColorSpan = ForegroundColorSpan(Color.BLACK)
@@ -351,9 +381,14 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
             text_name_bottom.text = input.text.toString()
             text_name.text = input.text.toString()
         })
-        builder.setNegativeButton(
-            "Cancel",
-            DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
+        if (language == "en")
+            builder.setNegativeButton(
+                "Cancel",
+                DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
+        else
+            builder.setNegativeButton(
+                "Hủy",
+                DialogInterface.OnClickListener { dialog, which -> dialog.cancel() })
 
         var dialog = builder.create()
 

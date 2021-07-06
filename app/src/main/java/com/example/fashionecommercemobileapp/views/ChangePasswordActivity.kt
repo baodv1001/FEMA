@@ -37,7 +37,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         button_change.setOnClickListener {
             if (checkTextField()) {
                 changePassword(idAccount)
-                Toast.makeText(this, "Successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.succ, Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -49,12 +49,11 @@ class ChangePasswordActivity : AppCompatActivity() {
     fun checkTextField(): Boolean {
         return if (
             text_input_new_password.text.toString().isEmpty() ||
-            text_input_re_password.text.toString().isEmpty()
-        ) {
-            Toast.makeText(this, "Please filled text field", Toast.LENGTH_SHORT).show()
+            text_input_re_password.text.toString().isEmpty()) {
+                    Toast.makeText(this, R.string.field_not_fill, Toast.LENGTH_SHORT).show()
             false
         } else if (text_input_new_password.text.toString() != text_input_re_password.text.toString()) {
-            Toast.makeText(this, "New password and retype not match", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.pass_not_match, Toast.LENGTH_SHORT).show()
             false
         } else {
             true

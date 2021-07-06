@@ -35,7 +35,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginBottom="16dp"
-            android:text="Account"
+            android:text="@string/account"
             android:textColor="@color/dark"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -107,6 +107,22 @@
             android:textSize="18sp"
             app:backgroundTint="#FFFFFF"
             app:icon="@drawable/ic_outline_location_on_24"
+            app:iconPadding="8dp"
+            app:iconTint="@color/primary" />
+
+        <Button
+            android:id="@+id/button_lang"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/corner_radius"
+            android:gravity="start|center"
+            android:text="@string/language"
+            android:textAllCaps="false"
+            android:textColor="@color/dark"
+            android:textSize="18sp"
+            app:backgroundTint="#FFFFFF"
+            app:icon="@drawable/ic_baseline_language_24"
             app:iconPadding="8dp"
             app:iconTint="@color/primary" />
 

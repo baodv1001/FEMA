@@ -26,7 +26,8 @@ class CartAdapter(
     private val listCart: ArrayList<CartInfo>,
     private val listProduct: ArrayList<Product>,
     private val listSize: ArrayList<Size>,
-    private val listColor: ArrayList<Color>
+    private val listColor: ArrayList<Color>,
+    private val lang: String
 ) : RecyclerView.Adapter<CartAdapter.ViewHolder>() {
 
     private var idDeletedProduct: MutableLiveData<Int> = MutableLiveData(0)
@@ -108,7 +109,10 @@ class CartAdapter(
             }
         }
         holder.productCart.text = listProduct[position].name
-        holder.infoCart.text = "Size: $sizeName, Color: $colorName"
+        if (lang == "en")
+            holder.infoCart.text = "Size: $sizeName, Color: $colorName"
+        else
+            holder.infoCart.text = "Cỡ: $sizeName, Màu: $colorName"
         val discount: Float = 1 - (listProduct[position].discount?.toFloat() ?: 0F)
         val price: Float = (listProduct[position].price?.toFloat() ?: 0F)
         holder.costCart.text =
@@ -144,7 +148,10 @@ class CartAdapter(
 
         holder.itemView.button_increase_cart.setOnClickListener {
             if(listProduct[position].quantity?.toInt() ?: 0 == listCart[position].quantity) {
-                Toast.makeText(context, "This product is out of stock!", Toast.LENGTH_SHORT).show()
+                if (lang == "en")
+                    Toast.makeText(context, "This product is out of stock!", Toast.LENGTH_SHORT).show()
+                else
+                    Toast.makeText(context, "Sản phẩm này đã hết hàng!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             idProduct.value = listCart[position].idProduct

@@ -1,5 +1,6 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -23,9 +24,13 @@ class OrderActivity : AppCompatActivity() {
     private var billViewModel: BillViewModel? = null
     private lateinit var billAdapter: BillAdapter
     private lateinit var isClicked: LiveData<Boolean>
+    private var language: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order)
+
+        val sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        language = sharedPreferences.getString("My_Lang", "").toString()
 
         setUpOrderRecyclerView()
         fetchData()
@@ -58,7 +63,7 @@ class OrderActivity : AppCompatActivity() {
 
     private fun setUpOrderRecyclerView() {
         billRecyclerView = findViewById(R.id.order_recycler)
-        billAdapter = BillAdapter(this, arrayListOf())
+        billAdapter = BillAdapter(this, arrayListOf(), language)
         val layoutManager: RecyclerView.LayoutManager =
             GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false)
         billRecyclerView.layoutManager = layoutManager

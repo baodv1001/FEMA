@@ -1,5 +1,6 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
@@ -35,27 +36,24 @@ class AddAddressActivity : AppCompatActivity() {
 
             if (checkTextField()) {
                 addressViewModel!!.addAddressInfo(idAccount.toInt(), name, address, phoneNumber)
-                Toast.makeText(this@AddAddressActivity, "Add address successfully!", LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this@AddAddressActivity, R.string.add_address_succ, LENGTH_SHORT).show()
                 super.onBackPressed()
             }
         }
 
 
         button_back.setOnClickListener {
-            Toast.makeText(this@AddAddressActivity, "Changes will not be saved!", LENGTH_SHORT)
-                .show()
+            Toast.makeText(this@AddAddressActivity, R.string.change_not_save, LENGTH_SHORT).show()
             super.onBackPressed()
         }
     }
 
     private fun checkTextField(): Boolean {
         if (text_input_Receiver_Name.text.toString().isEmpty() ||
-            text_input_Address.text.toString().isEmpty() ||
-            text_input_Phone_Number.text.toString().isEmpty()
-        ) {
-            Toast.makeText(this@AddAddressActivity, "Field must be fill...!", LENGTH_SHORT).show()
-            return false
+                text_input_Address.text.toString().isEmpty() ||
+                text_input_Phone_Number.text.toString().isEmpty()) {
+                Toast.makeText(this@AddAddressActivity, R.string.field_not_fill, LENGTH_SHORT).show()
+                return false
         }
         return true
     }

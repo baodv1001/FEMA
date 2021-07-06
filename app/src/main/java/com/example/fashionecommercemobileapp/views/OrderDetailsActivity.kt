@@ -1,5 +1,6 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -29,6 +30,7 @@ class OrderDetailsActivity : AppCompatActivity() {
     private var productList: ArrayList<Product> = arrayListOf()
     private var sizeList: ArrayList<Size> = arrayListOf()
     private var colorList: ArrayList<Color> = arrayListOf()
+    private var language: String = ""
 
     private lateinit var billViewModel: BillViewModel
     private lateinit var billInfoViewModel: BillInfoViewModel
@@ -46,6 +48,9 @@ class OrderDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_order_details)
+
+        val sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        language = sharedPreferences.getString("My_Lang", "").toString()
 
         BillRepository.Companion.setContext(this@OrderDetailsActivity)
         BillInfoRepository.Companion.setContext(this@OrderDetailsActivity)
@@ -67,7 +72,11 @@ class OrderDetailsActivity : AppCompatActivity() {
         setUpBillInfoObservers(idBill)
         getAddress()
 
-        val descriptionData = arrayOf("Unconfirmed", "Shipping", "Done")
+        var descriptionData: Array<String>
+        if (language == "en")
+            descriptionData = arrayOf("Unconfirmed", "Shipping", "Done")
+        else
+            descriptionData = arrayOf("Chưa xác nhận", "Đang giao", "Hoàn thành")
         val stateProgressBar =
             findViewById<View>(R.id.stateProgressBar) as StateProgressBar
         stateProgressBar.setStateDescriptionData(descriptionData)
@@ -108,7 +117,7 @@ class OrderDetailsActivity : AppCompatActivity() {
 
     private fun setUpRecyclerView() {
         orderDetailsAdapter =
-            OrderDetailsAdapter(this, arrayListOf(), arrayListOf(), sizeList, colorList)
+            OrderDetailsAdapter(this, arrayListOf(), arrayListOf(), sizeList, colorList, language)
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView_orderDetails.layoutManager = layoutManager
         recyclerView_orderDetails.adapter = orderDetailsAdapter
@@ -244,7 +253,7 @@ class OrderDetailsActivity : AppCompatActivity() {
                     }
                 }
             } else {
-                Toast.makeText(this, "Please add your address!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, R.string.please_add_add, Toast.LENGTH_SHORT).show()
             }
         })
     }
@@ -274,7 +283,7 @@ class OrderDetailsActivity : AppCompatActivity() {
             quantityList.add(info.quantity.toString())
         }
         productViewModel.updateProducts(idProductList, quantityList)
-        Toast.makeText(this, "Canceled successfully!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, R.string.cancel_success, Toast.LENGTH_SHORT).show()
         super.onBackPressed()
     }
 
@@ -287,6 +296,6 @@ class OrderDetailsActivity : AppCompatActivity() {
         productViewModel.updateProductRating(idProductList, ratingBar_order.rating.toString())
         isRated = 1
         button_add_review.visibility = View.GONE
-        Toast.makeText(this, "Added review successfully!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, R.string.Add_review, Toast.LENGTH_SHORT).show()
     }
 }

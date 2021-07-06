@@ -1,5 +1,6 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -43,13 +44,8 @@ class EditAddressActivity : AppCompatActivity() {
             val phoneNumberAfter: String = text_input_Phone_Number.text.toString()
 
             if (checkTextField()) {
-                addressViewModel!!.updateAddressInfo(
-                    idAddress,
-                    nameAfter,
-                    addressAfter,
-                    phoneNumberAfter
-                )
-                Toast.makeText(this, "Save successfully!", Toast.LENGTH_SHORT).show()
+                addressViewModel!!.updateAddressInfo(idAddress, nameAfter, addressAfter, phoneNumberAfter)
+                Toast.makeText(this,R.string.save_success, Toast.LENGTH_SHORT).show()
                 super.onBackPressed()
             }
         }
@@ -59,17 +55,15 @@ class EditAddressActivity : AppCompatActivity() {
     private fun checkTextField(): Boolean {
         if (text_input_Receiver_Name.text.toString().isEmpty() ||
             text_input_Address.text.toString().isEmpty() ||
-            text_input_Phone_Number.text.toString().isEmpty()
-        ) {
-            Toast.makeText(this@EditAddressActivity, "Field must be fill...!", Toast.LENGTH_SHORT)
-                .show()
+            text_input_Phone_Number.text.toString().isEmpty()) {
+            Toast.makeText(this@EditAddressActivity, R.string.field_not_fill, Toast.LENGTH_SHORT).show()
             return false
         }
         return true
     }
 
     fun onClickBack(view: View) {
-        Toast.makeText(this, "Change wil not be saved!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, R.string.change_not_save, Toast.LENGTH_SHORT).show()
         super.onBackPressed()
     }
 }

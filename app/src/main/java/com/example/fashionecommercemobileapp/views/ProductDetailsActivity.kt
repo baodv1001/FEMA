@@ -101,7 +101,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                         if (listSize?.isEmpty() == false) {
                             setupSizeRadioGroup(listSize)
                         } else
-                            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show()
                     }
                     Status.ERROR -> {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
@@ -123,7 +123,7 @@ class ProductDetailsActivity : AppCompatActivity() {
                         if (listColor?.isEmpty() == false) {
                             setupColorRadioGroup(listColor)
                         } else
-                            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, R.string.error, Toast.LENGTH_SHORT).show()
                     }
                     Status.ERROR -> {
                         Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
@@ -205,11 +205,11 @@ class ProductDetailsActivity : AppCompatActivity() {
             val color: String = selectedColorButton.text.toString()
             val idColor: Int = colorMap.filterValues { it == color }.keys.first().toString().toInt()
 
-            val spf = getSharedPreferences("Login", Context.MODE_PRIVATE)
-            val idAccount = spf.getString("Id", "0")?.toInt() ?: 0
-            if (quantity == 0) {
-                Toast.makeText(this, "Out of stock!", Toast.LENGTH_SHORT).show()
-            }
+        val spf = getSharedPreferences("Login", Context.MODE_PRIVATE)
+        val idAccount = spf.getString("Id", "0")?.toInt() ?: 0
+        if (quantity == 0) {
+            Toast.makeText(this, R.string.this_product_stock, Toast.LENGTH_SHORT).show()
+        }
 
             val cartInfoViewModel: CartInfoViewModel =
                 ViewModelProviders.of(this).get(CartInfoViewModel::class.java)
@@ -234,17 +234,9 @@ class ProductDetailsActivity : AppCompatActivity() {
                                             idProduct.toString(),
                                             1
                                         )
-                                        Toast.makeText(
-                                            this,
-                                            "Add to cart successfully",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                        Toast.makeText(this,R.string.add_to_cart_success,Toast.LENGTH_SHORT).show()
                                     } else {
-                                        Toast.makeText(
-                                            this,
-                                            "This product is out of stock!",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                            Toast.makeText(this,R.string.this_product_stock,Toast.LENGTH_SHORT).show()
                                     }
                                 } else {
                                     cartInfoViewModel.postCartInfo(
@@ -254,18 +246,14 @@ class ProductDetailsActivity : AppCompatActivity() {
                                         idColor,
                                         1
                                     )
-                                    Toast.makeText(
-                                        this,
-                                        "Add to cart successfully",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast.makeText(this,R.string.add_to_cart_success,Toast.LENGTH_SHORT).show()
                                 }
                             }
                             Status.ERROR -> {
                                 Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                             }
                             Status.LOADING -> {
-                                Toast.makeText(this, "Loading", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, R.string.loading, Toast.LENGTH_SHORT).show()
                             }
                         }
                     }

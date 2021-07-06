@@ -23,7 +23,8 @@ class OrderDetailsAdapter(
     private val listBillInfo: ArrayList<BillInfo>,
     private val listProduct: ArrayList<Product>,
     private val listSize: ArrayList<Size>,
-    private val listColor: ArrayList<Color>
+    private val listColor: ArrayList<Color>,
+    private val lang: String
 ) :
     RecyclerView.Adapter<OrderDetailsAdapter.ViewHolder>() {
 
@@ -86,12 +87,21 @@ class OrderDetailsAdapter(
                 colorName = color.name.toString()
             }
         }
-        holder.infoCart.text = "Size: $sizeName, Color: $colorName"
+        if (lang == "en")
+        {
+            holder.infoCart.text = "Size: $sizeName, Color: $colorName"
+            holder.quantity.text = "Quantity: " + listBillInfo[position].quantity.toString()
+        }
+        else
+        {
+            holder.infoCart.text = "Cỡ: $sizeName, Màu: $colorName"
+            holder.quantity.text = "Số lượng: " + listBillInfo[position].quantity.toString()
+        }
         holder.productCart.text = listProduct[position].name
         val price = listBillInfo[position].price?.toInt()
         holder.costCart.text =
             NumberFormat.getIntegerInstance(Locale.GERMANY).format(price)
-        holder.quantity.text = "Quantity: " + listBillInfo[position].quantity.toString()
+
     }
 
     override fun getItemCount(): Int {

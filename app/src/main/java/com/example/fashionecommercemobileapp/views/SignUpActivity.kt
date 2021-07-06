@@ -1,5 +1,6 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.app.Activity
 import android.app.ProgressDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -28,9 +29,26 @@ class SignUpActivity : AppCompatActivity() {
 
     private var accountViewModel: AccountViewModel? = null
 
+    var language:String = ""
+    var loading: String = ""
+    var verify_code: String =""
+    var re_code: String= ""
+    var signup: String = ""
+    var field_empty: String = ""
+    var pass_error:String = ""
+    var repasss_error: String = ""
+    var nowhite :String = ""
+    var not_match: String = ""
+    var username_long : String = ""
+    var name_long: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
+
+        val sharedPreferences = getSharedPreferences("Settings", Activity.MODE_PRIVATE)
+        language = sharedPreferences.getString("My_Lang", "").toString()
+        translate()
 
         AccountRepository.Companion.setContext(this@SignUpActivity)
         accountViewModel = ViewModelProviders.of(this).get(AccountViewModel::class.java)
@@ -39,7 +57,7 @@ class SignUpActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         progressDialog = ProgressDialog(this)
-        progressDialog.setTitle("Please wait...")
+        progressDialog.setTitle(loading)
         progressDialog.setCanceledOnTouchOutside(false)
 
         mCallbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -49,7 +67,7 @@ class SignUpActivity : AppCompatActivity() {
 
             override fun onVerificationFailed(p0: FirebaseException) {
                 progressDialog.dismiss()
-                Toast.makeText(this@SignUpActivity, "Check your phone number", Toast.LENGTH_SHORT)
+                Toast.makeText(this@SignUpActivity, R.string.check_phone, Toast.LENGTH_SHORT)
                     .show()
             }
 
@@ -100,17 +118,49 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
+    fun translate()
+    {
+        if (language == "en")
+        {
+            loading = "Loading"
+            verify_code = "Verifying code..."
+            re_code= "Resending code..."
+            signup= "Signing up..."
+            field_empty="Field cannot be empty"
+            pass_error = "Password must be more than 6 char"
+            nowhite = "White space is not allowed"
+            repasss_error= "Repassword must be more than 6 char"
+            not_match = "Repassword is not match"
+            username_long = "Username too long"
+            name_long = "Name too long"
+        }
+        else
+        {
+            loading = "Đang tải"
+            verify_code = "Đang xác minh số điện thoại ..."
+            re_code= "Gửi lại mã ..."
+            signup= "Đăng ký..."
+            field_empty = "Không được bỏ trống"
+            pass_error = "Mật khẩu phải hơn 6 ký tự"
+            nowhite = "Không được nhập khoảng trắng"
+            repasss_error = "Mật khẩu phải hơn 6 ký tự"
+            not_match = "Mật khẩu và nhập lại không khớp"
+            username_long ="Tên đăng nhập quá dài"
+            name_long = "Tên quá dài"
+        }
+    }
+
     fun validationUsername(): Boolean {
         val user: String = txtUsername.text.toString()
         val noWhite: Regex = Regex("(?=\\S+$)")
         if (user.isEmpty()) {
-            txtUsername.error = "Field cannot be empty"
+            txtUsername.error = field_empty
             false
         } else if (user.length > 50) {
-            txtUsername.error = "Username too long"
+            txtUsername.error = username_long
             return false
-        } else if (user.matches(noWhite)) {
-            txtUsername.error = "White space is not allowed"
+        } else if (user.contains(" ", false)) {
+            txtUsername.error = nowhite
             return false
         } else {
             txtUsername.error = null
@@ -123,10 +173,10 @@ class SignUpActivity : AppCompatActivity() {
         val name: String = txtName.text.toString()
 
         if (name.isEmpty()) {
-            txtName.error = "Field cannot be empty"
+            txtName.error = field_empty
             false
         } else if (name.length > 50) {
-            txtName.error = "Name too long"
+            txtName.error = name_long
             return false
         } else {
             txtName.error = null
@@ -138,7 +188,7 @@ class SignUpActivity : AppCompatActivity() {
     fun validationPhone(): Boolean {
         val phone: String = txtPhone.text.toString()
         if (phone.isEmpty()) {
-            txtPhone.error = "Field cannot be empty"
+            txtPhone.error = field_empty
             false
         } else {
             txtPhone.error = null
@@ -151,13 +201,13 @@ class SignUpActivity : AppCompatActivity() {
         val pass: String = txtPassword.text.toString()
         val noWhite: Regex = Regex("(?=\\S+$)")
         if (pass.isEmpty()) {
-            txtPassword.error = "Field cannot be empty"
+            txtPassword.error = field_empty
             false
         } else if (pass.length < 6) {
-            txtPassword.error = "Password must be more than 6 char"
+            txtPassword.error = pass_error
             return false
-        } else if (pass.matches(noWhite)) {
-            txtPassword.error = "White space is not allowed"
+        } else if (pass.contains(" ",false)) {
+            txtPassword.error = nowhite
             return false
         } else {
             txtPassword.error = null
@@ -170,16 +220,16 @@ class SignUpActivity : AppCompatActivity() {
         val rePass: String = txtRepassword.text.toString()
         val noWhite: Regex = Regex("(?=\\S+$)")
         if (rePass.isEmpty()) {
-            txtRepassword.error = "Field cannot be empty"
+            txtRepassword.error = field_empty
             return false
         } else if (rePass.length < 6) {
-            txtRepassword.error = "Repassword must be more than 6 char"
+            txtRepassword.error = repasss_error
             return false
-        } else if (rePass.matches(noWhite)) {
-            txtRepassword.error = "White space is not allowed"
+        } else if (rePass.contains(" ",false)) {
+            txtRepassword.error = nowhite
             return false
         } else if (rePass != txtPassword.text.toString()) {
-            txtRepassword.error = "Repassword is not match"
+            txtRepassword.error = not_match
             return false
         } else {
             txtRepassword.error = null
@@ -191,7 +241,7 @@ class SignUpActivity : AppCompatActivity() {
         val otp: String = txtOTP.text.toString()
 
         if (otp.isEmpty()) {
-            txtOTP.error = "Field cannot be empty"
+            txtOTP.error = field_empty
             return false
         } else {
             txtOTP.error = null
@@ -208,7 +258,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun sendVerificationCode(phone: String) {
-        progressDialog.setMessage("Verifying Phone Number...")
+        progressDialog.setMessage(verify_code)
         progressDialog.show()
 
         val options = PhoneAuthOptions.newBuilder(firebaseAuth)
@@ -224,7 +274,7 @@ class SignUpActivity : AppCompatActivity() {
         phone: String,
         token: PhoneAuthProvider.ForceResendingToken?
     ) {
-        progressDialog.setMessage("Resending code...")
+        progressDialog.setMessage(re_code)
         progressDialog.show()
 
         val options = PhoneAuthOptions.newBuilder(firebaseAuth)
@@ -238,7 +288,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun verifyPhoneNumberWithCode(verificationId: String?, code: String) {
-        progressDialog.setMessage("Verifying code...")
+        progressDialog.setMessage(verify_code)
         progressDialog.show()
 
         val credential = PhoneAuthProvider.getCredential(verificationId!!, code)
@@ -246,7 +296,7 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-        progressDialog.setMessage("Signing up...")
+        progressDialog.setMessage(signup)
         progressDialog.show()
 
         firebaseAuth.signInWithCredential(credential)
