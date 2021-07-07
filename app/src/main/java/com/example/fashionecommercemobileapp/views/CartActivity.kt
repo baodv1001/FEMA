@@ -161,8 +161,8 @@ class CartActivity : AppCompatActivity() {
                         }
                         else {
                             textview_discount.text =
-                                NumberFormat.getIntegerInstance(Locale.GERMANY)
-                                    .format(it.data?.value)
+
+                            Math.round((it.data?.value!!.toFloat()*100)/100.0f).toString()
                                 Toast.makeText(this, R.string.code_coupon_succ,Toast.LENGTH_SHORT).show()
                             loadData(this.cartInfoList, this.productList)
                         }
@@ -325,9 +325,9 @@ class CartActivity : AppCompatActivity() {
                     ?: 0F))
             subTotal += quantity * price
         }
-        textView_sub_total.text = NumberFormat.getIntegerInstance(Locale.GERMANY).format(subTotal)
+        textView_sub_total.text = "%.2f".format(subTotal).toFloat().toString()
         val total: Float = subTotal - textview_discount.text.toString().replace(".", "").toFloat()
-        textView_total.text = NumberFormat.getIntegerInstance(Locale.GERMANY).format(total)
+        textView_total.text = "%.2f".format(total).toFloat().toString()
     }
 
     private fun handleNavigation() {

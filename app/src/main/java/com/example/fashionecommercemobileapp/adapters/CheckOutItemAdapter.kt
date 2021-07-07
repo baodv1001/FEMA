@@ -97,7 +97,7 @@ class CheckOutItemAdapter(
         val discount: Float = 1 - (listProduct[position].discount?.toFloat() ?: 0F)
         val price: Float = (listProduct[position].price?.toFloat() ?: 0F)
         holder.costCart.text =
-            NumberFormat.getIntegerInstance(Locale.GERMANY).format(discount * price) + " $"
+            (Math.round((discount * price!!.toFloat())*100)/100.0f).toString() + " $"
 
     }
 

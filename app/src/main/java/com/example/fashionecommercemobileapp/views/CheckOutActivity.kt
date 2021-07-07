@@ -195,10 +195,10 @@ class CheckOutActivity : AppCompatActivity() {
             subTotal += quantity * price
         }
         textView_sub_checkOut.text =
-            NumberFormat.getIntegerInstance(Locale.GERMANY).format(subTotal)
+            "%.2f".format(subTotal).toFloat().toString()
         val total: Float =
             subTotal - textView_discount_checkOut.text.toString().replace(".", "").toFloat()
-        textView_total_checkOut.text = NumberFormat.getIntegerInstance(Locale.GERMANY).format(total)
+        textView_total_checkOut.text = "%.2f".format(total).toFloat().toString()
     }
 
     fun onClickBack(view: View) {
@@ -220,7 +220,7 @@ class CheckOutActivity : AppCompatActivity() {
             date,
             0,
             idAddress,
-            textView_total_checkOut.text.toString().replace(".", "").toInt(),
+            textView_total_checkOut.text.toString().toFloat(),
             0
         )
         val billViewModel: BillViewModel =
@@ -253,7 +253,7 @@ class CheckOutActivity : AppCompatActivity() {
         cartInfoList.forEach { cartInfo ->
             val price =
                 ((productList[i].price?.toFloat() ?: 0F) * (1 - (productList[i].discount?.toFloat()
-                    ?: 0F))).toInt()
+                    ?: 0F))).toFloat()
             i++
             val billInfo: BillInfo =
                 BillInfo(

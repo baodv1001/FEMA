@@ -42,7 +42,7 @@ class OrderDetailsActivity : AppCompatActivity() {
     private var idAddress: Int = 0
     private var idAccount: String = "0"
     private var date: String = "0"
-    private var total: Int = 0
+    private var total: Float = 0F
     private var status: Int = 0
     private var isRated: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +63,7 @@ class OrderDetailsActivity : AppCompatActivity() {
         idAddress = intent.getIntExtra("idAddress", 0)
         idAccount = intent.getIntExtra("idAccount", 0).toString()
         date = intent.getStringExtra("date").toString()
-        total = intent.getIntExtra("total", 0)
+        total = intent.getFloatExtra("total", 0F)
         status = intent.getIntExtra("status", 0)
         isRated = intent.getIntExtra("isRated", 0)
 
@@ -227,15 +227,15 @@ class OrderDetailsActivity : AppCompatActivity() {
                 ?: 0F) * (billInfoList[i].price?.toFloat() ?: 0F)
         }
         textView_sub_orderDetails.text =
-            NumberFormat.getIntegerInstance(Locale.GERMANY).format(subTotal)
-        if (subTotal.toInt() == total) {
+            "%.2f".format(subTotal).toFloat().toString()
+        if (subTotal == total) {
             textView_discount_orderDetails.text = "0"
         } else {
             textView_discount_orderDetails.text =
-                NumberFormat.getIntegerInstance(Locale.GERMANY).format(subTotal - total)
+                "%.2f".format(subTotal - total).toFloat().toString()
         }
         textView_total_orderDetails.text =
-            NumberFormat.getIntegerInstance(Locale.GERMANY).format(total)
+            "%.2f".format(total).toFloat().toString()
     }
 
     private fun getAddress() {

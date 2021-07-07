@@ -82,7 +82,7 @@ class ProductDetailsActivity : AppCompatActivity() {
         if (price != null)
             detail_price.text = price  + " $"
         if (discount != null)
-            detail_sale_price.text = ((1 - discount.toFloat()) * price!!.toFloat()).toString()  + " $"
+            detail_sale_price.text = (Math.round(((1 - discount.toFloat()) * price!!.toFloat())*100)/100.0f).toString()  + " $"
         if (rating != null) {
             ratingBar.rating = rating.toFloat()
         }

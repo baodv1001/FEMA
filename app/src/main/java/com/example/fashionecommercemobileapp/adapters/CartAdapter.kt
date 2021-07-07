@@ -116,7 +116,7 @@ class CartAdapter(
         val discount: Float = 1 - (listProduct[position].discount?.toFloat() ?: 0F)
         val price: Float = (listProduct[position].price?.toFloat() ?: 0F)
         holder.costCart.text =
-            NumberFormat.getIntegerInstance(Locale.GERMANY).format(discount * price) + " $"
+            (Math.round((discount * price!!.toFloat())*100)/100.0f).toString() + " $"
         holder.quantityCart.text = listCart[position].quantity.toString()
         holder.itemView.editText_quantity_cart.setText(listCart[position].quantity.toString())
 

@@ -26,7 +26,7 @@ interface UploadApi {
                 .setLenient()
                 .create()
             return Retrofit.Builder()
-                .baseUrl("http://ghostlove/FEMA/Image/")
+                .baseUrl("http://192.168.224.188/FEMA/Image/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
                 .create(UploadApi::class.java)
