@@ -36,7 +36,7 @@ class  WishlistAdapter(private val context: Context, private val wishList: Mutab
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.nameItem.text = newWishList[position].name
-        holder.costItem.text = NumberFormat.getIntegerInstance(Locale.GERMANY).format(newWishList[position].price) + " $"
+        holder.costItem.text = newWishList[position].price + " $"
         holder.idItem.text = newWishList[position].idProduct
 
         Glide.with(holder.itemView).load(newWishList[position].imageFile).into(holder.imageItem)
