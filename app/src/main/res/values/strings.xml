@@ -64,8 +64,8 @@
 
      //layout
      <string name="new_phone">NEW PHONE NUMBER</string>
-     <string name="get_code">GET CODE</string>
-     <string name="re_code">RESEND CODE</string>
+     <string name="get_code">Get code</string>
+     <string name="re_code">Resend code</string>
 
      //layout check out
      <string name="check_out">Check out</string>
@@ -74,8 +74,8 @@
      <string name="confirm">CONFIRM</string>
 
      //layout forget pass
-     <string name="forget_pass">FORGET PASSWORD</string>
-     <string name="get_ver_code">GET VERIFICATION CODE</string>
+     <string name="forget_pass">Forget password</string>
+     <string name="get_ver_code">Get verification code</string>
      <string name="change_pass">Change password</string>
      <string name="re_pass">Password again</string>
      <string name="ver_code">Verification code</string>
@@ -84,7 +84,7 @@
      <string name="search">Search product</string>
      <string name="category">Category</string>
      <string name="flash_sale">Flash Sale</string>
-     <string name="see_more">SEE MORE</string>
+     <string name="see_more">See more</string>
 
      //layout on board
      <string name="name_product">Name product</string>

@@ -100,7 +100,7 @@ class OrderDetailsAdapter(
         holder.productCart.text = listProduct[position].name
         val price = listBillInfo[position].price?.toInt()
         holder.costCart.text =
-            NumberFormat.getIntegerInstance(Locale.GERMANY).format(price)
+            NumberFormat.getIntegerInstance(Locale.GERMANY).format(price) + " $"
 
     }
 
