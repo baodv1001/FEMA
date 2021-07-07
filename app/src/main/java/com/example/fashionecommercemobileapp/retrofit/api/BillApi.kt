@@ -19,7 +19,7 @@ interface BillApi {
     ): Int
 
     @FormUrlEncoded
-    @POST("get_invoice.php")
+    @POST("Bill/get_invoice.php")
     fun getBillData(@Field("idAccount") idAccount: String): Call<List<Bill>>
 
     @POST("Bill/update_bill.php")

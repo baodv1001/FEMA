@@ -9,18 +9,18 @@ import retrofit2.http.POST
 
 interface ProductApi {
 
-    @POST("get_product.php")
+    @POST("Product/get_product.php")
     @FormUrlEncoded
     fun getProduct(@Field("idProductCode") idProductCode: String): Call<List<Product>>
 
-    @POST("get_product_by_name.php")
+    @POST("Product/get_product_by_name.php")
     @FormUrlEncoded
     fun getProductByName(
         @Field("name") name: String,
         @Field("idProductCode") idProductCode: String
     ): Call<List<Product>>
 
-    @POST("get_product_by_rating_price.php")
+    @POST("Product/get_product_by_rating_price.php")
     @FormUrlEncoded
     fun getProductByRating(
         @Field("rating") rating: String,
@@ -30,34 +30,34 @@ interface ProductApi {
         @Field("discount") discount: String
     ): Call<List<Product>>
 
-    @GET("get_recommended.php")
+    @GET("Product/get_recommended.php")
     fun getRecommended(): Call<List<Product>>
 
-    @GET("get_flash_sale.php")
+    @GET("Product/get_flash_sale.php")
     fun getFlashSale(): Call<List<Product>>
 
-    @POST("get_product_by_id.php")
+    @POST("Product/get_product_by_id.php")
     @FormUrlEncoded
     suspend fun getProductById(@Field("idProductList") idProductList: String): List<Product>
 
-    @GET("get_all_flash_sale.php")
+    @GET("Product/get_all_flash_sale.php")
     fun getAllFlashSale(): Call<List<Product>>
 
-    @POST("update_product.php")
+    @POST("Product/update_product.php")
     @FormUrlEncoded
     fun updateProduct(
         @Field("idProduct") idProduct: String,
         @Field("quantity") quantity: Int
     ): Call<Boolean>
 
-    @POST("update_product_list.php")
+    @POST("Product/update_product_list.php")
     @FormUrlEncoded
     fun updateProducts(
         @Field("idProductList") idProductList: String,
         @Field("quantity") quantity: String
     ): Call<Boolean>
 
-    @POST("update_product_rating.php")
+    @POST("Product/update_product_rating.php")
     @FormUrlEncoded
     fun updateProductRating(
         @Field("idProductList") idProductList: String,

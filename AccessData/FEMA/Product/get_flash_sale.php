@@ -1,5 +1,5 @@
 <?php
- include_once './dbConnect.php';
+ include_once '../dbConnect.php';
  function dispInfo(){
    $db = new dbConnect();
   // Mảng JSON

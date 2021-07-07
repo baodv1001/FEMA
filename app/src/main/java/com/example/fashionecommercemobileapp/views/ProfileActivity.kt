@@ -93,9 +93,9 @@ class ProfileActivity : AppCompatActivity(), UploadRequestBody.UploadCallBack {
                         val month: Array<String> = birthday[2].split(",").toTypedArray()
                         text_birthday.text = birthday[0] + "-" + month[0] + "-" + birthday[3]*/
                         val format = SimpleDateFormat("dd-MM-yyyy")
-
+                        val format1 = SimpleDateFormat("yyyy-MM-dd")
                         text_birthday.text = format.format(listUser!![0].dateOfBirth)
-                        pickDate = listUser!![0].dateOfBirth?.toString()
+                        pickDate = format1.format(listUser!![0].dateOfBirth)
                         //text_user_email.text = listUser!![0].email
                         text_phone_number.text = listUser!![0].phoneNumber
 

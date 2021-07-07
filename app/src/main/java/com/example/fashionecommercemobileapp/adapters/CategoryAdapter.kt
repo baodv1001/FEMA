@@ -1,5 +1,6 @@
 package com.example.fashionecommercemobileapp.adapters
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -33,7 +34,7 @@ class CategoryAdapter(
             i.putExtra("name", categoryList[position].name)
             i.putExtra("image", categoryList[position].image)
             i.putExtra("idProductCode", categoryList[position].idProductCode)
-            context.startActivity(i)
+            (context as Activity).startActivityForResult(i, 1)
         }
     }
 

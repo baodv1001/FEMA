@@ -11,13 +11,13 @@ import retrofit2.http.POST
 
 interface CategoryApi {
 
-    @GET("get_category.php")
+    @GET("Others/get_category.php")
     fun getCategory(): Call<List<Category>>
 
-    @GET("get_swipe_image.php")
+    @GET("Others/get_swipe_image.php")
     fun getSwipeImage(): Call<List<String>>
 
-    @POST("get_productcode_by_name.php")
+    @POST("Others/get_productcode_by_name.php")
     @FormUrlEncoded
     fun getProductCodeByName(@Field("name") name:String): Call<List<Category>>
 }

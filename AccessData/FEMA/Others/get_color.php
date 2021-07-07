@@ -1,18 +1,17 @@
 <?php
-
-include_once './dbConnect.php';
-
-function dispInfo(){
+ include_once '../dbConnect.php';
+ function dispInfo(){
    $db = new dbConnect();
   // Mảng JSON
   $response = array();
   //$response["product"] = array();
   // Câu lệnh Select dùng để xem dữ liệu
-  $result = mysqli_query($db->connect(),"SELECT * FROM swipeimage;");
+  $result = mysqli_query($db->connect(),"SELECT * FROM color;");
   //Đọc dữ liệu từ MySQL
   while($row = mysqli_fetch_assoc($result)){
     $t = array();
-    $t["image"] = $row["image"];
+    $t["idColor"] = $row["idColor"];
+    $t["name"] = $row["name"];
     // Mảng JSON
     array_push($response, $t);
  }
@@ -22,3 +21,4 @@ function dispInfo(){
  echo json_encode($response);
 }
 dispInfo();
+?>

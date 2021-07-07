@@ -8,18 +8,18 @@ import com.example.fashionecommercemobileapp.model.Account
 
 interface AccountApi {
     @FormUrlEncoded
-    @POST("post_checkAccount.php")
+    @POST("Account/post_checkAccount.php")
     fun checkAccount(@Field("username") username: String,
                       @Field("phoneNumber") phoneNumber: String) : Call<String>
 
     @FormUrlEncoded
-    @POST("post_updatePassword.php")
+    @POST("Account/post_updatePassword.php")
     fun updatePassword(@Field("username") username: String,
                    @Field("password") password: String?,
                    @Field("phoneNumber") phoneNumber: String?) : Call<String>
 
     @FormUrlEncoded
-    @POST("post_signup.php")
+    @POST("Account/post_signup.php")
     fun signUp(@Field("username") username: String,
                @Field("password") password: String,
                 @Field("name") name: String,

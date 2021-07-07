@@ -1,21 +1,25 @@
 <?php
- include_once './dbConnect.php';
+ include_once '../dbConnect.php';
  function dispInfo(){
    $db = new dbConnect();
   // Mảng JSON
-  $name = $_REQUEST['name'];
   $idProductCode = $_REQUEST['idProductCode'];
+  $rating = $_REQUEST['rating'];
+  $minPrice = $_REQUEST['minPrice'];
+  $maxPrice = $_REQUEST['maxPrice'];
+  $discount = $_REQUEST['discount'];
   $response = array();
   //$response["product"] = array();
   // Câu lệnh Select dùng để xem dữ liệu
   if($idProductCode!='0')
   {
-    $result = mysqli_query($db->connect(),"SELECT * FROM product WHERE name like '%$name%' and idProductCode='$idProductCode'");
+    $result = mysqli_query($db->connect(),"SELECT * FROM product WHERE idProductCode='$idProductCode' and rating>='$rating' and price>='$minPrice' and price<= '$maxPrice' ");
   }
   else
   {
-    $result = mysqli_query($db->connect(),"SELECT * FROM product WHERE name like '%$name%' and discount>'0'");
+    $result = mysqli_query($db->connect(),"SELECT * FROM product WHERE rating>='$rating' and price>='$minPrice' and price<= '$maxPrice' and discount>'$discount' ");
   }
+  
   //Đọc dữ liệu từ MySQL
   while($row = mysqli_fetch_assoc($result)){
     $data = array();
