@@ -15,7 +15,7 @@ interface BillApi {
         @Field("idAccount") idAccount: Int?,
         @Field("invoiceDate") invoiceDate: String?,
         @Field("status") status: Int?,
-        @Field("totalMoney") totalMoney: Int?
+        @Field("totalMoney") totalMoney: Float?
     ): Int
 
     @FormUrlEncoded

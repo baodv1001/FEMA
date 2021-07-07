@@ -66,7 +66,7 @@ class BillAdapter(context: Context, private val listBill: ArrayList<Bill>, val l
         }
 
         holder.total.text =
-            NumberFormat.getIntegerInstance(Locale.GERMANY).format(listBill[position].totalMoney)
+            (Math.round(listBill[position].totalMoney!! *100)/100.0F).toString() + " $"
         holder.container.setOnClickListener {
             bill.value = Bill(
                 listBill[position].id,

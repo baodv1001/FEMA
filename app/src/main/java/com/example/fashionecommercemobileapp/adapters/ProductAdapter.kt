@@ -40,8 +40,8 @@ class ProductAdapter(
         //Truyền dữ liệu vô item
         holder.productName.text = allProductsList[position].name
         holder.productSalePrice.text =
-                ((1 - allProductsList[position].discount!!.toFloat()) * allProductsList[position].price!!.toFloat()).toString()
-        holder.productPrice.text = allProductsList[position].price
+            (Math.round(((1 - allProductsList[position].discount!!.toFloat()) * allProductsList[position].price!!.toFloat())*100)/100.0f).toString()+ " $"
+        holder.productPrice.text = allProductsList[position].price+ " $"
         holder.productPrice.paintFlags = holder.productPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         Glide.with(context).load(allProductsList[position].imageFile).into(holder.productImage)
         holder.productRating.rating = allProductsList[position].rating!!.toFloat();

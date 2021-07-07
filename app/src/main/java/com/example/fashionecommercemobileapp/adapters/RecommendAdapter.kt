@@ -38,9 +38,9 @@ class RecommendAdapter(
     override fun onBindViewHolder(holder: RecommendedViewHolder, position: Int) {
         holder.recommendName.text = recommendedList[position].name
         holder.recommendSalePrice.text =
-            ((1 - recommendedList[position].discount!!.toFloat()) * recommendedList[position].price!!.toFloat()).toString()
+            (Math.round(((1 - recommendedList[position].discount!!.toFloat()) * recommendedList[position].price!!.toFloat())*100)/100.0f).toString()+ " $"
         holder.recommendedRating.rating = recommendedList[position].rating?.toFloat()!!
-        holder.recommendPrice.text = recommendedList[position].price
+        holder.recommendPrice.text = recommendedList[position].price + " $"
         holder.recommendPrice.paintFlags =
             holder.recommendPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         Glide.with(context).load(recommendedList[position].imageFile).into(holder.recommendImage)

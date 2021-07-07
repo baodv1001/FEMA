@@ -1,5 +1,6 @@
 package com.example.fashionecommercemobileapp.views
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -44,6 +45,7 @@ class ProductDetailsActivity : AppCompatActivity() {
     private lateinit var productViewModel: ProductViewModel
     var sizeMap: MutableMap<String, String> = mutableMapOf<String, String>()
     var colorMap: MutableMap<String, String> = mutableMapOf<String, String>()
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_details)
@@ -78,9 +80,9 @@ class ProductDetailsActivity : AppCompatActivity() {
 
         detail_name.text = name
         if (price != null)
-            detail_price.text = price
+            detail_price.text = price  + " $"
         if (discount != null)
-            detail_sale_price.text = ((1 - discount.toFloat()) * price!!.toFloat()).toString()
+            detail_sale_price.text = (Math.round(((1 - discount.toFloat()) * price!!.toFloat())*100)/100.0f).toString()  + " $"
         if (rating != null) {
             ratingBar.rating = rating.toFloat()
         }

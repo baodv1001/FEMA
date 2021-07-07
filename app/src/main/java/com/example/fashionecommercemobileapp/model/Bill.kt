@@ -26,7 +26,7 @@ class Bill() {
 
     @SerializedName("totalMoney")
     @Expose
-    var totalMoney: Int? = null
+    var totalMoney: Float? = null
 
     @SerializedName("isRated")
     @Expose
@@ -38,7 +38,7 @@ class Bill() {
         invoiceDate: String?,
         status: Int?,
         idAddress: Int?,
-        totalMoney: Int?,
+        totalMoney: Float?,
         rated: Int?
     ) : this() {
         this.id = id

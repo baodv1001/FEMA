@@ -17,6 +17,7 @@ import com.example.fashionecommercemobileapp.model.Product
 import com.example.fashionecommercemobileapp.R
 import com.example.fashionecommercemobileapp.views.ProductDetailsActivity
 import kotlinx.android.synthetic.main.flash_sale_recycler_item.view.*
+import kotlin.math.round
 
 
 class FlashSaleAdapter(
@@ -37,8 +38,8 @@ class FlashSaleAdapter(
     override fun onBindViewHolder(holder: FlashSaleViewHolder, position: Int) {
         holder.flashSaleName.text = flashSaleList[position].name
         holder.flashSaleSalePrice.text =
-                ((1 - flashSaleList[position].discount!!.toFloat()) * flashSaleList[position].price!!.toFloat()).toString()
-        holder.flashSalePrice.text = flashSaleList[position].price
+            (Math.round(((1 - flashSaleList[position].discount!!.toFloat()) * flashSaleList[position].price!!.toFloat())*100)/100.0f).toString() + " $"
+        holder.flashSalePrice.text = flashSaleList[position].price + " $"
         holder.flashSalePrice.paintFlags = holder.flashSalePrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         Glide.with(context).load(flashSaleList[position].imageFile).into(holder.flashSaleImage)
         if (position == flashSaleList.size - 1) {

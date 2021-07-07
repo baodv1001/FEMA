@@ -98,9 +98,11 @@ class OrderDetailsAdapter(
             holder.quantity.text = "Số lượng: " + listBillInfo[position].quantity.toString()
         }
         holder.productCart.text = listProduct[position].name
-        val price = listBillInfo[position].price?.toInt()
-        holder.costCart.text =
-            NumberFormat.getIntegerInstance(Locale.GERMANY).format(price)
+        val price = listBillInfo[position].price?.toFloat()
+        if (price != null) {
+            holder.costCart.text =
+                (Math.round(price*100)/100.0f).toString() + " $"
+        }
 
     }
 
