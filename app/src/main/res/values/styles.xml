@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_right_to_left</item>
+        <item name="android:windowExitAnimation">@anim/slide_left_to_right</item>
+    </style>
+    <style name="myDialogStyle" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:colorAccent" tools:ignore="NewApi">@color/primary</item>
+        <item name="android:layout_marginRight" tools:ignore="NewApi">0dp</item>
+        <item name="android:layout_marginLeft" tools:ignore="NewApi">0dp</item>
+        <item name="android:layout_width" tools:ignore="NewApi" >wrap_content</item>
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+        <item name="backgroundColor">@color/white</item>
+    </style>
+    <style name="myDateDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:colorAccent" tools:ignore="NewApi">@color/primary</item>
+        <item name="android:colorActivatedHighlight" tools:ignore="NewApi">@color/primary</item>
+        <item name="android:layout_width" tools:ignore="NewApi" >wrap_content</item>
+        <item name="backgroundColor">@color/white</item>
+        <item name="windowActionBar">false</item>
+        <item name="android:windowMinWidthMajor">80%</item>
+        <item name="android:windowMinWidthMinor">80%</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+</resources>

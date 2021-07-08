@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/home_nvg"
+        android:icon="@drawable/ic_outline_home_24"
+        android:title="@string/home"
+        app:showAsAction="ifRoom">
+
+    </item>
+    <item
+        android:id="@+id/wish_list"
+        android:icon="@drawable/ic_baseline_favorite_border_24"
+        android:title="@string/wish_list"
+        app:showAsAction="ifRoom">
+
+    </item>
+    <item
+        android:id="@+id/cart"
+        android:icon="@drawable/ic_outline_shopping_cart_24"
+        android:title="@string/cart"
+        app:showAsAction="ifRoom">
+
+    </item>
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/ic_outline_person_outline_24"
+        android:title="@string/me"
+        app:showAsAction="ifRoom">
+
+    </item>
+</menu>

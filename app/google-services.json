@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "307152931201",
+    "project_id": "optfema",
+    "storage_bucket": "optfema.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:307152931201:android:bbd0852fabaf78d7f6c080",
+        "android_client_info": {
+          "package_name": "com.example.fashionecommercemobileapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "307152931201-38t199gdpfr18t8t6642t749f7jpojra.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg4l1Xglw2LNNTooHuLEs8SrTJNEtwpYg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "307152931201-38t199gdpfr18t8t6642t749f7jpojra.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
