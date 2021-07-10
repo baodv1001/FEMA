@@ -3,7 +3,7 @@
     function upLoadImage() {
         $db = new dbConnect();
 
-        $uploadpath = 'http://laptop-0qnm76ck/fashionecommerceapp/Image/'; 
+        $uploadpath = 'http://192.168.224.188/FEMA/Image/'; 
         $file_path = $uploadpath.basename( $_FILES['uploaded_file']['name']);
         
         if(!is_dir($file_path)){
