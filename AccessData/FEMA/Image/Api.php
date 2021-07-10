@@ -7,7 +7,7 @@
     $response = array();
     
     //uploads directory, we will upload all the files inside this folder
-    $target_dir = "./";
+    $target_dir = "";
 
     $idAccount = $_REQUEST['idAccount'];
 
@@ -49,7 +49,7 @@
                         //saving the file information to our database
                         $result = mysqli_query($db->connect(), 
                             "UPDATE user 
-                            SET `image` = 'http://laptop-0qnm76ck/fashionecommerceapp/Image/$target_file'
+                            SET `image` = 'http://192.168.224.188/FEMA/Image/$target_file'
                             WHERE `idAccount` = $idAccount;" );
                         //$stmt = $conn->prepare("INSERT INTO uploads (`path`, `description`) VALUES (?, ?)");
                         //$stmt->bind_param("ss", $target_file, $_POST['desc']);
